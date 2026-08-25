@@ -30,7 +30,7 @@ while ($listener.IsListening) {
     $ext = [IO.Path]::GetExtension($full).ToLowerInvariant()
     $bytes = [IO.File]::ReadAllBytes($full)
     $res.ContentType = $mime[$ext]
-    $res.Headers.Add("Referrer-Policy", "origin")
+    $res.Headers.Add("Referrer-Policy", "strict-origin-when-cross-origin")
     $res.Headers.Add("Cache-Control", "no-cache")
     $res.ContentLength64 = $bytes.Length
     $res.OutputStream.Write($bytes, 0, $bytes.Length)

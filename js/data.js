@@ -28,6 +28,13 @@ window.SB_DATA = {
       conclusion:
         "En 1er Bac SM, la logique sert à rédiger une démonstration propre. Une implication P ⇒ Q est fausse seulement si P est vraie et Q fausse. La contraposée ¬Q ⇒ ¬P est équivalente à P ⇒ Q : souvent plus simple à prouver. Un contre-exemple suffit à démolir un « pour tout ». Attention au « ou » mathématique (inclusif) et à la négation des quantificateurs : ¬(∀x, P(x)) ⇔ ∃x, ¬P(x). Si tu es pressé : retiens tables de vérité, contraposée, absurde, et la négation de ∀ / ∃.",
       formula: "¬(P ⇒ Q) ⇔ P ∧ ¬Q",
+      conclusionAr: "في السنة الأولى باكالوريا علوم رياضية، يُستعمل المنطق لتحرير برهان سليم. الاستلزام P ⇒ Q يكون خاطئاً فقط إذا كانت P صادقة و Q خاطئة. عكس النقيض ¬Q ⇒ ¬P يكافئ P ⇒ Q : وغالباً ما يكون إثباته أبسط. يكفي مثال مضاد واحد لدحض قضية من شكل «من أجل كل». انتبه إلى «أو» الرياضي (الشمولي) وإلى نفي المكممات : ¬(∀x, P(x)) ⇔ ∃x, ¬P(x). إذا كنت مستعجلاً : احفظ جداول الحقيقة، وعكس النقيض، والبرهان بالخلف، ونفي ∀ / ∃.",
+      basicsAr: [
+        "القضية عبارة تكون صادقة (V) أو خاطئة (F)، ولا تكون الاثنين معاً.",
+        "الروابط : ¬ (نفي)، ∧ (و)، ∨ (أو)، ⇒ (يستلزم)، ⇔ (يكافئ).",
+        "المكممات : ∀ «من أجل كل»، ∃ «يوجد».",
+        "الطرائق : استلزام مباشر، عكس النقيض، برهان بالخلف، مثال مضاد.",
+      ],
     },
     {
       id: "ensembles-applications",
@@ -48,6 +55,13 @@ window.SB_DATA = {
       conclusion:
         "Un ensemble se décrit en extension {1,2,3} ou en compréhension {x ∈ ℝ | x>0}. Les diagrammes de Venn aident, mais en contrôle on attend les définitions. Une application n’est pas « un dessin de flèches » : c’est une règle totale et univoque. Pour la bijection, cherche l’application réciproque f⁻¹. Piège classique : confondre injective et bijective, ou oublier de vérifier que f est bien définie sur tout E. En SM, ce chapitre prépare le dénombrement et les raisonnements sur ℕ et ℝ.",
       formula: "f bijective ⇔ f injective et surjective ⇔ f⁻¹ existe",
+      conclusionAr: "تُوصف المجموعة بالامتداد {1,2,3} أو بالفهم {x ∈ ℝ | x\u003e0}. مخططات فن تساعد، لكن في المراقبة تُطلب التعاريف. التطبيق ليس «رسماً لأسهم» : إنه قاعدة كلية وأحادية القيمة. من أجل التقابل، ابحث عن التطبيق العكسي f⁻¹. فخ كلاسيكي : الخلط بين التباينية والتقابلية، أو نسيان التحقق من أن f معرفة جيداً على كل E. في علوم رياضية، يمهّد هذا الدرس للتعداد وللاستدلال على ℕ و ℝ.",
+      basicsAr: [
+        "الاتحاد ∪، التقاطع ∩، المتممة، الفرق \\.",
+        "التطبيق f : E → F يربط بكل x من E عنصراً وحيداً f(x) في F.",
+        "متباين : f(x)=f(y) ⇒ x=y. شامل : لكل y سابق. تقابلي : الاثنان معاً.",
+        "عدد العناصر : |E ∪ F| = |E| + |F| − |E ∩ F|.",
+      ],
     },
     {
       id: "generalites-fonctions",
@@ -68,6 +82,13 @@ window.SB_DATA = {
       conclusion:
         "Avant toute étude, cherche D_f (dénominateur ≠ 0, racines d’indice pair ≥ 0, ln > 0). La parité réduit le travail : on étudie sur ℝ⁺ puis on symétrise. Le taux d’accroissement est le pont vers le nombre dérivé. Compare deux fonctions, encadre, et sache lire une courbe : image, antécédents, max/min. Piège : dire « f est croissante » sans préciser l’intervalle. En SM, on exige le vocabulaire exact : croissante, strictement croissante, majorée, minorée, bornée.",
       formula: "τ_a(h) = [f(a+h) − f(a)] / h",
+      conclusionAr: "قبل أي دراسة، ابحث عن D_f (المقام ≠ 0، الجذور ذات الدليل الزوجي ≥ 0، ln \u003e 0). الزوجية تختصر العمل : ندرس على ℝ⁺ ثم نتمم بالتناظر. معدل التزايد هو الجسر نحو العدد المشتق. قارن دالتين، احصر، وأحسن قراءة منحنى : صورة، سوابق، قيمة كبرى/صغرى. الفخ : قول «f تزايدية» دون تحديد المجال. في علوم رياضية، يُفرض المعجم الدقيق : تزايدية، تزايدية قطعاً، محدودة من الأعلى، محدودة من الأسفل، محدودة.",
+      basicsAr: [
+        "مجموعة التعريف D_f : مجموعة قيم x التي يكون لـ f(x) معنى.",
+        "الزوجية : f(−x)=f(x) زوجية ؛ f(−x)=−f(x) فردية (D_f متناظرة).",
+        "معدل التزايد : [f(a+h)−f(a)] / h.",
+        "التغيرات، القيم القصوى، والفروع اللانهائية تُهيَّأ هنا.",
+      ],
     },
     {
       id: "barycentre-plan",
@@ -88,6 +109,13 @@ window.SB_DATA = {
       conclusion:
         "Le barycentre généralise le milieu (poids égaux). Pour montrer que G est barycentre, repars de la définition vectorielle ou de ∑ α_i GA⃗_i = 0⃗. Les poids peuvent être négatifs : G n’est alors pas « entre » les points. L’associativité simplifie les calculs à 3 points ou plus. Applications : alignement, coordonnées barycentriques, réduction de sommes vectorielles. Piège : oublier α+β ≠ 0, ou confondre barycentre et isobarycentre. En exercice, on te demande souvent de construire G puis d’écrire une relation de Chasles.",
       formula: "∑ α_i GA⃗_i = 0⃗  ⇔  G barycentre des (A_i, α_i)",
+      conclusionAr: "البارسينتر يعمم منتصف القطعة (أوزان متساوية). لإثبات أن G بارسينتر، ارجع إلى التعريف المتجهي أو إلى ∑ α_i GA⃗_i = 0⃗. يمكن أن تكون الأوزان سالبة : عندئذ لا يقع G «بين» النقط. التجميعية تبسط الحسابات عند 3 نقط أو أكثر. التطبيقات : الاستقامية، الإحداثيات البارسينترية، اختزال مجاميع متجهية. الفخ : نسيان α+β ≠ 0، أو الخلط بين البارسينتر والأيزوبارسينتر. في التمرين، يُطلب منك غالباً إنشاء G ثم كتابة علاقة شال.",
+      basicsAr: [
+        "G بارسينتر {(A,α),(B,β)} إذا كان (α+β)G⃗ = αA⃗ + βB⃗، مع α+β ≠ 0.",
+        "علاقة لايبنتز : ∑ α_i MG⃗_i = (∑ α_i) MG⃗.",
+        "التجميعية : يمكن تجميع منظومات جزئية.",
+        "إذا كان ∑ α_i = 0، فلا بارسينتر (متجهة ثابتة).",
+      ],
     },
     {
       id: "produit-scalaire-plan",
@@ -108,6 +136,13 @@ window.SB_DATA = {
       conclusion:
         "Le produit scalaire mesure l’alignement de deux vecteurs. En base orthonormée, utilise les coordonnées : plus rapide que cosinus. Pour prouver un angle droit, montre un produit scalaire nul. Pour une longueur, passe par ‖u‖². Formules de polarisation et théorème de Pythagore / Al-Kashi en découlent. Piège : appliquer x1x2+y1y2 hors base orthonormée, ou oublier le signe du cosinus (angle obtus). En SM, tu dois aussi exprimer une distance d’un point à une droite via le produit scalaire.",
       formula: "u⃗ · v⃗ = ‖u⃗‖ ‖v⃗‖ cos(u⃗, v⃗)",
+      conclusionAr: "الجداء السلمي يقيس مدى تحاذي متجهتين. في قاعدة متعامدة ممنظمة، استعمل الإحداثيات : أسرع من جيب التمام. لإثبات زاوية قائمة، بيّن أن الجداء السلمي معدوم. من أجل طول، مرّ عبر ‖u⃗‖². صيغ الاستقطاب ومبرهنة فيثاغورس / الكاشي تنجم عن ذلك. الفخ : تطبيق x1x2+y1y2 خارج قاعدة متعامدة ممنظمة، أو نسيان إشارة جيب التمام (زاوية منفرجة). في علوم رياضية، يجب أيضاً التعبير عن مسافة نقطة إلى مستقيم بواسطة الجداء السلمي.",
+      basicsAr: [
+        "u⃗ · v⃗ = ‖u⃗‖ ‖v⃗‖ cos θ = x_u x_v + y_u y_v في B.O.N.",
+        "التعامد : u⃗ · v⃗ = 0 (متجهتان غير معدومتين).",
+        "‖u⃗‖² = u⃗ · u⃗. متطابقة : ‖u+v‖² = ‖u‖² + ‖v‖² + 2 u·v.",
+        "الإسقاط العمودي : p⃗ = [(u·v)/‖v‖²] v⃗.",
+      ],
     },
     {
       id: "calcul-trigonometrique",
@@ -128,6 +163,13 @@ window.SB_DATA = {
       conclusion:
         "Le calcul trigonométrique du 1er Bac SM, c’est d’abord le cercle et les formules d’addition, pas une calculatrice. Pour linéariser un produit, utilise cos a cos b, etc. Pour résoudre cos x = cos α : x = ±α + 2kπ. Pour sin : x = α + 2kπ ou x = π−α + 2kπ. Piège : domaines de tan et les valeurs interdites, ou se tromper de formule d’angle associé. En contrôle, on attend une réduction exacte (pas 0,707). Entraîne-toi à passer de tan à sin/cos et à factoriser avec les identités.",
       formula: "cos(a−b) = cos a cos b + sin a sin b",
+      conclusionAr: "الحساب المثلثي في السنة الأولى باكالوريا علوم رياضية هو أولاً الدائرة وصيغ الجمع، وليس الآلة الحاسبة. لخطية جداء، استعمل cos a cos b، إلخ. لحل cos x = cos α : x = ±α + 2kπ. من أجل sin : x = α + 2kπ أو x = π−α + 2kπ. الفخ : مجال تعريف tan والقيم الممنوعة، أو الخطأ في صيغة الزاوية المرتبطة. في المراقبة، يُنتظر اختزال مضبوط (وليس 0,707). تدرّب على المرور من tan إلى sin/cos وعلى التحليل بالمتطابقات.",
+      basicsAr: [
+        "الدائرة المثلثية : cos²x + sin²x = 1 ؛ tan x = sin x / cos x.",
+        "الزوايا المرتبطة : π−x، π+x، −x، π/2−x…",
+        "الجمع : cos(a±b)، sin(a±b)، tan(a±b).",
+        "المضاعفة : cos 2a = 2cos²a − 1 = 1 − 2sin²a.",
+      ],
     },
     {
       id: "suites-numeriques",
@@ -148,6 +190,13 @@ window.SB_DATA = {
       conclusion:
         "Une suite est une fonction de ℕ (ou ℕ*) vers ℝ. Reconnaître arithmétique / géométrique évite 80 % des pièges. Pour une récurrence u_{n+1}=f(u_n), étudie f, les points fixes, et encadre. Somme arithmétique : n(u_1+u_n)/2. Somme géométrique : u_0 (1−q^{n+1})/(1−q) si q≠1. Piège : dire qu’une suite croissante converge (il faut qu’elle soit majorée). En SM, on te demandera aussi la limite par comparaison, et parfois une démonstration par récurrence sur une inégalité.",
       formula: "S_n = u_0 (1 − q^{n+1}) / (1 − q)   (q ≠ 1)",
+      conclusionAr: "المتتالية تطبيق من ℕ (أو ℕ*) نحو ℝ. تمييز الحسابية / الهندسية يجنب 80 % من الفخاخ. من أجل علاقة تراجعية u_{n+1}=f(u_n)، ادرس f، والنقط الثابتة، واحصر. مجموع حسابي : n(u_1+u_n)/2. مجموع هندسي : u_0 (1−q^{n+1})/(1−q) إذا كان q≠1. الفخ : القول إن متتالية تزايدية تتقارب (يلزم أن تكون محدودة من الأعلى). في علوم رياضية، سيُطلب منك أيضاً النهاية بالمقارنة، وأحياناً برهاناً بالترجع على متباينة.",
+      basicsAr: [
+        "متتالية حسابية : u_{n+1} = u_n + r ؛ u_n = u_0 + n r.",
+        "متتالية هندسية : u_{n+1} = q u_n ؛ u_n = u_0 q^n.",
+        "الرتابة : قارن u_{n+1}−u_n أو u_{n+1}/u_n (إذا كان \u003e0).",
+        "التقارب : نهاية منتهية ؛ متباعدة نحو ±∞ أو بلا نهاية.",
+      ],
     },
     {
       id: "limites-fonction",
@@ -168,6 +217,13 @@ window.SB_DATA = {
       conclusion:
         "Calculer une limite, c’est lever une indétermination : factoriser, multiplier par le conjugué, mettre x² en facteur, ou comparer. Une limite à droite différente de la gauche ⇒ pas de limite en a. L’asymptote verticale apparaît si f(x) → ±∞ quand x → a. Piège : « simplifier » un 0/0 sans factoriser vraiment, ou conclure trop vite qu’une FI vaut 0. En SM, on attend aussi le théorème des gendarmes et les limites de référence (sin x / x → 1, etc.) quand le programme les autorise.",
       formula: "lim_{x→0} (sin x)/x = 1",
+      conclusionAr: "حساب نهاية يعني رفع شكل غير محدد : تحليل، ضرب في المرافق، إخراج x² عاملاً، أو مقارنة. نهاية يمنى مختلفة عن اليسرى ⇒ لا نهاية في a. يظهر المقارب العمودي إذا كان f(x) → ±∞ عندما x → a. الفخ : «تبسيط» 0/0 دون تحليل حقيقي، أو الاستنتاج بسرعة أن شكلاً غير محدد يساوي 0. في علوم رياضية، تُنتظر أيضاً مبرهنة الدركيين والنهايات المرجعية (sin x / x → 1، إلخ) عندما يسمح بها المقرر.",
+      basicsAr: [
+        "نهاية في a، في ±∞ ؛ نهايات يسرى / يمنى.",
+        "العمليات : مجموع، جداء، خارج قسمة (إذا كان المقام ≠ 0).",
+        "أشكال غير محددة : ∞−∞، 0/0، ∞/∞، 0×∞…",
+        "المقاربات : عمودي x=a، أفقي y=ℓ، مائل y=mx+p.",
+      ],
     },
     {
       id: "rotation-plan",
@@ -188,6 +244,13 @@ window.SB_DATA = {
       conclusion:
         "Une rotation conserve les distances et les angles orientés : c’est un isométrie directe. Pour construire M', reporte l’angle θ autour de Ω et garde la même longueur. Pour montrer qu’une application est une rotation, identifie le centre (point fixe) et l’angle. La composée de deux rotations de même centre est une rotation d’angle somme. Piège : confondre rotation et homothétie, ou oublier l’orientation (sens trigo). En SM, relie ce chapitre au produit scalaire (cosinus de l’angle) et aux nombres complexes si ton prof les a déjà introduits en construction.",
       formula: "z' − ω = e^{iθ} (z − ω)",
+      conclusionAr: "الدوران يحفظ المسافات والزوايا الموجهة : إنه تقايس مباشر. لإنشاء M\u0027، انقل الزاوية θ حول Ω واحفظ نفس الطول. لإثبات أن تطبيقاً هو دوران، حدد المركز (النقطة الثابتة) والزاوية. مركب دورانين لهما نفس المركز دوران زاويته المجموع. الفخ : الخلط بين الدوران والتحاكي، أو نسيان التوجيه (المنحى المثلثي). في علوم رياضية، اربط هذا الدرس بالجداء السلمي (جيب تمام الزاوية) وبالأعداد العقدية إذا كان أستاذك قد أدخلها في الإنشاء.",
+      basicsAr: [
+        "دوران r مركزه Ω وزاويته θ : r(Ω)=Ω، (ΩM, ΩM\u0027) = θ، ‖ΩM‖=‖ΩM\u0027‖.",
+        "مركب دورانين : دوران أو إزاحة.",
+        "الزاوية موجهة ؛ θ و θ+2π يعرّفان نفس الدوران.",
+        "التعبير العقدي (إن دُرس) : z\u0027 − ω = e^{iθ}(z − ω).",
+      ],
     },
 
     /* ——— MATHS S2 ——— */
@@ -210,6 +273,13 @@ window.SB_DATA = {
       conclusion:
         "La dérivée est le taux d’accroissement instantané et la pente de la tangente. Apprends par cœur les dérivées usuelles (x^n, √x, 1/x, sin, cos, tan) puis les opérations. Une fonction peut être continue sans être dérivable (angle, |x| en 0). Pour un extremum intérieur, f'(c)=0 n’est pas suffisant : lis le tableau de signes. Piège : dériver un quotient trop vite, ou oublier la chaîne (u∘v). En SM, on te demandera aussi la dérivée n-ième simple et l’interprétation cinématique (vitesse = dérivée de la position).",
       formula: "(u ∘ v)' = (u' ∘ v) · v'",
+      conclusionAr: "المشتقة هي معدل التزايد اللحظي وميل المماس. احفظ عن ظهر قلب المشتقات المعتادة (x^n، √x، 1/x، sin، cos، tan) ثم العمليات. يمكن أن تكون دالة متصلة دون أن تكون قابلة للاشتقاق (زاوية، |x| في 0). من أجل قيمة قصوى داخلية، f\u0027(c)=0 غير كافٍ : اقرأ جدول الإشارات. الفخ : اشتقاق خارج قسمة بسرعة، أو نسيان اشتقاق المركبة (u∘v). في علوم رياضية، سيُطلب منك أيضاً المشتقة من الرتبة n البسيطة والتأويل الحركي (السرعة = مشتقة الموضع).",
+      basicsAr: [
+        "f\u0027(a) = lim_{h→0} [f(a+h)−f(a)]/h إذا وُجدت النهاية.",
+        "(u+v)\u0027=u\u0027+v\u0027، (uv)\u0027=u\u0027v+uv\u0027، (u/v)\u0027=(u\u0027v−uv\u0027)/v²، (u∘v)\u0027=(u\u0027∘v)·v\u0027.",
+        "المماس في a : y = f\u0027(a)(x−a) + f(a).",
+        "إشارة f\u0027 ⇒ تغيرات f.",
+      ],
     },
     {
       id: "etude-fonctions",
@@ -230,6 +300,13 @@ window.SB_DATA = {
       conclusion:
         "L’étude de fonction est le chapitre « examen » du 1er Bac SM. Suis toujours le même plan pour ne rien oublier. Les limites aux bornes de D_f donnent les branches infinies. Une asymptote oblique se trouve en calculant lim (f(x)−mx−p). Le tableau de variations doit coller au signe de f', pas à l’intuition. Piège : tracer une courbe qui contredit les limites, ou inventer un extremum. En SM, soigne la rédaction : « f est dérivable sur… », « d’où le tableau », « donc C_f admet… ».",
       formula: "m = lim_{x→∞} f(x)/x ,   p = lim_{x→∞} [f(x) − m x]",
+      conclusionAr: "دراسة الدوال هي درس «الامتحان» في السنة الأولى باكالوريا علوم رياضية. اتبع دائماً نفس الخطة حتى لا تنسى شيئاً. النهايات عند حدود D_f تعطي الفروع اللانهائية. يُوجد المقارب المائل بحساب lim (f(x)−mx−p). يجب أن يطابق جدول التغيرات إشارة f\u0027، لا الحدس. الفخ : رسم منحنى يناقض النهايات، أو اختراع قيمة قصوى. في علوم رياضية، اعتنِ بالتحرير : «f قابلة للاشتقاق على…»، «ومن ثم الجدول»، «إذن C_f تقبل…».",
+      basicsAr: [
+        "خطة الدراسة : D_f، الزوجية، النهايات، f\u0027، الجدول، المقاربات، المنحنى.",
+        "مقارب مائل : f(x) = mx + p + ε(x) مع ε→0.",
+        "التحدب / الانعطاف عبر f\u0027\u0027 إذا طلب المقرر ذلك.",
+        "الوضع النسبي : إشارة f−g.",
+      ],
     },
     {
       id: "vecteurs-espace",
@@ -250,6 +327,13 @@ window.SB_DATA = {
       conclusion:
         "L’espace ajoute une troisième dimension : on ne peut plus tout dessiner comme au plan. Colinéarité de deux vecteurs = proportionnalité des 3 coordonnées. Trois vecteurs coplanaires s’expriment l’un en fonction des autres. Un repère affine permet de passer au calcul. Piège : utiliser un produit scalaire 2D, ou conclure à la colinéarité avec deux coordonnées seulement. Ce chapitre ouvre la géométrie analytique de l’espace (droites, plans) du semestre 2.",
       formula: "u⃗ ∧ v⃗ = 0⃗  ⇔  u⃗ et v⃗ colinéaires",
+      conclusionAr: "الفضاء يضيف بعداً ثالثاً : لم يعد بالإمكان رسم كل شيء كما في المستوى. استقامية متجهتين = تناسب الإحداثيات الثلاث. ثلاث متجهات مستوائية يُعبَّر عن إحداها بدلالة الأخريين. معلم تآلفي يسمح بالانتقال إلى الحساب. الفخ : استعمال جداء سلمي ثنائي البعد، أو استنتاج الاستقامية من إحداثيتين فقط. يفتح هذا الدرس الهندسة التحليلية في الفضاء (مستقيمات، مستويات) في الدورة الثانية.",
+      basicsAr: [
+        "متجهتان مستقيميتان : يوجد k، u⃗ = k v⃗.",
+        "مستوائية : تأليفة خطية معدومة غير تافهة، أو محدد معدوم.",
+        "معلم (O; i⃗,j⃗,k⃗) : M(x,y,z) ⇔ OM⃗ = x i⃗ + y j⃗ + z k⃗.",
+        "علاقة شال تبقى صحيحة في الفضاء.",
+      ],
     },
     {
       id: "geometrie-espace",
@@ -270,6 +354,13 @@ window.SB_DATA = {
       conclusion:
         "En espace, une droite n’a pas d’équation cartésienne unique « simple » comme au plan : on préfère une représentation paramétrique. Un plan, lui, a une équation ax+by+cz+d=0. Pour l’orthogonalité droite/plan : directeur colinéaire à la normale. Pour le parallélisme de deux plans : normales colinéaires. Piège : confondre orthogonalité de droites et de plans. Méthode SM : traduis tout en vecteurs, puis calcule. Les exercices types : intersection, distance, section plane.",
       formula: "Plan : ax + by + cz + d = 0",
+      conclusionAr: "في الفضاء، ليس للمستقيم معادلة ديكارتية وحيدة «بسيطة» كما في المستوى : نفضّل تمثيلاً بارامترياً. أما المستوى فله معادلة ax+by+cz+d=0. من أجل تعامد مستقيم/مستوى : المتجهة الموجهة مستقيمية مع الناظم. من أجل توازي مستويين : الناظمتان مستقيميتان. الفخ : الخلط بين تعامد المستقيمات وتعامد المستويات. طريقة علوم رياضية : ترجم كل شيء إلى متجهات، ثم احسب. التمارين النموذجية : تقاطع، مسافة، مقطع مستوٍ.",
+      basicsAr: [
+        "مستقيم : نقطة + متجهة موجهة. مستوى : نقطة + متجهتان غير مستقيميتين.",
+        "معادلة ديكارتية لمستوى : ax+by+cz+d=0، n⃗=(a,b,c) ناظم.",
+        "التوازي / التعامد عبر المتجهات الموجهة والناظمات.",
+        "التقاطع : حل نظمة.",
+      ],
     },
     {
       id: "denombrement",
@@ -290,6 +381,13 @@ window.SB_DATA = {
       conclusion:
         "Avant de calculer, décide si l’ordre compte et si les répétitions sont permises. C’est 90 % de l’exercice. Un comité de 3 personnes parmi 10 : C_10^3. Un code à 4 chiffres distincts : A_10^4. Un mot de 4 lettres avec répétition : 26^4. Piège : utiliser C_n^p alors que l’ordre compte (classement, podium). En SM, on relie souvent ce chapitre aux probabilités d’un univers fini équiprobable : P(A)=|A|/|Ω|. Dessine un arbre si tu doutes.",
       formula: "C_n^p = n! / (p! (n−p)!)",
+      conclusionAr: "قبل الحساب، قرر هل الترتيب يُحسب وهل التكرار مسموح. هذا 90 % من التمرين. لجنة من 3 أشخاص من بين 10 : C_10^3. رمز من 4 أرقام متميزة : A_10^4. كلمة من 4 حروف مع تكرار : 26^4. الفخ : استعمال C_n^p بينما الترتيب يُحسب (تصنيف، منصة تتويج). في علوم رياضية، يُربط هذا الدرس غالباً باحتمالات كون منتهٍ متساوي الاحتمال : P(A)=|A|/|Ω|. ارسم شجرة إذا شككت.",
+      basicsAr: [
+        "المبدأ : عدد عناصر جداء ديكارتي، p×q اختيارات متتالية.",
+        "التبديلات : n! ترتيبات لـ n أشياء متميزة.",
+        "الترتيبات A_n^p = n! / (n−p)! (الترتيب مهم).",
+        "التوفيقات C_n^p = n! / (p!(n−p)!) (الترتيب غير مهم).",
+      ],
     },
     {
       id: "produit-scalaire-espace",
@@ -310,6 +408,13 @@ window.SB_DATA = {
       conclusion:
         "Le produit scalaire 3D est le même objet qu’au plan, avec une coordonnée de plus. L’équation d’un plan s’interprète comme « vecteur normal · vecteur du plan = 0 ». Pour un angle entre deux droites, prends les directeurs. Pour un angle droite/plan, passe par le complémentaire avec la normale. Piège : formule de distance oubliée, ou normale mal lue dans l’équation. En SM, ce chapitre fusionne avec la géométrie analytique : un seul langage vectoriel pour tout l’espace.",
       formula: "d(M, plan) = |ax+by+cz+d| / √(a²+b²+c²)",
+      conclusionAr: "الجداء السلمي ثلاثي الأبعاد هو نفس الكائن الذي في المستوى، مع إحداثية إضافية. تُفسَّر معادلة مستوى بأنها «متجهة ناظم · متجهة من المستوى = 0». من أجل زاوية بين مستقيمين، خذ الموجهتين. من أجل زاوية مستقيم/مستوى، مرّ عبر الزاوية المتممة مع الناظم. الفخ : نسيان صيغة المسافة، أو قراءة الناظم خطأ من المعادلة. في علوم رياضية، يندمج هذا الدرس مع الهندسة التحليلية : لغة متجهية واحدة لكل الفضاء.",
+      basicsAr: [
+        "u⃗·v⃗ = ‖u‖‖v‖ cos θ = xx\u0027+yy\u0027+zz\u0027 في B.O.N.",
+        "مستوى عمودي على n⃗ : n⃗ · AM⃗ = 0.",
+        "مسافة نقطة إلى مستوى : |ax+by+cz+d|/√(a²+b²+c²).",
+        "المساحة، التعامد، الإسقاطات : نفس الأفكار التي في المستوى.",
+      ],
     },
     {
       id: "arithmetique-z",
@@ -330,6 +435,13 @@ window.SB_DATA = {
       conclusion:
         "L’arithmétique SM, c’est la division euclidienne + Euclide + Bézout + Gauss. Pour résoudre ax+by=c, une solution existe ssi pgcd(a,b) divise c. Les congruences a ≡ b [n] simplifient les puissances et les critères de divisibilité. Piège : oublier que les coefficients de Bézout peuvent être négatifs, ou appliquer Gauss sans coprimalité. En contrôle, rédige Euclide en cascade jusqu’au reste 0, puis remonte pour Bézout. C’est un chapitre très « points faciles » si la méthode est mécanique.",
       formula: "au + bv = pgcd(a,b)   (Bézout)",
+      conclusionAr: "حسابيات علوم رياضية هي القسمة الإقليدية + إقليدس + بيزو + غاوس. لحل ax+by=c، يوجد حل إذا وفقط إذا كان pgcd(a,b) يقسم c. التطابقات a ≡ b [n] تبسط القوى ومعايير القابلية للقسمة. الفخ : نسيان أن معاملات بيزو يمكن أن تكون سالبة، أو تطبيق غاوس دون أن يكونا أوليين فيما بينهما. في المراقبة، حرر إقليدس بالتتابع حتى الباقي 0، ثم اصعد لبيزو. إنه درس «نقط سهلة» إذا كانت الطريقة آلية.",
+      basicsAr: [
+        "القسمة الإقليدية : a = bq + r، 0 ≤ r \u003c |b|.",
+        "PGCD : خوارزمية إقليدس. PPCM · PGCD = |ab| إذا كان a,b ≠ 0.",
+        "بيزو : يوجد u,v، au+bv = pgcd(a,b).",
+        "غاوس : إذا كان a|bc و pgcd(a,b)=1 فإن a|c. أعداد أولية، تطابقات.",
+      ],
     },
     {
       id: "produit-vectoriel",
@@ -350,6 +462,13 @@ window.SB_DATA = {
       conclusion:
         "Le produit vectoriel est l’outil SM pour l’aire, le plan (vecteur normal u∧v) et le volume (produit mixte). Il n’est pas commutatif : v∧u = −(u∧v). Calcule-le par déterminant pour éviter les erreurs de signes. Piège : oublier le sens (base directe) ou utiliser un produit vectoriel au plan 2D sans plonger dans l’espace. Si tu es pressé : normal au plan = AB ∧ AC, aire du triangle = (1/2)‖AB ∧ AC‖, volume du tétraèdre = (1/6)|mixte|.",
       formula: "‖u⃗ ∧ v⃗‖ = ‖u⃗‖ ‖v⃗‖ |sin θ|",
+      conclusionAr: "الجداء المتجهي هو أداة علوم رياضية للمساحة، وللمستوى (متجهة ناظم u∧v)، وللحجم (الجداء المختلط). ليس تبديلياً : v∧u = −(u∧v). احسبه بالمحدد لتفادي أخطاء الإشارات. الفخ : نسيان المنحى (قاعدة مباشرة) أو استعمال جداء متجهي في المستوى ثنائي البعد دون الانتقال إلى الفضاء. إذا كنت مستعجلاً : ناظم المستوى = AB ∧ AC، مساحة المثلث = (1/2)‖AB ∧ AC‖، حجم رباعي الوجوه = (1/6)|mixte|.",
+      basicsAr: [
+        "u⃗ ∧ v⃗ عمودية على u⃗ و v⃗، منحى قاعدة اليد اليمنى.",
+        "‖u⃗ ∧ v⃗‖ = ‖u‖‖v‖ sin θ = مساحة متوازي الأضلاع.",
+        "في B.O.N. مباشرة : محدد 3×3 للإحداثيات.",
+        "u ∧ v = 0⃗ ⇔ مستقيميتان. المختلط : (u∧v)·w = الحجم.",
+      ],
     },
 
     /* ——— PC PHYSIQUE S1 ——— */
@@ -372,6 +491,13 @@ window.SB_DATA = {
       conclusion:
         "Un solide en rotation autour d’un axe fixe tourne d’un même angle en un même temps : ω est commun. Plus un point est loin de l’axe, plus il va vite (v=rω). Convertis toujours les tours/min en rad/s : ω = 2πN/60. Piège : utiliser v=ω pour tous les points, ou oublier le rayon. Ce chapitre pose le vocabulaire (axe, tour, radian) avant travail et énergie. En SM, on te demandera souvent de relier N (tr/min), T et v d’un point périphérique.",
       formula: "v = r ω    et    ω = 2π / T",
+      conclusionAr: "يدور جسم صلب حول محور ثابت بنفس الزاوية في نفس المدة: فالسرعة الزاوية ω مشتركة. كلما ابتعدت نقطة عن المحور زادت سرعتها الخطية (v=rω). حوّل دائماً الدورات في الدقيقة إلى rad/s وفق ω = 2πN/60. الفخ: استعمال v=ω لجميع النقاط، أو نسيان نصف القطر. يضع هذا الدرس المفردات (محور، دورة، راديان) قبل الشغل والطاقة. إذا كنت مستعجلاً: اربط N (tr/min) و T و v لنقطة محيطية.",
+      basicsAr: [
+        "الجسم الصلب غير القابل للتشوه: المسافات بين نقاطه ثابتة.",
+        "السرعة الخطية: v = r ω (ω بـ rad/s).",
+        "الدور T، التردد f = 1/T، و ω = 2π f.",
+        "لجميع النقاط نفس ω، وليست لها نفس v.",
+      ],
     },
     {
       id: "travail-puissance-force",
@@ -392,6 +518,13 @@ window.SB_DATA = {
       conclusion:
         "Le travail mesure l’énergie transférée par une force lors d’un déplacement. Seule la composante parallèle compte. Le poids : W(P) = mgh si on descend de h (selon l’orientation du z). Une force de frottement de norme constante : W = −f × ℓ. Piège : oublier le signe, ou prendre α comme l’angle avec la verticale au lieu du déplacement. Puissance moyenne ≠ puissance instantanée. En exercice SM, on enchaîne souvent plusieurs forces : le travail total est la somme algébrique.",
       formula: "W(F⃗) = F × AB × cos α",
+      conclusionAr: "يقيس الشغل الطاقة التي تنقلها قوة أثناء إزاحة. لا تُحسب إلا المركبة الموازية. بالنسبة للوزن: W(P) = mgh عند النزول بمقدار h (حسب توجيه محور z). قوة احتكاك ذات شدة ثابتة: W = −f × ℓ. الفخ: نسيان الإشارة، أو أخذ α زاوية مع الشاقول بدل الإزاحة. الاستطاعة المتوسطة ≠ الاستطاعة اللحظية. إذا كنت مستعجلاً: اجمع شغلاً جبرياً لكل القوى في تمرين SM.",
+      basicsAr: [
+        "W(F) = F · AB⃗ = F AB cos α (قوة ثابتة).",
+        "شغل محرك (W\u003e0)، مقاوم (W\u003c0)، ومنعدم إذا كانت القوة ⊥ الإزاحة.",
+        "الاستطاعة P = W/Δt = F v cos α.",
+        "الوحدات: W بالجول (J)، و P بالواط (W).",
+      ],
     },
     {
       id: "travail-energie-cinetique",
@@ -412,6 +545,13 @@ window.SB_DATA = {
       conclusion:
         "Le théorème de l’énergie cinétique relie la variation de ½mv² à la somme des travaux. C’est souvent plus court que Newton + cinématique. Inclus toutes les forces (poids, frottements, tension…). Piège : oublier un travail, ou utiliser ½mv² avec v en km/h. Pour un solide en rotation, le programme SM reste en général sur la translation du centre / un point, sauf si le prof a défini E_c de rotation. Méthode : état initial, état final, bilan des travaux, résoudre pour v ou pour f.",
       formula: "ΔE_c = E_c(B) − E_c(A) = ∑ W_{A→B}(F⃗)",
+      conclusionAr: "تربط مبرهنة الطاقة الحركية تغيّر ½mv² بمجموع الأشغال. غالباً أقصر من نيوتن مع الحركة. أدخل جميع القوى (الوزن، الاحتكاكات، التوتر…). الفخ: نسيان شغل، أو استعمال ½mv² و v بـ km/h. بالنسبة لجسم دوار، يبقى مقرر SM عموماً على انتقال المركز / نقطة، إلا إذا عرّف الأستاذ E_c الدورانية. إذا كنت مستعجلاً: حالة ابتدائية، حالة نهائية، جرد الأشغال، ثم حل لإيجاد v أو f.",
+      basicsAr: [
+        "الطاقة الحركية: E_c = ½ m v² (حركة انتقالية).",
+        "المبرهنة: ΔE_c = ∑ W(F) بين A و B.",
+        "m بالكيلوغرام، v بـ m/s، و E_c بالجول.",
+        "مفيدة لإيجاد سرعة دون المرور بـ a=F/m.",
+      ],
     },
     {
       id: "energie-mecanique",
@@ -432,6 +572,13 @@ window.SB_DATA = {
       conclusion:
         "L’énergie potentielle de pesanteur dépend du zéro choisi, mais les variations ΔE_pp = mgΔz n’en dépendent pas. Conservation de E_m ⇔ pas de frottement (ou travail nul des forces non conservatives). Sinon : ΔE_m = W(frottements). Piège : mélanger z vers le bas et la formule mgz, ou dire que E_m se conserve « toujours ». En SM, un exercice type : glisser sur un plan, trouver v en bas, puis la hauteur si un f intervient. Toujours définir le référentiel et l’axe z.",
       formula: "E_m = ½ m v² + m g z",
+      conclusionAr: "تتعلق الطاقة الكامنة الثقالية بالأصل المختار، لكن التغيرات ΔE_pp = mgΔz لا تتعلق به. انحفاظ E_m ⇔ لا احتكاك (أو شغل منعدم للقوى غير المحافظة). وإلا: ΔE_m = W(الاحتكاكات). الفخ: خلط محور z نحو الأسفل مع الصيغة mgz، أو القول إن E_m تنحفظ «دائماً». تمرين نمطي في SM: الانزلاق على مستوٍ، إيجاد v في الأسفل، ثم الارتفاع إذا تدخل f. إذا كنت مستعجلاً: حدّد دائماً المرجع ومحور z.",
+      basicsAr: [
+        "E_pp = m g z (محور z شاقولي موجّه نحو الأعلى، أصل مختار).",
+        "E_m = E_c + E_pp.",
+        "إذا عملت القوى المحافظة وحدها، تُحفظ E_m.",
+        "الاحتكاكات ⇒ تتناقص E_m: ΔE_m = W(غير المحافظة).",
+      ],
     },
     {
       id: "energie-interne",
@@ -452,6 +599,13 @@ window.SB_DATA = {
       conclusion:
         "Ici on quitte le point matériel pour un système qui peut chauffer. L’énergie interne change si on lui fournit du travail ou de la chaleur. Un frottement « perdu » en mécanique se retrouve souvent en Q (échauffement). Piège : confondre U avec E_c macroscopique, ou oublier la convention de signes de ton manuel. En SM, relie ce chapitre à l’énergie mécanique : ce qui n’est plus mécanique est devenu interne / thermique. Reste concret : compression, frottement, chauffage.",
       formula: "ΔU = W + Q",
+      conclusionAr: "نغادر هنا النقطة المادية إلى جملة يمكن أن تسخن. تتغير الطاقة الداخلية إذا زُوّدت بشغل أو حرارة. احتكاك «ضائع» ميكانيكياً يظهر غالباً في Q (تسخين). الفخ: خلط U مع E_c الماكروسكوبية، أو نسيان اصطلاح الإشارات في كتيّبك. في SM، اربط هذا الدرس بالطاقة الميكانيكية: ما لم يعد ميكانيكياً صار داخلياً / حرارياً. إذا كنت مستعجلاً: ابقَ ملموساً — انضغاط، احتكاك، تسخين.",
+      basicsAr: [
+        "الطاقة الداخلية U: طاقة مجهرية (اهتزاز، روابط).",
+        "المبدأ الأول (صيغة الثانوية): ΔU = W + Q.",
+        "W: شغل (غالباً قوى الضغط)، Q: حرارة.",
+        "الإشارة: ما تستقبله الجملة \u003e 0 (اصطلاح شائع في الثانوية المغربية يُتحقق منه عند أستاذك).",
+      ],
     },
     {
       id: "energie-thermique",
@@ -472,6 +626,13 @@ window.SB_DATA = {
       conclusion:
         "La calorimétrie du 1er Bac SM, c’est un bilan d’énergie thermique. L’eau qui se refroidit cède Q < 0 ; le métal qui se chauffe reçoit Q > 0. Sans perte : ∑Q = 0. Attention aux unités (g vs kg) et aux changements d’état (on reste à θ constante pendant la fusion). Piège : utiliser mcΔθ pendant une fusion. Conduction, convection, rayonnement : trois modes de transfert, à citer même si le calcul est surtout calorimétrique. Prépare les valeurs de c de l’eau : 4180 J·kg⁻¹·°C⁻¹.",
       formula: "Q = m c Δθ    ;    Q = m L",
+      conclusionAr: "المسعرية في 1 باك SM هي جرد طاقة حرارية. الماء الذي يبرد يمنح Q \u003c 0؛ والمعدن الذي يسخن يستقبل Q \u003e 0. دون ضياع: ∑Q = 0. انتبه للوحدات (g مقابل kg) ولتغيرات الحالة (نبقى عند θ ثابتة أثناء الانصهار). الفخ: استعمال mcΔθ أثناء انصهار. التوصيل، الحمل، الإشعاع: ثلاثة أنماط نقل، تُذكر حتى لو كان الحساب مسعرياً أساساً. إذا كنت مستعجلاً: احفظ قيمة c للماء: 4180 J·kg⁻¹·°C⁻¹.",
+      basicsAr: [
+        "Q = m c Δθ (تسخين دون تغير الحالة).",
+        "تغير الحالة: Q = m L (انصهار، تبخر…).",
+        "التوازن: مجموع Q = 0 في مسعر معزول.",
+        "c: السعة الحرارية الكتلية (J·kg⁻¹·°C⁻¹).",
+      ],
     },
 
     /* ——— PC CHIMIE S1 ——— */
@@ -494,6 +655,13 @@ window.SB_DATA = {
       conclusion:
         "La chimie quantitative commence par mesurer correctement : masse, volume, concentration. Une burette n’a pas la même précision qu’une éprouvette : choisis l’instrument. L’incertitude se propage dans un calcul (somme : on additionne les incertitudes ; produit : on passe par le relatif). Piège : écrire 1,23456 mol·L⁻¹ avec une balance au 0,1 g. En SM, on te demandera d’estimer si un résultat est acceptable (écart relatif < 5 % souvent). Ce chapitre est court mais il note tous les TP de l’année.",
       formula: "δ_relatif = |x_mes − x_ref| / |x_ref|",
+      conclusionAr: "تبدأ الكيمياء الكمية بالقياس الصحيح: كتلة، حجم، تركيز. ليست للسحاحة دقة المخبار المدرج نفسها: اختر الأداة. ينتشر الارتياب في الحساب (مجموع: نجمع الارتيابات؛ جداء: نمرّ بالنسبي). الفخ: كتابة 1,23456 mol·L⁻¹ بميزان دقة 0,1 g. في SM يُطلب تقدير قبول النتيجة (انحراف نسبي \u003c 5 % غالباً). إذا كنت مستعجلاً: هذا الدرس قصير لكنه يُقيَّم في جميع الأشغال التطبيقية للسنة.",
+      basicsAr: [
+        "القياس = قيمة + وحدة + ارتياب.",
+        "الأرقام المعنوية: لا تُظهر أكثر مما يعطيه الجهاز.",
+        "الخطأ النسبي = |الانحراف| / القيمة المرجعية.",
+        "الدقة (قابلية التكرار) ≠ الصحة (القرب من القيمة الحقيقية).",
+      ],
     },
     {
       id: "quantite-matiere",
@@ -514,6 +682,13 @@ window.SB_DATA = {
       conclusion:
         "Toute la chimie de 1er Bac passe par n, la quantité de matière. Convertis tout en mole avant un tableau d’avancement. Pour un gaz, vérifie si V_m est donné (22,4 ou 24 L·mol⁻¹ selon T,P). Piège : mélanger mL et L (V en litre dans c=n/V SI), ou utiliser M du composé au lieu de l’espèce demandée. En SM, entraîne-toi à passer de la bouteille (étiquette en g/L) à c en mol·L⁻¹. Sans ce réflexe, les dosages et l’avancement deviennent impossibles.",
       formula: "n = m/M = cV = N/N_A",
+      conclusionAr: "تمرّ كل كيمياء 1 باك عبر n، كمية المادة. حوّل كل شيء إلى مول قبل جدول التقدم. للغاز، تحقق هل أُعطي V_m (22,4 أو 24 L·mol⁻¹ حسب T,P). الفخ: خلط mL و L (V باللتر في c=n/V في النظام الدولي)، أو استعمال M للمركب بدل النوع المطلوب. في SM، تمرّن على الانتقال من القارورة (التسمية بـ g/L) إلى c بـ mol·L⁻¹. إذا كنت مستعجلاً: بدون هذا المنعكس تصبح المعايرات والتقدم مستحيلة.",
+      basicsAr: [
+        "n = m / M ؛ n = c V ؛ n = V / V_m (غاز، V_m ≈ 24 L·mol⁻¹ غالباً).",
+        "M: الكتلة المولية (g·mol⁻¹). N_A ≈ 6,02×10²³ mol⁻¹.",
+        "التركيز الكتلي t = m/V ؛ المولي c = n/V.",
+        "التحويل: c = t / M.",
+      ],
     },
     {
       id: "solutions-electrolytiques",
@@ -534,6 +709,13 @@ window.SB_DATA = {
       conclusion:
         "Une solution électrolytique contient des ions libres qui conduisent le courant. Écris la dissolution ionique avec les bons coefficients (CaCl2 → Ca²⁺ + 2 Cl⁻). La dilution conserve n du soluté : c1V1=c2V2. Piège : oublier les coefficients stœchiométriques des ions, ou diluer sans convertir les volumes. En SM, ce chapitre prépare conductimétrie et titrages : on suit souvent [X] au cours du temps ou du volume versé. Toujours préciser l’espèce (ion, molécule) dont on parle.",
       formula: "c_1 V_1 = c_2 V_2  (dilution)",
+      conclusionAr: "يحتوي محلول إلكتروليتي على أيونات حرة تُمرّر التيار. اكتب الذوبان الأيوني بالمعاملات الصحيحة (CaCl2 → Ca²⁺ + 2 Cl⁻). يحفظ التمديد n للمذاب: c1V1=c2V2. الفخ: نسيان المعاملات الستوكيومترية للأيونات، أو التمديد دون تحويل الحجوم. في SM يمهّد هذا الدرس لقياس المواصلة والمعايرات: نتتبع غالباً [X] مع الزمن أو الحجم المضاف. إذا كنت مستعجلاً: حدّد دائماً النوع (أيون، جزيء) الذي تتحدث عنه.",
+      basicsAr: [
+        "إلكتروليت: يتفكك إلى أيونات (NaCl → Na⁺ + Cl⁻).",
+        "انحفاظ الشحنة والمادة في المحلول.",
+        "التمديد: c1 V1 = c2 V2.",
+        "الموصلية مرتبطة بالتركيز وبطبيعة الأيونات.",
+      ],
     },
     {
       id: "suivi-transformation",
@@ -554,6 +736,13 @@ window.SB_DATA = {
       conclusion:
         "Le tableau d’avancement est l’outil central. Une ligne par espèce, une colonne état initial / en cours / final. Trouve x_max en testant quel réactif s’annule. Si la réaction n’est pas totale, x_f se mesure ( palier de conductivité, volume de gaz…). Piège : coefficients stœchiométriques oubliés dans −νx, ou unités de n incohérentes. En SM, on enchaîne souvent suivi expérimental + modèle. Rédige : « le réactif limitant est… donc x_max=… ».",
       formula: "n(X) = n_0(X) + ν_X · x",
+      conclusionAr: "جدول التقدم هو الأداة المركزية. سطر لكل نوع، وعمود للحالة الابتدائية / أثناء التفاعل / النهائية. أوجد x_max باختبار أي متفاعل ينعدم. إذا لم يكن التفاعل تاماً، يُقاس x_f (هضبة الموصلية، حجم الغاز…). الفخ: نسيان المعاملات الستوكيومترية في −νx، أو وحدات n غير متجانسة. في SM يُربط غالباً تتبع تجريبي بالنموذج. إذا كنت مستعجلاً: اكتب «المتفاعل المحدِّد هو… إذن x_max=…».",
+      basicsAr: [
+        "جدول التقدم: n_i، −νx، n_f = n_i + νx (ν جبرية).",
+        "المتفاعل المحدِّد: الذي ينعدم أولاً (x_max).",
+        "التقدم النهائي x_f ≤ x_max ؛ تفاعل تام إذا تساويا.",
+        "التتبع: ضغط، كتلة، موصلية، قياس طيفي…",
+      ],
     },
     {
       id: "conductimetrie",
@@ -574,6 +763,13 @@ window.SB_DATA = {
       conclusion:
         "La conductimétrie suit les ions. Quand on verse un réactif, σ change parce que la nature et la concentration des ions changent. À l’équivalence, le réactif limitant s’inverse : la pente de σ(V) casse. On lit V_E, puis n = c V. Piège : oublier que l’eau et les ions spectateurs comptent, ou ne pas diluer correctement (volume total). En SM, on te donne souvent λ (conductivités molaires) : recalcule σ théorique et compare à la courbe. C’est un TP / exercice très fréquent au régional.",
       formula: "σ ≈ ∑ λ_i [X_i]",
+      conclusionAr: "يتتبع قياس المواصلة الأيونات. عند صب متفاعل، تتغير σ لأن طبيعة الأيونات وتركيزها يتغيران. عند التكافؤ ينعكس المتفاعل المحدِّد: ينكسر ميل σ(V). نقرأ V_E ثم n = c V. الفخ: نسيان أن الماء والأيونات المتفرجة تُحسب، أو عدم التمديد الصحيح (الحجم الكلي). في SM تُعطى غالباً λ (الموصليات المولية): أعد حساب σ النظرية وقارنها بالمنحنى. إذا كنت مستعجلاً: هذا شغل تطبيقي / تمرين شائع جداً في الجهوي.",
+      basicsAr: [
+        "σ = ∑ λ_i [X_i] (عند التمديد اللانهائي، قانون كولراوش في الثانوية).",
+        "تتناقص σ أو تزداد حسب اختفاء الأيونات الموصلة.",
+        "التكافؤ: انكسار الميل على σ = f(V).",
+        "تسمح بإيجاد c المجهولة دون كاشف ملون.",
+      ],
     },
     {
       id: "acido-basiques",
@@ -594,6 +790,13 @@ window.SB_DATA = {
       conclusion:
         "Identifie toujours les couples. Un acide fort est totalement dissocié ; un acide faible, non (équilibre). L’eau est à la fois acide et base (amphotère), Ke = [H3O⁺][HO⁻] = 1,0×10⁻¹⁴ à 25 °C. Piège : écrire HCl comme molécule en solution diluée, ou calculer le pH d’un acide faible comme un fort. En SM, tu dois écrire l’équation de la réaction prépondérante et reconnaître si elle est totale. C’est la base des dosages du chapitre suivant.",
       formula: "pH = −log [H3O⁺]    ;    K_e = 10⁻¹⁴ (25 °C)",
+      conclusionAr: "حدّد الأزواج دائماً. الحمض القوي متفكك كلياً؛ والحمض الضعيف لا (توازن). الماء حمض وقاعدة معاً (مذبذب)، و Ke = [H3O⁺][HO⁻] = 1,0×10⁻¹⁴ عند 25 °C. الفخ: كتابة HCl كجزيء في محلول ممدد، أو حساب pH حمض ضعيف كأنه قوي. في SM يجب كتابة معادلة التفاعل المهيمن والتعرف إن كان تاماً. إذا كنت مستعجلاً: هذا أساس معايرات الدرس التالي.",
+      basicsAr: [
+        "برونستد: الحمض = مانح H⁺، القاعدة = مستقبل.",
+        "الزوج حمض/قاعدة: AH / A⁻. مذبذب: H2O، HCO3⁻…",
+        "pH = −log [H3O⁺] (محلول مائي ممدد).",
+        "تفاعل حمض قوي + قاعدة قوية: H3O⁺ + HO⁻ → 2 H2O.",
+      ],
     },
     {
       id: "oxydoreduction",
@@ -614,6 +817,13 @@ window.SB_DATA = {
       conclusion:
         "Méthode : écris les deux demi-équations, multiplie pour égaler les e⁻, additionne. En solution aqueuse, on peut avoir H2O, H⁺ ou HO⁻ pour équilibrer O et H. Piège : inverser oxydant et réducteur, ou laisser des électrons dans le bilan. En SM, les couples classiques (MnO4⁻/Mn²⁺, I2/I⁻, Fe³⁺/Fe²⁺, Zn²⁺/Zn) reviennent tout le temps. Un oxydant fort oxyde un réducteur fort : tu n’as pas encore le tableau complet des E°, donc on te donne souvent « la réaction a lieu » ou les couples à utiliser.",
       formula: "Ox_1 + Red_2 → Red_1 + Ox_2",
+      conclusionAr: "الطريقة: اكتب نصفي المعادلتين، اضرب لمساواة e⁻، ثم اجمع. في محلول مائي يمكن استعمال H2O أو H⁺ أو HO⁻ لموازنة O و H. الفخ: عكس المؤكسد والمختزل، أو ترك إلكترونات في الحصيلة. في SM تعود الأزواج الكلاسيكية (MnO4⁻/Mn²⁺، I2/I⁻، Fe³⁺/Fe²⁺، Zn²⁺/Zn) باستمرار. مؤكسد قوي يؤكسد مختزلاً قوياً: ليس لديك بعد جدول E° الكامل، لذا يُعطى غالباً «التفاعل يتم» أو الأزواج المستعملة. إذا كنت مستعجلاً: أنصاف معادلات ثم حصيلة دون e⁻.",
+      basicsAr: [
+        "الأكسدة: فقدان إلكترونات. الاختزال: اكتساب إلكترونات.",
+        "الزوج Ox/Red. مؤكسد الزوج 1 يتفاعل مع مختزل الزوج 2.",
+        "أنصاف المعادلات، ثم الحصيلة دون e⁻.",
+        "أعداد الأكسدة للتحقق.",
+      ],
     },
     {
       id: "dosages-directs",
@@ -634,6 +844,13 @@ window.SB_DATA = {
       conclusion:
         "Un titrage direct sert à trouver une concentration inconnue. On verse le réactif titrant jusqu’à l’équivalence. Relie n_inconnu et n_versé par la stœchiométrie. Piège : oublier le facteur 2 (H2SO4, H2C2O4…), ou lire V_E sur le mauvais axe. En SM, on attend le tableau d’avancement à l’équivalence et parfois l’incertitude sur V_E. Choisis un indicateur dont la zone de virage contient le pH à l’équivalence. Rédige l’équation, puis « à l’équivalence, n(A)/ν_A = n(B)/ν_B ».",
       formula: "n(titré)/ν_titré = n(titrant)/ν_titrant   (à l’équivalence)",
+      conclusionAr: "تُستعمل المعايرة المباشرة لإيجاد تركيز مجهول. يُصب المتفاعل المعايِر حتى التكافؤ. اربط n المجهول و n المصبوب بالستوكيومترية. الفخ: نسيان العامل 2 (H2SO4، H2C2O4…)، أو قراءة V_E على المحور الخطأ. في SM يُنتظر جدول التقدم عند التكافؤ وأحياناً الارتياب على V_E. اختر كاشفاً تقع منطقة تغير لونه عند pH التكافؤ. إذا كنت مستعجلاً: اكتب المعادلة ثم «عند التكافؤ، n(A)/ν_A = n(B)/ν_B».",
+      basicsAr: [
+        "عند التكافؤ: أُدخل المتفاعلان بالنسب الستوكيومترية.",
+        "c_A V_A = k c_B V_E (k حسب المعاملات).",
+        "كاشف ملون، قياس pH أو قياس المواصلة لإيجاد V_E.",
+        "المعايرة المباشرة = تفاعل سريع، تام، وحيد.",
+      ],
     },
 
     /* ——— PC PHYSIQUE S2 ——— */
@@ -656,6 +873,13 @@ window.SB_DATA = {
       conclusion:
         "Le champ électrostatique décrit la force qu’une charge q subirait : F=qE (attention au signe de q). Superposition : E⃗ total = somme vectorielle. Entre les plaques d’un condensateur (plan), E est uniforme et orthogonal aux armatures. Piège : oublier que E est un vecteur, ou utiliser kq/r au lieu de kq/r². En SM, on te demandera souvent le mouvement d’une charge dans un champ uniforme (parabole analogue à la pesanteur). Relie E et la tension U=Ed pour les exercices d’accélérateur simple.",
       formula: "F⃗ = q E⃗    ;    E = k |q| / r²",
+      conclusionAr: "يصف الحقل الكهرساكن القوة التي ستخضع لها شحنة q: F=qE (انتبه لإشارة q). التراكب: E⃗ الكلي = مجموع شعاعي. بين صفيحتي مكثف (مستوٍ)، E منتظم وعمودي على اللبوسين. الفخ: نسيان أن E شعاع، أو استعمال kq/r بدل kq/r². في SM يُطلب غالباً حركة شحنة في حقل منتظم (قطع مكافئ شبيه بالثقالة). اربط E والتوتر U=Ed لتمارين المسرع البسيط. إذا كنت مستعجلاً: F⃗ = q E⃗ ثم E = U/d بين الصفيحتين.",
+      basicsAr: [
+        "E⃗ بحيث F⃗ = q E⃗. الوحدة: N·C⁻¹ أو V·m⁻¹.",
+        "شحنة نقطية: E = k |q| / r²، k = 9×10⁹ SI.",
+        "خطوط الحقل: تخرج من + وتنتهي عند −.",
+        "حقل منتظم بين لبوسين: E = U / d.",
+      ],
     },
     {
       id: "energie-potentielle-electrique",
@@ -676,6 +900,13 @@ window.SB_DATA = {
       conclusion:
         "Comme mgz pour la pesanteur, qEz (ou qV) pour l’électrostatique uniforme. Le travail de la force électrique ne dépend pas du chemin. L’énergie mécanique E_c + E_pe se conserve s’il n’y a pas d’autre force qui travaille. Piège : le signe de q, et l’orientation de l’axe. En SM, exercices types : accélération d’un électron entre deux plaques, vitesse à la sortie, ou « hauteur » maximale analogue au lancer. Toujours dessiner + / − des armatures et le sens de E⃗.",
       formula: "ΔE_pe = q (V_final − V_initial)",
+      conclusionAr: "كما mgz للثقالة، فإن qEz (أو qV) للكهرساكنة المنتظمة. شغل القوة الكهربائية لا يتعلق بالمسار. تنحفظ الطاقة الميكانيكية E_c + E_pe إن لم تعمل قوة أخرى. الفخ: إشارة q، وتوجيه المحور. تمارين نمطية في SM: تسريع إلكترون بين صفيحتين، السرعة عند الخروج، أو «ارتفاع» أقصى شبيه بالقذف. إذا كنت مستعجلاً: ارسم دائماً + / − للبوسين ومنحى E⃗.",
+      basicsAr: [
+        "E_pe = q V + ثابت. في حقل منتظم: E_pe = q E z (+ثابت).",
+        "W(F_élec) = −ΔE_pe (قوة محافظة).",
+        "U = V_A − V_B = E d إذا كان E منتظماً، و d وفق خطوط الحقل.",
+        "شحنة + تهبط الكمون؛ وشحنة − تصعده.",
+      ],
     },
     {
       id: "transfert-energie-circuit",
@@ -696,6 +927,13 @@ window.SB_DATA = {
       conclusion:
         "Un circuit convertit de l’énergie : chimique → électrique → thermique / lumière / mouvement. La loi de Joule Q = R I² Δt explique l’échauffement des fils. Le rendement η = E_utile / E_fournie < 1. Piège : oublier de convertir les heures en secondes, ou confondre U aux bornes du générateur et U aux bornes de R. En SM, on combine souvent U=E−rI (générateur réel) avec un bilan d’énergie. Lis bien ce qui est « utile » (chaleur dans une résistance de chauffage, ou travail mécanique d’un moteur).",
       formula: "P = U I    ;    E = P t",
+      conclusionAr: "يحوّل دارة الطاقة: كيميائية → كهربائية → حرارية / ضوء / حركة. يفسّر قانون جول Q = R I² Δt تسخين الأسلاك. المردود η = E_النافعة / E_المزودة \u003c 1. الفخ: نسيان تحويل الساعات إلى ثوانٍ، أو خلط U بين قطبي المولد و U بين قطبي R. في SM يُجمع غالباً U=E−rI (مولد حقيقي) مع جرد طاقة. إذا كنت مستعجلاً: اقرأ جيداً ما هو «نافع» (حرارة في مقاومة تسخين، أو شغل ميكانيكي لمحرك).",
+      basicsAr: [
+        "P = U I = R I² = U²/R لثنائي قطب أومي.",
+        "الطاقة: E = P Δt (جول) ؛ 1 kWh = 3,6×10⁶ J.",
+        "المولد: يزوّد بالطاقة. المستقبل: يستهلكها (جول، ميكانيكية…).",
+        "الجرد: الطاقة المزودة = الطاقة النافعة + الضياعات.",
+      ],
     },
     {
       id: "champ-magnetique",
@@ -716,6 +954,13 @@ window.SB_DATA = {
       conclusion:
         "Le champ magnétique se visualise par des lignes fermées (pas de « charges magnétiques » isolées). Un aimant a toujours deux pôles. La boussole s’aligne sur B⃗. Piège : croire que le pôle nord géographique est un pôle nord magnétique (c’est un sud magnétique). En SM, ce chapitre est surtout qualitatif avant « B créé par un courant ». Retiens : direction, sens, spectre, et que B est plus intense où les lignes sont serrées. Teslas : le champ terrestre est ~ 4×10⁻⁵ T, un aimant de TP quelques mT à 0,1 T.",
       formula: "Unité de B : tesla (T)    ;    1 G = 10⁻⁴ T",
+      conclusionAr: "يُبصَّر الحقل المغناطيسي بخطوط مغلقة (لا «شحنات مغناطيسية» معزولة). للمغناطيس دائماً قطبان. تتجه البوصلة وفق B⃗. الفخ: الاعتقاد أن القطب الشمالي الجغرافي قطب شمالي مغناطيسي (إنه جنوب مغناطيسي). في SM هذا الدرس كيفي أساساً قبل «B الذي ينشئه تيار». احفظ: الاتجاه، المنحى، الطيف، وأن B أشد حيث تتقارب الخطوط. التسلا: حقل الأرض ~ 4×10⁻⁵ T، ومغناطيس الأشغال التطبيقية بضعة mT إلى 0,1 T. إذا كنت مستعجلاً: خطوط مغلقة، قطبان، والبوصلة على B⃗.",
+      basicsAr: [
+        "B⃗: مقدار شعاعي، الوحدة تسلا (T).",
+        "خطوط حقل مغلقة: تخرج من N وتدخل من S لمغناطيس.",
+        "الأرض: البوصلة = مغناطيس صغير؛ القطب الشمالي للإبرة نحو الشمال الجغرافي.",
+        "الطيف المغناطيسي: برادة الحديد.",
+      ],
     },
     {
       id: "champ-magnetique-courant",
@@ -736,6 +981,13 @@ window.SB_DATA = {
       conclusion:
         "Un courant crée un champ magnétique. Pour le fil, les lignes sont des cercles ; pour le solénoïde, B est quasi uniforme à l’intérieur, faible à l’extérieur. Augmenter n (spires par mètre) ou I augmente B. Piège : sens de B inversé (règle de la main), ou appliquer B=μ0 n I à une simple spire. En SM, on te demande souvent de comparer aimant et bobine (même spectre). Prépare les schémas : croix / points pour le courant, et les flèches de B.",
       formula: "Solénoïde : B = μ_0 n I",
+      conclusionAr: "ينشئ التيار حقلاً مغناطيسياً. للسلك، الخطوط دوائر؛ وللملف اللولبي، B شبه منتظم في الداخل وضعيف في الخارج. زيادة n (عدد اللفات في المتر) أو I تزيد B. الفخ: عكس منحى B (قاعدة اليد)، أو تطبيق B=μ0 n I على لفة واحدة. في SM يُطلب غالباً مقارنة المغناطيس والوشيعة (نفس الطيف). إذا كنت مستعجلاً: حضّر المخططات — صليب / نقط للتيار، وأسهم B.",
+      basicsAr: [
+        "سلك مستقيم: الخطوط = دوائر، المنحى بقاعدة اليد اليمنى.",
+        "لفة / وشيعة / ملف لولبي: B ≈ μ0 n I في الداخل (ملف لولبي طويل).",
+        "B متناسب مع I.",
+        "μ0 = 4π × 10⁻⁷ SI.",
+      ],
     },
     {
       id: "laplace",
@@ -756,6 +1008,13 @@ window.SB_DATA = {
       conclusion:
         "Laplace, c’est « le courant dans un champ B subit une force ». Maximum si I ⊥ B (sin 90°=1), nulle si I parallèle à B. Le rail de Laplace est l’exercice type : F = I ℓ B, parfois équilibrée par le poids ou un frottement. Piège : mauvais angle α, ou oublier que F est perpendiculaire à I et à B. En SM, relie ce chapitre à l’énergie : le travail de Laplace peut faire bouger une barre (moteur électrique élémentaire). Dessine toujours I, B, F avant de calculer.",
       formula: "F = I ℓ B sin α",
+      conclusionAr: "لابلاس هو «التيار في حقل B يخضع لقوة». القيمة القصوى إذا I ⊥ B (sin 90°=1)، ومنعدمة إذا كان I موازياً لـ B. سكة لابلاس هي التمرين النمطي: F = I ℓ B، وأحياناً تتوازن مع الوزن أو احتكاك. الفخ: زاوية α خاطئة، أو نسيان أن F عمودية على I وعلى B. في SM اربط هذا الدرس بالطاقة: شغل لابلاس يمكن أن يحرك قضيباً (محرك كهربائي أولي). إذا كنت مستعجلاً: ارسم دائماً I و B و F قبل الحساب.",
+      basicsAr: [
+        "قوة لابلاس: F⃗ = I ℓ⃗ ∧ B⃗ ، F = I ℓ B sin α.",
+        "ℓ⃗: منحى التيار، الطول داخل B.",
+        "الاتجاه ⊥ للمستوي (I, B). المنحى: قاعدة الأصابع الثلاث.",
+        "سكة لابلاس: يمكن لموصل أن يتحرك.",
+      ],
     },
     {
       id: "visibilite-objet",
@@ -776,6 +1035,13 @@ window.SB_DATA = {
       conclusion:
         "Chapitre court et visuel : on voit un objet si des rayons issus de cet objet (émis ou diffusés) atteignent l’œil. Un objet dans le noir n’est pas visible sans éclairage. La propagation rectiligne explique ombres et éclipses. Piège : croire qu’il faut forcément une lentille pour « voir ». En SM, c’est l’introduction à l’optique géométrique (miroirs, lentilles). Retiens le vocabulaire : source, diffuseur, faisceau incident / réfléchi / transmis, et le schéma du rayon qui entre dans l’œil.",
       formula: "Propagation rectiligne de la lumière (milieu homogène)",
+      conclusionAr: "درس قصير وبصري: نرى جسماً إذا بلغت العينَ أشعة صادرة عنه (منبعثة أو منتشرة). جسم في الظلام غير مرئي دون إضاءة. يفسّر الانتشار المستقيم الظلال والكسوفات. الفخ: الاعتقاد أنه يلزم عدسة حتماً «للرؤية». في SM هذه مقدمة للبصريات الهندسية (مرايا، عدسات). إذا كنت مستعجلاً: احفظ المفردات — منبع، ناشر، حزمة واردة / منعكسة / نافذة، ومخطط الشعاع الذي يدخل العين.",
+      basicsAr: [
+        "لرؤية جسم: ضوء + عين + مسار ضوئي حتى العين.",
+        "جسم مضيء (منبع) مقابل مضاء (ينشر الضوء).",
+        "وسط شفاف؛ حاجز غير شفاف → ظل.",
+        "حزمة، شعاع، انتشار مستقيم في وسط متجانس.",
+      ],
     },
     {
       id: "miroir-plan",
@@ -796,6 +1062,13 @@ window.SB_DATA = {
       conclusion:
         "Le miroir plan donne toujours une image virtuelle, droite, de même taille, située « derrière » le miroir par symétrie. Pour construire : deux rayons, dont les prolongements se coupent. Piège : tracer l’image réelle, ou se tromper sur la symétrie (distance). En SM, les exercices portent sur la position d’un objet vu dans une glace, un champ visuel, ou un système de deux miroirs. Rédige : « par construction, H' est le symétrique de H ».",
       formula: "i = i'    ;    AH = AH' (symétrie)",
+      conclusionAr: "تعطي المرآة المستوية دائماً صورة خيالية، مستقيمة، بنفس القد، تقع «خلف» المرآة بالتناظر. للإنشاء: شعاعان، يمتد امتداداهما حتى يتقاطعا. الفخ: رسم صورة حقيقية، أو الخطأ في التناظر (المسافة). في SM تتعلق التمارين بموضع جسم يُرى في زجاج، أو مجال الرؤية، أو جملة مرآتين. إذا كنت مستعجلاً: اكتب «بالإنشاء، H\u0027 متناظر H».",
+      basicsAr: [
+        "i = i\u0027 (زاوية الورود = زاوية الانعكاس).",
+        "صورة خيالية، متناظرة مع الجسم بالنسبة للمرآة.",
+        "نفس القد، نفس المنحى (مستقيمة)، مسافة الجسم = مسافة الصورة.",
+        "لا يمكن استقبالها على شاشة.",
+      ],
     },
     {
       id: "lentille-convergente",
@@ -816,6 +1089,13 @@ window.SB_DATA = {
       conclusion:
         "Selon la position de l’objet (avant F, entre F et O…), l’image est réelle ou virtuelle, plus grande ou plus petite, droite ou renversée. C’est le cœur de l’optique 1er Bac. Respecte la convention de signes de ton manuel (souvent Descartes). Piège : mélanger f et f', ou oublier que OA est négatif pour un objet réel à gauche. Applications : œil, loupe, projecteur, appareil photo. En SM, un exercice complet = construction + calcul + nature de l’image.",
       formula: "1/f' = 1/OA' − 1/OA",
+      conclusionAr: "حسب موضع الجسم (قبل F، بين F و O…)، تكون الصورة حقيقية أو خيالية، أكبر أو أصغر، مستقيمة أو مقلوبة. هذا قلب بصريات 1 باك. احترم اصطلاح الإشارات في كتيّبك (غالباً ديكارت). الفخ: خلط f و f\u0027، أو نسيان أن OA سالب لجسم حقيقي على اليسار. تطبيقات: العين، المكبرة، المسلاط، آلة التصوير. إذا كنت مستعجلاً: تمرين كامل = إنشاء + حساب + طبيعة الصورة.",
+      basicsAr: [
+        "البؤرة الصورة F\u0027: الأشعة الموازية للمحور تخرج عبر F\u0027. المسافة البؤرية f\u0027 = OF\u0027.",
+        "ثلاثة أشعة خاصة لإنشاء الصورة.",
+        "علاقة ديكارت: 1/f\u0027 = 1/OA\u0027 − 1/OA (جبرية، الأصل O).",
+        "التكبير γ = OA\u0027/OA = A\u0027B\u0027/AB.",
+      ],
     },
 
     /* ——— PC CHIMIE S2 ——— */
@@ -838,6 +1118,13 @@ window.SB_DATA = {
       conclusion:
         "La chimie organique étudie les composés centrés sur le carbone, atome tétravalent capable d’enchaîner des liaisons C–C : d’où la diversité des molécules du vivant et de l’industrie. Elle s’est étendue à la synthèse à partir du pétrole et du gaz (raffinage, craquage). On y rattache plastiques, médicaments, carburants — et les problèmes de ressources fossiles. Piège : tout composé contenant du carbone n’est pas « organique » au sens scolaire (CO₂, HCO₃⁻, carbonates restent du côté minéral). Ce chapitre ouvre le S2 : ensuite on classera les molécules par squelette carboné, puis par groupes caractéristiques.",
       formula: "Le carbone est tétravalent (4 liaisons)",
+      conclusionAr: "تدرس الكيمياء العضوية المركبات المتمحورة حول الكربون، ذرة رباعية التكافؤ قادرة على تسلسل روابط C–C: ومن هنا تنوع جزيئات الكائنات والصناعة. امتدت إلى الاصطناع انطلاقاً من النفط والغاز (تكرير، تكسير). نربط بها البلاستيك والأدوية والوقود — ومشكلات الموارد الأحفورية. الفخ: ليس كل مركب يحتوي كربوناً «عضوياً» بالمعنى المدرسي (CO₂، HCO₃⁻، الكربونات تبقى في الجانب المعدني). إذا كنت مستعجلاً: يفتح هذا الدرس الدورة 2، وبعدها نصنف الجزيئات حسب الهيكل الكربوني ثم حسب المجموعات المميزة.",
+      basicsAr: [
+        "الكيمياء العضوية: مركبات الكربون (عدا CO₂ والكربونات وغيرها حسب مقرر الوزارة).",
+        "الكربون رباعي التكافؤ: 4 روابط، سلاسل وحلقات ممكنة.",
+        "المصادر: النفط، الغاز، الفحم، الكتلة الحيوية؛ التكرير والتكسير.",
+        "الرهانات: أدوية، بوليميرات، وقود، تلوث، كيمياء خضراء.",
+      ],
     },
     {
       id: "squelettes-carbones",
@@ -858,6 +1145,13 @@ window.SB_DATA = {
       conclusion:
         "On représente une molécule par plusieurs formules : brute, semi-développée, topologique (sommets = C). Le squelette saturé acyclique est un alcane C_nH_{2n+2} ; une double liaison donne un alcène. La chaîne principale est la plus longue, pas la plus « droite » sur le dessin. Même formule brute + squelettes différents = isomères de chaîne (butane / méthylpropane). Pièges : oublier les H en topologique ; mal numéroter. La double liaison est plane : d’où d’éventuels stéréoisomères Z/E. Sans formule juste, les réactions du chapitre suivant sont illisibles.",
       formula: "Alcane (linéaire) : C_n H_{2n+2}",
+      conclusionAr: "نمثّل الجزيء بعدة صيغ: إجمالية، نصف منشورة، طوبولوجية (الرؤوس = C). الهيكل المشبع غير الحلقي ألكان C_nH_{2n+2} ؛ والرابطة المزدوجة تعطي ألكيناً. السلسلة الرئيسية هي الأطول، وليست الأكثر «استقامة» على الرسم. نفس الصيغة الإجمالية + هياكل مختلفة = مماكبات سلسلة (بوتان / ميثيل بروبان). الفخاخ: نسيان H في الطوبولوجية؛ ترقيم خاطئ. الرابطة المزدوجة مستوية: ومن هنا مماكبات فراغية Z/E محتملة. إذا كنت مستعجلاً: بدون صيغة صحيحة تصبح تفاعلات الدرس التالي غير مقروءة.",
+      basicsAr: [
+        "الصيغ: إجمالية، منشورة، نصف منشورة، طوبولوجية.",
+        "الألكان C_nH_{2n+2} ؛ الألكين C_nH_{2n} ؛ الألكان الحلقي C_nH_{2n}.",
+        "تماكب السلسلة والموضع ؛ Z/E للألكينات إن كان في المقرر.",
+        "التسمية: أطول سلسلة + مواضع (ميثيل، إيثيل…).",
+      ],
     },
     {
       id: "modification-squelette",
@@ -878,6 +1172,13 @@ window.SB_DATA = {
       conclusion:
         "Modifier le squelette, c’est casser ou créer des liaisons C–C, ou transformer une insaturation. Le craquage fournit des fragments plus courts dont un alcène. Sur C=C, l’addition est la réaction-type : H₂ (Ni/Pt) sature ; H₂O en milieu acide donne un alcool ; HX un halogénoalcane. Markovnikov : H va sur le carbone déjà le plus hydrogéné. Pièges : craquage qui ne conserve pas les atomes ; Markovnikov inversé ; confondre addition et substitution. En devoir SM, on donne souvent un alcène et on demande hydratation, hydrogénation, ou l’équation de craquage.",
       formula: "n H2C=CH2 → —[CH2−CH2]_n—  (polymérisation)",
+      conclusionAr: "تعديل الهيكل يعني قطع روابط C–C أو إنشاءها، أو تحويل عدم تشبع. يوفّر التكسير قطعاً أقصر منها ألكين. على C=C، الإضافة هي التفاعل النمطي: H₂ (Ni/Pt) يُشبع؛ H₂O في وسط حمضي يعطي كحولاً؛ HX هالوجينوألكان. ماركوفنيكوف: يذهب H إلى الكربون الأكثر هدرجة أصلاً. الفخاخ: تكسير لا يحفظ الذرات؛ ماركوفنيكوف معكوس؛ خلط إضافة واستبدال. في فرض SM يُعطى غالباً ألكين ويُطلب إماهة أو هدرجة أو معادلة التكسير. إذا كنت مستعجلاً: تكسير، إضافة على C=C، وماركوفنيكوف.",
+      basicsAr: [
+        "التكسير: قطع C–C بالتسخين (ألكان طويل → ألكان قصير + ألكين).",
+        "إعادة التشكيل: تماكب (خطي → متفرع) وحلقة.",
+        "إضافة على C=C: H₂، X₂، HX، H₂O (حمض) — ماركوفنيكوف إن كان الألكين غير متناظر.",
+        "البلمرة: n H₂C=CH₂ → بولي إيثيلين.",
+      ],
     },
     {
       id: "groupes-caracteristiques-alcools",
@@ -898,6 +1199,13 @@ window.SB_DATA = {
       conclusion:
         "On classe l’alcool en primaire, secondaire ou tertiaire selon le nombre de C liés au carbone porteur de OH : l’oxydation en dépend. Un I s’oxyde en aldéhyde puis en acide (oxydant en excès) ; un II en cétone ; un III ne s’oxyde pas de façon ménagée. La déshydratation acide à chaud donne un alcène (Zaïtsev : souvent l’alcène le plus substitué). Pièges : confondre alcool et phénol ; oxyder un III ; aldéhyde vs cétone au test de Fehling (la cétone ne réduit pas). Exercice type : isomères de C₃H₈O, leur classe, produit d’oxydation, équation de déshydratation.",
       formula: "R−CH2OH  —[ox]→  R−CHO  —[ox]→  R−COOH",
+      conclusionAr: "نصنّف الكحول أولياً أو ثانوياً أو ثالثياً حسب عدد ذرات C المرتبطة بالكربون الحامل لـ OH: وتتعلق الأكسدة بذلك. يتأكسد I إلى ألدهيد ثم إلى حمض (مؤكسد بفائض)؛ و II إلى كيتون؛ و III لا يتأكسد بلطف. نزع الماء الحمضي بالتسخين يعطي ألكيناً (زايتسيف: غالباً الألكين الأكثر استبدالاً). الفخاخ: خلط كحول وفينول؛ أكسدة III؛ ألدهيد مقابل كيتون في اختبار Fehling (الكيتون لا يختزل). تمرين نمطي: مماكبات C₃H₈O، صنفها، ناتج الأكسدة، معادلة نزع الماء. إذا كنت مستعجلاً: صنّف I/II/III ثم الأكسدة ونزع الماء.",
+      basicsAr: [
+        "المجموعة الهيدروكسيلية –OH: كحول R–OH، صنف I / II / III.",
+        "التسمية: …ول، أصغر موضع (إيثانول، بروبان-2-ول).",
+        "أكسدة لطيفة: I → ألدهيد ثم حمض؛ II → كيتون؛ III: لا أكسدة لطيفة.",
+        "نزع الماء (H₂SO₄، تسخين) → ألكين + H₂O. اختبارات: DNPH، Fehling / Tollens.",
+      ],
     },
   ],
 };

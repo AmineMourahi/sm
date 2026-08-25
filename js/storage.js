@@ -6,6 +6,7 @@ window.SBStore = (() => {
     notes: {},
     notesOpen: true,
     lastLesson: null,
+    lang: "fr",
   });
 
   function read() {
@@ -56,6 +57,16 @@ window.SBStore = (() => {
     return write(s);
   }
 
+  function getLang() {
+    return read().lang === "ar" ? "ar" : "fr";
+  }
+
+  function setLang(lang) {
+    const s = read();
+    s.lang = lang === "ar" ? "ar" : "fr";
+    return write(s);
+  }
+
   function stats(lessons) {
     const s = read();
     const math = lessons.filter((l) => l.subject === "math");
@@ -94,6 +105,8 @@ window.SBStore = (() => {
     setNote,
     notesOpen,
     setNotesOpen,
+    getLang,
+    setLang,
     stats,
     reset,
   };

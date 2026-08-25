@@ -32,6 +32,108 @@
       .replace(/"/g, "&quot;");
   }
 
+  function fold(str) {
+    return String(str)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function parseHash() {
+    const raw = (location.hash || "#/").replace(/^#/, "") || "/";
+    const qIndex = raw.indexOf("?");
+    const path = qIndex === -1 ? raw : raw.slice(0, qIndex);
+    const qs = qIndex === -1 ? "" : raw.slice(qIndex + 1);
+    const parts = path.split("/").filter(Boolean);
+    const params = new URLSearchParams(qs);
+    return { parts, q: params.get("q") || "" };
+  }
+
+  const scrollPos = Object.create(null);
+  let lastKey = location.hash || "#/";
+  const stack = [];
+  let goingBack = false;
+
+  function hashKey() {
+    return location.hash || "#/";
+  }
+
+  function backLink(fallback, label = "Retour") {
+    return `<a class="sb-back" href="${fallback}" data-back="${fallback}">← ${label}</a>`;
+  }
+
+  function goBack(fallback) {
+    scrollPos[hashKey()] = window.scrollY;
+    if (stack.length > 1) {
+      stack.pop();
+      const prev = stack[stack.length - 1];
+      if (hashKey() === prev) {
+        lastKey = prev;
+        route();
+        return;
+      }
+      goingBack = true;
+      location.hash = prev;
+      return;
+    }
+    const target = fallback || "#/";
+    if (hashKey() === target) return;
+    history.replaceState(null, "", target);
+    stack[0] = target;
+    lastKey = target;
+    route();
+  }
+
+  function tokenMatch(hay, word) {
+    if (word.length >= 4) return hay.includes(word);
+    const esc = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp("(^|[^a-z0-9])" + esc + "(?=[^a-z0-9]|$)", "i").test(hay);
+  }
+
+  function searchLessons(query) {
+    const q = fold(query).trim();
+    if (!q) return [];
+    const words = q.split(/\s+/).filter(Boolean);
+    return lessons
+      .map((l) => {
+        const hay = fold(
+          [
+            l.chapter,
+            l.branch,
+            branchLabel[l.branch],
+            l.channel,
+            l.videoTitle,
+            l.formula,
+            (l.basics || []).join(" "),
+            (l.basicsAr || []).join(" "),
+            l.conclusion,
+            l.conclusionAr || "",
+            l.subject === "math" ? "maths mathematiques" : "physique chimie pc",
+            "S" + l.semester,
+          ].join(" ")
+        );
+        const hit = words.every((w) => tokenMatch(hay, w));
+        if (!hit) return null;
+        const titleHit = words.every((w) => tokenMatch(fold(l.chapter), w));
+        return { lesson: l, score: titleHit ? 0 : 1 };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.score - b.score || a.lesson.chapter.localeCompare(b.lesson.chapter, "fr"))
+      .map((x) => x.lesson);
+  }
+
+  function ytIframe(id, title, autoplay) {
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+      hl: "fr",
+    });
+    if (autoplay) params.set("autoplay", "1");
+    const src = `https://www.youtube.com/embed/${encodeURIComponent(id)}?${params}`;
+    return `<iframe src="${src}" title="${escapeHtml(title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  }
+
   function pctFill(n) {
     return `stroke-dasharray: ${2 * Math.PI * 52}; stroke-dashoffset: ${
       2 * Math.PI * 52 * (1 - n / 100)
@@ -53,8 +155,9 @@
       </div>`;
   }
 
-  function header(active) {
+  function header(active, query) {
     const stats = store.stats(lessons);
+    const q = query != null ? query : parseHash().q;
     return `
       <a class="sb-skip" href="#main">Aller au contenu</a>
       <header class="sb-header">
@@ -69,6 +172,17 @@
               <span class="sb-header__tag">1er Bac · Sciences Maths</span>
             </span>
           </a>
+          <form class="sb-search" id="search-form" role="search" action="#/recherche">
+            <label class="sb-search__label" for="search-input">Rechercher</label>
+            <input id="search-input" class="sb-search__input" type="search" name="q" value="${escapeHtml(q)}" placeholder="Rechercher un cours…" autocomplete="off" />
+            <button class="sb-search__btn" type="submit" aria-label="Lancer la recherche">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M20 20l-3.2-3.2"/>
+              </svg>
+            </button>
+            <div class="sb-search__suggest" id="search-suggest" hidden></div>
+          </form>
           <nav class="sb-header__nav" aria-label="Navigation principale">
             <a href="#/" data-link class="${active === "home" ? "is-active" : ""}">Accueil</a>
             <a href="#/maths" data-link class="${active === "maths" ? "is-active" : ""}">Maths</a>
@@ -242,6 +356,7 @@
       ${header(subject === "math" ? "maths" : "pc")}
       <main id="main">
         <div class="sb-container sb-pagehead">
+          <p class="sb-breadcrumb">${backLink("#/")}</p>
           <p class="sb-hero__kicker">Programme officiel · 1er Bac SM</p>
           <h1 class="sb-section__title">${title}</h1>
           <p class="sb-section__sub">${lead}</p>
@@ -293,10 +408,71 @@
       </aside>`;
   }
 
+  function conclusionBlock(l) {
+    const lang = store.getLang();
+    const arReady = Boolean(l.conclusionAr);
+    const frList = (l.basics || []).map((b) => `<li>${b}</li>`).join("");
+    const arList = (l.basicsAr || []).map((b) => `<li>${b}</li>`).join("");
+    return `
+      <article class="sb-conclusion${lang === "ar" && arReady ? " sb-conclusion--ar" : ""}">
+        <div class="sb-conclusion__head">
+          <h2 class="sb-conclusion__title" id="conclusion-title" ${lang === "ar" && arReady ? 'dir="rtl" lang="ar"' : 'lang="fr"'}>${
+            lang === "ar" && arReady ? "الخلاصة — إن لم تشاهد الفيديو" : "Conclusion — si tu n’as pas tout regardé"
+          }</h2>
+          <div class="sb-langtabs" role="tablist" aria-label="Langue de la conclusion">
+            <button type="button" class="sb-langtabs__btn" role="tab" id="lang-fr" data-lang="fr" aria-controls="pane-fr" aria-selected="${lang !== "ar"}">Français</button>
+            <button type="button" class="sb-langtabs__btn" role="tab" id="lang-ar" data-lang="ar" aria-controls="pane-ar" aria-selected="${lang === "ar"}" ${arReady ? "" : "disabled"}>العربية</button>
+          </div>
+        </div>
+        <div class="sb-conclusion__pane" id="pane-fr" data-pane="fr" lang="fr" role="tabpanel" aria-labelledby="lang-fr" ${lang === "ar" && arReady ? "hidden" : ""}>
+          <p>${l.conclusion}</p>
+          <h3 class="sb-conclusion__h3">Les bases à retenir</h3>
+          <ul class="sb-conclusion__list">${frList}</ul>
+        </div>
+        <div class="sb-conclusion__pane sb-conclusion__pane--ar" id="pane-ar" data-pane="ar" lang="ar" dir="rtl" role="tabpanel" aria-labelledby="lang-ar" ${lang === "ar" && arReady ? "" : "hidden"}>
+          <p>${l.conclusionAr || ""}</p>
+          <h3 class="sb-conclusion__h3">الأساسيات التي يجب حفظها</h3>
+          <ul class="sb-conclusion__list">${arList}</ul>
+        </div>
+        <p class="sb-callout" dir="ltr">${l.formula}</p>
+      </article>`;
+  }
+
+  function bindLangTabs() {
+    const tabs = document.querySelectorAll(".sb-langtabs__btn");
+    if (!tabs.length) return;
+    const title = document.getElementById("conclusion-title");
+    const box = document.querySelector(".sb-conclusion");
+    const panes = {
+      fr: document.querySelector('[data-pane="fr"]'),
+      ar: document.querySelector('[data-pane="ar"]'),
+    };
+    const apply = (lang) => {
+      const ar = lang === "ar";
+      store.setLang(ar ? "ar" : "fr");
+      tabs.forEach((btn) => btn.setAttribute("aria-selected", String(btn.dataset.lang === lang)));
+      if (panes.fr) panes.fr.hidden = ar;
+      if (panes.ar) panes.ar.hidden = !ar;
+      if (box) box.classList.toggle("sb-conclusion--ar", ar);
+      if (title) {
+        title.textContent = ar ? "الخلاصة — إن لم تشاهد الفيديو" : "Conclusion — si tu n’as pas tout regardé";
+        title.lang = ar ? "ar" : "fr";
+        if (ar) title.setAttribute("dir", "rtl");
+        else title.removeAttribute("dir");
+      }
+    };
+    tabs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        apply(btn.dataset.lang);
+      });
+    });
+  }
+
   function renderLesson(id) {
     const l = byId[id];
     if (!l) {
-      app.innerHTML = `${header("home")}<main class="sb-container sb-empty"><p>Cours introuvable.</p><a href="#/">Retour</a></main>${footer()}`;
+      app.innerHTML = `${header("home")}<main class="sb-container sb-empty"><p>Cours introuvable.</p>${backLink("#/")}</main>${footer()}`;
       return;
     }
     const done = store.isDone(l.id);
@@ -310,6 +486,8 @@
       <main id="main" class="sb-section">
         <div class="sb-container">
           <nav class="sb-breadcrumb">
+            ${backLink(subjectHref)}
+            <span aria-hidden="true">·</span>
             <a href="#/" data-link>Accueil</a> ·
             <a href="${subjectHref}" data-link>${subjectName}</a> ·
             <span>S${l.semester}</span>
@@ -326,18 +504,17 @@
             <div>
               <div class="sb-player" id="yt-box" data-yt="${l.youtubeId}">
                 <div class="sb-player__frame" id="yt-frame">
-                  <a class="sb-player__poster" href="https://www.youtube.com/watch?v=${l.youtubeId}" target="_blank" rel="noopener">
-                    <img src="https://i.ytimg.com/vi/${l.youtubeId}/hqdefault.jpg" alt="${l.videoTitle}">
-                    <span class="sb-player__play">Lire sur YouTube</span>
-                  </a>
+                  <button type="button" class="sb-player__poster" id="yt-play" aria-label="Lire ${escapeHtml(l.videoTitle)}">
+                    <img src="https://i.ytimg.com/vi/${l.youtubeId}/hqdefault.jpg" alt="">
+                    <span class="sb-player__play">Lire la vidéo</span>
+                  </button>
                 </div>
               </div>
               <div class="sb-player__bar">
-                <a class="sb-btn sb-btn--primary" href="https://www.youtube.com/watch?v=${l.youtubeId}" target="_blank" rel="noopener">Ouvrir la vidéo sur YouTube</a>
-                <button class="sb-btn sb-btn--ghost" type="button" id="yt-embed">Essayer dans la page</button>
+                <button class="sb-btn sb-btn--ghost" type="button" id="yt-reload">Relancer la vidéo</button>
                 <a class="sb-btn sb-btn--ghost" href="https://www.youtube.com/results?search_query=${encodeURIComponent(l.chapter + " 1bac SM cours")}" target="_blank" rel="noopener">Autre vidéo</a>
               </div>
-              <p class="sb-player__hint">YouTube bloque souvent le lecteur intégré en local (erreur 153). Ouvre la vidéo sur YouTube — la conclusion du cours est juste en dessous.</p>
+              <p class="sb-player__hint">Clique sur « Lire la vidéo » : le cours se lance ici, sans ouvrir YouTube.</p>
             </div>
             <div class="sb-cours-side">
               ${lessonIndex(l)}
@@ -361,13 +538,7 @@
             <a class="sb-btn sb-btn--secondary" href="#/stats" data-link>Voir mes stats</a>
           </div>
 
-          <article class="sb-conclusion">
-            <h2 class="sb-conclusion__title">Conclusion — si tu n’as pas tout regardé</h2>
-            <p>${l.conclusion}</p>
-            <h3 style="font-size:1.05rem;margin:1rem 0 .4rem">Les bases à retenir</h3>
-            <ul class="sb-conclusion__list">${l.basics.map((b) => `<li>${b}</li>`).join("")}</ul>
-            <p class="sb-callout">${l.formula}</p>
-          </article>
+          ${conclusionBlock(l)}
 
           <div class="sb-cours-nav" style="margin-top:1.25rem">
             ${prev ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${prev.id}" data-link>← ${prev.chapter}</a>` : "<span></span>"}
@@ -382,11 +553,13 @@
       const nextOpen = !store.notesOpen();
       store.setNotesOpen(nextOpen);
       renderLesson(id);
+      bindChrome();
     });
     const fab = document.getElementById("fab-notes");
     fab.addEventListener("click", () => {
       store.setNotesOpen(true);
       renderLesson(id);
+      bindChrome();
     });
     const field = document.getElementById("note-field");
     field.value = note;
@@ -398,21 +571,23 @@
         document.getElementById("note-hint").textContent = "Enregistré.";
       }, 250);
     });
-    document.getElementById("yt-embed").addEventListener("click", () => {
-      const frame = document.getElementById("yt-frame");
-      const ytId = l.youtubeId;
-      frame.innerHTML = `<iframe src="embed.html?v=${encodeURIComponent(ytId)}" title="${l.videoTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="origin" allowfullscreen></iframe>`;
-    });
+    const startVideo = () => {
+      document.getElementById("yt-frame").innerHTML = ytIframe(l.youtubeId, l.videoTitle, true);
+    };
+    document.getElementById("yt-play").addEventListener("click", startVideo);
+    document.getElementById("yt-reload").addEventListener("click", startVideo);
     document.getElementById("mark-done").addEventListener("click", () => {
       store.toggleDone(l.id, !store.isDone(l.id));
       toast(store.isDone(l.id) ? "Cours marqué terminé." : "Cours remis à faire.");
       renderLesson(id);
+      bindChrome();
     });
     const list = document.querySelector(".sb-index__list");
     const currentRow = document.getElementById("index-current");
     if (list && currentRow) {
       list.scrollTop = currentRow.offsetTop - list.clientHeight / 2 + currentRow.clientHeight / 2;
     }
+    bindLangTabs();
   }
 
   function renderStats() {
@@ -424,7 +599,7 @@
       <main id="main">
         <div class="sb-container sb-pagehead">
           <p class="sb-hero__kicker">Tableau de bord</p>
-          <p class="sb-breadcrumb"><a href="#/" data-link>← Accueil</a></p>
+          <p class="sb-breadcrumb">${backLink("#/")}</p>
           <h1 class="sb-section__title">Ta progression</h1>
           <p class="sb-section__sub">Un pourcentage clair : maths, physique-chimie, et le programme entier.</p>
         </div>
@@ -451,7 +626,7 @@
             </div>
             ${last ? `<p style="margin-top:1.5rem">Dernier cours ouvert : <a href="#/cours/${last.id}" data-link>${last.chapter}</a></p>` : ""}
             <div class="sb-hero__actions" style="margin-top:1.25rem">
-              <a class="sb-btn sb-btn--primary" href="#/" data-link>← Retour à l’accueil</a>
+              <a class="sb-btn sb-btn--primary" href="#/" data-back="#/">← Retour</a>
               ${last ? `<a class="sb-btn sb-btn--secondary" href="#/cours/${last.id}" data-link>Reprendre le cours</a>` : ""}
               <a class="sb-btn sb-btn--ghost" href="#/notes" data-link>Toutes mes notes</a>
               <button class="sb-btn sb-btn--sm sb-btn--ghost" type="button" id="reset-progress">Réinitialiser</button>
@@ -465,6 +640,7 @@
         store.reset();
         toast("Progression remise à zéro.");
         renderStats();
+        bindChrome();
       }
     });
   }
@@ -475,7 +651,7 @@
       ${header("stats")}
       <main id="main" class="sb-section">
         <div class="sb-container">
-          <p class="sb-breadcrumb"><a href="#/" data-link>← Accueil</a> · <a href="#/stats" data-link>Stats</a></p>
+          <p class="sb-breadcrumb">${backLink("#/stats")} · <a href="#/stats" data-link>Stats</a></p>
           <h1 class="sb-section__title">Mes notes</h1>
           <p class="sb-section__sub">Toutes tes notes, un clic pour revenir au cours.</p>
           ${
@@ -512,23 +688,122 @@
         btn.setAttribute("aria-expanded", String(open));
       });
     });
+    bindSearch();
+    document.querySelectorAll("[data-back]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        goBack(el.getAttribute("data-back") || "#/");
+      });
+    });
+  }
+
+  function renderSearch(query) {
+    const q = (query || "").trim();
+    const hits = q ? searchLessons(q) : [];
+    app.innerHTML = `
+      ${header("", q)}
+      <main id="main">
+        <div class="sb-container sb-pagehead">
+          <p class="sb-breadcrumb">${backLink("#/")}</p>
+          <h1 class="sb-section__title">Recherche</h1>
+          <p class="sb-section__sub">${
+            q
+              ? hits.length
+                ? `${hits.length} cours pour « ${escapeHtml(q)} »`
+                : `Aucun cours pour « ${escapeHtml(q)} ». Essaie barycentre, pH, dérivation…`
+              : "Tape un chapitre, une formule ou une matière (maths, physique, chimie)."
+          }</p>
+        </div>
+        <section class="sb-section" style="padding-top:0">
+          <div class="sb-container">
+            ${
+              hits.length
+                ? `<div class="sb-grid sb-grid--3">${hits.map(courseCard).join("")}</div>`
+                : `<p class="sb-empty">${q ? "Aucun résultat." : "Le champ de recherche est en haut de la page."}</p>`
+            }
+          </div>
+        </section>
+      </main>
+      ${footer()}`;
+  }
+
+  function bindSearch() {
+    const form = document.getElementById("search-form");
+    const input = document.getElementById("search-input");
+    const box = document.getElementById("search-suggest");
+    if (!form || !input || !box) return;
+
+    const showSuggest = () => {
+      const q = input.value.trim();
+      const hits = searchLessons(q).slice(0, 8);
+      if (!q || !hits.length) {
+        box.hidden = true;
+        box.innerHTML = "";
+        return;
+      }
+      box.innerHTML = hits
+        .map((l) => {
+          const mat = l.subject === "math" ? "Maths" : l.branch === "chimie" ? "Chimie" : "Physique";
+          return `<a class="sb-search__hit" href="#/cours/${l.id}" data-link>
+            <strong>${l.chapter}</strong>
+            <span>${mat} · S${l.semester}</span>
+          </a>`;
+        })
+        .join("");
+      box.hidden = false;
+    };
+
+    input.addEventListener("input", showSuggest);
+    input.addEventListener("focus", showSuggest);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        form.requestSubmit();
+      }
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      location.hash = q ? `#/recherche?q=${encodeURIComponent(q)}` : "#/recherche";
+    });
+    input.addEventListener("blur", () => {
+      setTimeout(() => {
+        box.hidden = true;
+      }, 180);
+    });
   }
 
   function route() {
-    const hash = location.hash.slice(1) || "/";
-    const parts = hash.split("/").filter(Boolean);
+    const { parts, q } = parseHash();
     if (parts.length === 0) renderHome();
     else if (parts[0] === "maths") renderProgramme("math");
     else if (parts[0] === "pc") renderProgramme("pc");
     else if (parts[0] === "stats") renderStats();
     else if (parts[0] === "notes") renderNotes();
+    else if (parts[0] === "recherche") renderSearch(q);
     else if (parts[0] === "cours" && parts[1]) renderLesson(parts[1]);
     else renderHome();
     bindChrome();
-    window.scrollTo(0, 0);
+    const y = scrollPos[hashKey()] || 0;
+    window.scrollTo(0, y);
   }
 
-  window.addEventListener("hashchange", route);
-  if (!location.hash) location.hash = "#/";
+  window.addEventListener("hashchange", () => {
+    scrollPos[lastKey] = window.scrollY;
+    const next = hashKey();
+    if (goingBack) {
+      goingBack = false;
+    } else if (stack[stack.length - 2] === next) {
+      stack.pop();
+    } else if (stack[stack.length - 1] !== next) {
+      stack.push(next);
+    }
+    lastKey = next;
+    route();
+  });
+
+  if (!location.hash) history.replaceState(null, "", "#/");
+  stack.push(hashKey());
+  lastKey = hashKey();
   route();
 })();

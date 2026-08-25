@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="referrer" content="origin" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vidéo</title>
     <style>
@@ -23,21 +23,21 @@
   <body>
     <script>
       (function () {
-        var id = new URLSearchParams(location.search).get("v") || "";
+        var params = new URLSearchParams(location.search);
+        var id = params.get("v") || "";
         if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
-        var origin = location.origin;
-        var src =
-          "https://www.youtube.com/embed/" +
-          encodeURIComponent(id) +
-          "?rel=0&modestbranding=1&playsinline=1&origin=" +
-          encodeURIComponent(origin) +
-          "&widget_referrer=" +
-          encodeURIComponent(origin);
+        var q = new URLSearchParams({
+          rel: "0",
+          modestbranding: "1",
+          playsinline: "1",
+          hl: "fr",
+        });
+        if (params.get("autoplay") === "1") q.set("autoplay", "1");
         var f = document.createElement("iframe");
-        f.src = src;
+        f.src = "https://www.youtube.com/embed/" + encodeURIComponent(id) + "?" + q.toString();
         f.allow =
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        f.setAttribute("referrerpolicy", "origin");
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+        f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
         f.allowFullscreen = true;
         f.title = "Cours YouTube";
         document.body.appendChild(f);
