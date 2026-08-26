@@ -189,10 +189,7 @@
       <header class="sb-header">
         <div class="sb-container sb-header__inner">
           <a class="sb-header__brand" href="#/" data-link>
-            <svg class="sb-logo" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="11" fill="#c8102e"/>
-              <path fill="#006233" d="M12 4.2 L13.9 9.9 L20 10 L15.2 13.6 L17 19.4 L12 16.1 L7 19.4 L8.8 13.6 L4 10 L10.1 9.9 Z"/>
-            </svg>
+            <img class="sb-logo" src="img/pfp.png" alt="" width="36" height="36" />
             <span>
               <span class="sb-header__name">Succès Bac <span>SM</span>!</span>
               <span class="sb-header__tag">1er Bac · Sciences Maths</span>

@@ -194,8 +194,10 @@ button {
 .sb-logo {
   width: 2.25rem;
   height: 2.25rem;
-  color: var(--sb-green);
   flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--sb-border-gold);
 }
 
 .sb-header__name {
