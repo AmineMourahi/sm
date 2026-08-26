@@ -541,7 +541,7 @@ button {
   border-radius: 0;
   box-shadow: none;
   background: transparent;
-  border-bottom: 1px solid var(--sb-border-gold);
+  border-bottom: 1px solid var(--sb-border);
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem 1.15rem;
