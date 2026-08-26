@@ -7,6 +7,8 @@ window.SBStore = (() => {
     notesOpen: true,
     lastLesson: null,
     lang: "fr",
+    theme: "light",
+    ornaments: true,
   });
 
   function read() {
@@ -67,6 +69,27 @@ window.SBStore = (() => {
     return write(s);
   }
 
+  function getTheme() {
+    const t = read().theme;
+    return t === "dark" || t === "system" ? t : "light";
+  }
+
+  function setTheme(theme) {
+    const s = read();
+    s.theme = theme === "dark" || theme === "system" ? theme : "light";
+    return write(s);
+  }
+
+  function getOrnaments() {
+    return read().ornaments !== false;
+  }
+
+  function setOrnaments(on) {
+    const s = read();
+    s.ornaments = Boolean(on);
+    return write(s);
+  }
+
   function stats(lessons) {
     const s = read();
     const math = lessons.filter((l) => l.subject === "math");
@@ -107,6 +130,10 @@ window.SBStore = (() => {
     setNotesOpen,
     getLang,
     setLang,
+    getTheme,
+    setTheme,
+    getOrnaments,
+    setOrnaments,
     stats,
     reset,
   };

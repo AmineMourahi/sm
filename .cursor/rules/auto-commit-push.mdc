@@ -1,0 +1,20 @@
+---
+description: Commit et push GitHub après chaque changement, sans demander.
+alwaysApply: true
+---
+
+# Commit et push automatiques
+
+Ce dépôt est publié sur GitHub (`origin`, branche courante, Pages depuis `index.html`).
+
+Après **chaque** modification terminée dans ce repo (code, CSS, data, skills, règles) :
+
+1. `git add` des fichiers du changement (jamais `.env`, secrets, credentials).
+2. `git commit` avec un message court en anglais, centré sur le *pourquoi*.
+3. `git push` vers `origin` ( `-u` si la branche n’a pas encore d’upstream).
+
+**Ne pas** attendre « commit » ou « push ». **Ne pas** demander confirmation. Cette règle **remplace** le réflexe « only commit when asked » **pour ce projet**.
+
+Interdit : `--force` / `--force-with-lease` sur `main`/`master`, `--no-verify`, `git config`, amend d’un commit déjà poussé.
+
+Si commit ou push échoue, corriger et réessayer, puis donner l’URL du repo.

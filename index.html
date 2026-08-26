@@ -9,7 +9,24 @@
       content="Succès Bac SM! — plateforme marocaine 1er Bac Sciences Mathématiques. Cours de maths et physique-chimie, vidéos, conclusions express, notes et progression."
     />
     <title>Succès Bac SM! · 1er Bac Sciences Maths</title>
+    <meta name="theme-color" content="#f7f1e5" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23c8102e'/%3E%3Cpath fill='%23006233' d='M12 4.2 13.9 9.9 20 10 15.2 13.6 17 19.4 12 16.1 7 19.4 8.8 13.6 4 10 10.1 9.9Z'/%3E%3C/svg%3E" />
+    <script>
+      (function () {
+        try {
+          var s = JSON.parse(localStorage.getItem("succes-bac-sm-v1") || "{}");
+          var pref = s.theme || "light";
+          var dark =
+            pref === "dark" ||
+            (pref === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+          document.documentElement.setAttribute("data-ornaments", s.ornaments === false ? "off" : "on");
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.setAttribute("data-ornaments", "on");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>

@@ -17,6 +17,31 @@
     chimie: "Chimie",
   };
 
+  function videosOf(l) {
+    if (Array.isArray(l.videos) && l.videos.length) {
+      return l.videos.map((v, i) => ({
+        youtubeId: v.youtubeId,
+        title: v.title || l.videoTitle,
+        durationMin: v.durationMin || 0,
+        part: v.part || i + 1,
+      }));
+    }
+    return [
+      {
+        youtubeId: l.youtubeId,
+        title: l.videoTitle,
+        durationMin: l.durationMin || 0,
+        part: 1,
+      },
+    ];
+  }
+
+  function durationOf(l) {
+    const vs = videosOf(l);
+    const sum = vs.reduce((n, v) => n + (Number(v.durationMin) || 0), 0);
+    return sum || l.durationMin || 0;
+  }
+
   function toast(msg) {
     toastEl.textContent = msg;
     toastEl.classList.add("is-on");
@@ -103,6 +128,7 @@
             branchLabel[l.branch],
             l.channel,
             l.videoTitle,
+            (l.videos || []).map((v) => v.title).join(" "),
             l.formula,
             (l.basics || []).join(" "),
             (l.basicsAr || []).join(" "),
@@ -189,9 +215,29 @@
             <a href="#/pc" data-link class="${active === "pc" ? "is-active" : ""}">Physique-Chimie</a>
             <a href="#/stats" data-link class="${active === "stats" ? "is-active" : ""}">Mes stats (${stats.allPct}%)</a>
           </nav>
-          <button class="sb-header__toggle" type="button" aria-expanded="false" aria-controls="menu-mobile" id="burger">
-            <span></span><span></span><span></span>
-          </button>
+          <div class="sb-header__tools">
+            <button class="sb-atelier__btn" type="button" id="atelier-btn" aria-expanded="false" aria-controls="atelier-panel" title="Apparence">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z"/>
+              </svg>
+              <span class="sb-search__label">Apparence</span>
+            </button>
+            <div class="sb-atelier" id="atelier-panel" hidden>
+              <p class="sb-atelier__label">Apparence</p>
+              <div class="sb-theme" role="radiogroup" aria-label="Thème">
+                <button type="button" class="sb-theme__btn" role="radio" data-theme-set="light">Jour</button>
+                <button type="button" class="sb-theme__btn" role="radio" data-theme-set="dark">Nuit</button>
+                <button type="button" class="sb-theme__btn" role="radio" data-theme-set="system">Auto</button>
+              </div>
+              <label class="sb-atelier__check">
+                <input type="checkbox" id="ornaments-toggle" />
+                Ornements zellige
+              </label>
+            </div>
+            <button class="sb-header__toggle" type="button" aria-expanded="false" aria-controls="menu-mobile" id="burger">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
         </div>
         <div class="sb-container sb-header__panel" id="menu-mobile">
           <a href="#/" data-link>Accueil</a>
@@ -206,7 +252,7 @@
   function footer() {
     return `
       <section class="sb-strip">
-        <p class="sb-strip__arabic sb-arabic">نجاح الباك</p>
+        <p class="sb-strip__arabic sb-arabic"><span class="sb-khatem" aria-hidden="true"></span>نجاح الباك<span class="sb-khatem" aria-hidden="true"></span></p>
         <p>Plateforme marocaine · 1er Bac Sciences Mathématiques uniquement</p>
       </section>
       <footer class="sb-footer">
@@ -231,7 +277,9 @@
             ${done ? '<span class="sb-badge sb-badge--done">Terminé</span>' : ""}
           </div>
           <h3 class="sb-course-card__title">${l.chapter}</h3>
-          <p class="sb-course-card__meta">${branchLabel[l.branch]} · ${l.durationMin} min · ${l.channel}</p>
+          <p class="sb-course-card__meta">${branchLabel[l.branch]} · ${
+            videosOf(l).length > 1 ? `${videosOf(l).length} vidéos · ` : ""
+          }${durationOf(l)} min · ${l.channel}</p>
           <div class="sb-progress"><div class="sb-progress__fill ${l.subject === "pc" ? "sb-progress__fill--pc" : ""}" style="width:${done ? 100 : 0}%"></div></div>
         </div>
       </a>`;
@@ -251,6 +299,13 @@
       ${header("home")}
       <main id="main">
         <section class="sb-hero">
+          <div class="sb-hero__stars" aria-hidden="true"></div>
+          <svg class="sb-hero__jewel sb-hero__jewel--tl" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z"/>
+          </svg>
+          <svg class="sb-hero__jewel sb-hero__jewel--tr" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z"/>
+          </svg>
           <div class="sb-container">
             <p class="sb-hero__kicker">${site.kicker}</p>
             <h1 class="sb-hero__title">Succès Bac SM!</h1>
@@ -333,7 +388,7 @@
               return `<a class="sb-lesson-row ${on ? "is-done" : ""}" href="#/cours/${l.id}" data-link>
                 <span style="display:flex;align-items:center;gap:.7rem">
                   <span class="sb-check ${on ? "is-on" : ""}"></span>
-                  <span><strong>${l.chapter}</strong><br><small>${branchLabel[l.branch]} · ${l.durationMin} min</small></span>
+                  <span><strong>${l.chapter}</strong><br><small>${branchLabel[l.branch]} · ${videosOf(l).length > 1 ? videosOf(l).length + " vidéos · " : ""}${durationOf(l)} min</small></span>
                 </span>
                 <span class="sb-badge sb-badge--${l.subject === "math" ? "maths" : "pc"}">${on ? "Fait" : "À faire"}</span>
               </a>`;
@@ -481,6 +536,24 @@
     const { prev, next } = neighbors(l);
     const subjectHref = l.subject === "math" ? "#/maths" : "#/pc";
     const subjectName = l.subject === "math" ? "Maths" : "Physique-Chimie";
+    const parts = videosOf(l);
+    const first = parts[0];
+    const playlist =
+      parts.length > 1
+        ? `<ol class="sb-playlist" aria-label="Séances du chapitre">
+            ${parts
+              .map(
+                (v, i) => `<li>
+              <button type="button" class="sb-playlist__item${i === 0 ? " is-current" : ""}" data-i="${i}" data-yt="${v.youtubeId}" data-title="${escapeHtml(v.title)}">
+                <span class="sb-playlist__n">${i + 1}</span>
+                <span class="sb-playlist__title">${escapeHtml(v.title)}</span>
+                ${v.durationMin ? `<span class="sb-playlist__dur">${v.durationMin} min</span>` : ""}
+              </button>
+            </li>`
+              )
+              .join("")}
+          </ol>`
+        : "";
     app.innerHTML = `
       ${header(l.subject === "math" ? "maths" : "pc")}
       <main id="main" class="sb-section">
@@ -494,27 +567,33 @@
           </nav>
           <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1rem">
             <span class="sb-badge sb-badge--${l.subject === "math" ? "maths" : "pc"}">${branchLabel[l.branch]}</span>
-            <span class="sb-badge">${l.durationMin} min</span>
+            <span class="sb-badge">${durationOf(l)} min</span>
+            ${videosOf(l).length > 1 ? `<span class="sb-badge">${videosOf(l).length} vidéos</span>` : ""}
             ${done ? '<span class="sb-badge sb-badge--done">Cours terminé</span>' : ""}
           </div>
           <h1 class="sb-section__title">${l.chapter}</h1>
-          <p class="sb-section__sub">Vidéo : ${l.videoTitle} · ${l.channel}</p>
+          <p class="sb-section__sub">${parts.length > 1 ? `${parts.length} vidéos à la suite` : "Vidéo"} : ${escapeHtml(first.title)} · ${l.channel}</p>
 
           <div class="sb-cours" style="margin-top:1.25rem">
             <div>
-              <div class="sb-player" id="yt-box" data-yt="${l.youtubeId}">
+              <div class="sb-player" id="yt-box" data-yt="${first.youtubeId}">
                 <div class="sb-player__frame" id="yt-frame">
-                  <button type="button" class="sb-player__poster" id="yt-play" aria-label="Lire ${escapeHtml(l.videoTitle)}">
-                    <img src="https://i.ytimg.com/vi/${l.youtubeId}/hqdefault.jpg" alt="">
+                  <button type="button" class="sb-player__poster" id="yt-play" aria-label="Lire ${escapeHtml(first.title)}">
+                    <img src="https://i.ytimg.com/vi/${first.youtubeId}/hqdefault.jpg" alt="">
                     <span class="sb-player__play">Lire la vidéo</span>
                   </button>
                 </div>
               </div>
+              ${playlist}
               <div class="sb-player__bar">
                 <button class="sb-btn sb-btn--ghost" type="button" id="yt-reload">Relancer la vidéo</button>
                 <a class="sb-btn sb-btn--ghost" href="https://www.youtube.com/results?search_query=${encodeURIComponent(l.chapter + " 1bac SM cours")}" target="_blank" rel="noopener">Autre vidéo</a>
               </div>
-              <p class="sb-player__hint">Clique sur « Lire la vidéo » : le cours se lance ici, sans ouvrir YouTube.</p>
+              <p class="sb-player__hint" id="yt-hint">${
+                parts.length > 1
+                  ? "Le chapitre est en plusieurs séances : lance la 1, puis la 2, etc. Même cours, à la suite."
+                  : "Clique sur « Lire la vidéo » : le cours se lance ici, sans ouvrir YouTube."
+              }</p>
             </div>
             <div class="sb-cours-side">
               ${lessonIndex(l)}
@@ -571,11 +650,36 @@
         document.getElementById("note-hint").textContent = "Enregistré.";
       }, 250);
     });
+    let currentPart = 0;
+    const showPart = (i, autoplay) => {
+      currentPart = i;
+      const v = parts[i];
+      const frame = document.getElementById("yt-frame");
+      const sub = document.querySelector(".sb-section__sub");
+      document.querySelectorAll(".sb-playlist__item").forEach((btn) => {
+        btn.classList.toggle("is-current", Number(btn.dataset.i) === i);
+      });
+      if (sub) {
+        sub.textContent = `${parts.length > 1 ? `${parts.length} vidéos à la suite` : "Vidéo"} : ${v.title} · ${l.channel}`;
+      }
+      if (autoplay || frame.querySelector("iframe")) {
+        frame.innerHTML = ytIframe(v.youtubeId, v.title, true);
+      } else {
+        const play = document.getElementById("yt-play");
+        const img = play && play.querySelector("img");
+        if (play) play.setAttribute("aria-label", "Lire " + v.title);
+        if (img) img.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
+      }
+    };
     const startVideo = () => {
-      document.getElementById("yt-frame").innerHTML = ytIframe(l.youtubeId, l.videoTitle, true);
+      const v = parts[currentPart];
+      document.getElementById("yt-frame").innerHTML = ytIframe(v.youtubeId, v.title, true);
     };
     document.getElementById("yt-play").addEventListener("click", startVideo);
     document.getElementById("yt-reload").addEventListener("click", startVideo);
+    document.querySelectorAll(".sb-playlist__item").forEach((btn) => {
+      btn.addEventListener("click", () => showPart(Number(btn.dataset.i), true));
+    });
     document.getElementById("mark-done").addEventListener("click", () => {
       store.toggleDone(l.id, !store.isDone(l.id));
       toast(store.isDone(l.id) ? "Cours marqué terminé." : "Cours remis à faire.");
@@ -671,6 +775,62 @@
       ${footer()}`;
   }
 
+  function resolvedTheme() {
+    const pref = store.getTheme();
+    if (pref === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    return pref === "dark" ? "dark" : "light";
+  }
+
+  function applyAppearance() {
+    const theme = resolvedTheme();
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.ornaments = store.getOrnaments() ? "on" : "off";
+    document.documentElement.style.colorScheme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme === "dark" ? "#16110e" : "#f7f1e5";
+  }
+
+  function syncAtelierUi() {
+    const pref = store.getTheme();
+    document.querySelectorAll("[data-theme-set]").forEach((btn) => {
+      btn.setAttribute("aria-checked", String(btn.dataset.themeSet === pref));
+    });
+    const chk = document.getElementById("ornaments-toggle");
+    if (chk) chk.checked = store.getOrnaments();
+  }
+
+  function bindAtelier() {
+    const btn = document.getElementById("atelier-btn");
+    const panel = document.getElementById("atelier-panel");
+    if (!btn || !panel) return;
+    syncAtelierUi();
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+    });
+    document.querySelectorAll("[data-theme-set]").forEach((el) => {
+      el.addEventListener("click", () => {
+        store.setTheme(el.dataset.themeSet);
+        applyAppearance();
+        syncAtelierUi();
+        const label = { light: "Mode jour.", dark: "Mode nuit.", system: "Thème automatique." };
+        toast(label[el.dataset.themeSet] || "Apparence enregistrée.");
+      });
+    });
+    const chk = document.getElementById("ornaments-toggle");
+    if (chk) {
+      chk.addEventListener("change", () => {
+        store.setOrnaments(chk.checked);
+        applyAppearance();
+        toast(chk.checked ? "Ornements affichés." : "Ornements masqués.");
+      });
+    }
+  }
+
   function bindChrome() {
     const burger = document.getElementById("burger");
     const panel = document.getElementById("menu-mobile");
@@ -689,6 +849,7 @@
       });
     });
     bindSearch();
+    bindAtelier();
     document.querySelectorAll("[data-back]").forEach((el) => {
       el.addEventListener("click", (e) => {
         e.preventDefault();
@@ -805,5 +966,28 @@
   if (!location.hash) history.replaceState(null, "", "#/");
   stack.push(hashKey());
   lastKey = hashKey();
+  applyAppearance();
+  document.addEventListener("click", (e) => {
+    const panel = document.getElementById("atelier-panel");
+    const btn = document.getElementById("atelier-btn");
+    if (!panel || panel.hidden) return;
+    if (panel.contains(e.target) || (btn && btn.contains(e.target))) return;
+    panel.hidden = true;
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const panel = document.getElementById("atelier-panel");
+    const btn = document.getElementById("atelier-btn");
+    if (!panel || panel.hidden) return;
+    panel.hidden = true;
+    if (btn) {
+      btn.setAttribute("aria-expanded", "false");
+      btn.focus();
+    }
+  });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    if (store.getTheme() === "system") applyAppearance();
+  });
   route();
 })();
