@@ -257,7 +257,7 @@
       </section>
       <footer class="sb-footer">
         <div class="sb-container sb-footer__inner">
-          <p>Succès Bac SM! · Maths & Physique-Chimie · Programme officiel MEN</p>
+          <p>Succès Bac SM! · Cahier du 1er Bac Sciences Maths · Maroc</p>
           <p>
             <a href="https://github.com/AmineMourahi/sm" target="_blank" rel="noopener">Code sur GitHub</a>
             · Séries YouTube du même cours · Conclusions pour réviser vite
@@ -270,10 +270,8 @@
     const done = store.isDone(l.id);
     const badge = l.subject === "math" ? "maths" : "pc";
     return `
-      <a class="sb-course-card" href="#/cours/${l.id}" data-link>
-        <div class="sb-course-card__media ${l.subject === "pc" ? "sb-course-card__media--pc" : ""}">
-          S${l.semester}
-        </div>
+      <a class="sb-course-card sb-course-card--${badge}" href="#/cours/${l.id}" data-link>
+        <span class="sb-course-card__tab">S${l.semester}</span>
         <div class="sb-course-card__body">
           <div>
             <span class="sb-badge sb-badge--${badge}">${l.subject === "math" ? "Maths" : l.branch === "chimie" ? "Chimie" : "Physique"}</span>
@@ -309,41 +307,54 @@
           <svg class="sb-hero__jewel sb-hero__jewel--tr" viewBox="0 0 24 24" aria-hidden="true">
             <path fill="currentColor" d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z"/>
           </svg>
-          <div class="sb-container">
-            <p class="sb-hero__kicker">${site.kicker}</p>
-            <h1 class="sb-hero__title">Succès Bac SM!</h1>
-            <p class="sb-hero__arabic sb-arabic">${site.arabic}</p>
-            <p class="sb-hero__lead">${site.tagline}</p>
-            <div class="sb-hero__actions">
-              <a class="sb-btn sb-btn--primary" href="#/maths" data-link>Programme Maths</a>
-              <a class="sb-btn sb-btn--secondary" href="#/pc" data-link>Programme Physique-Chimie</a>
+          <div class="sb-container sb-hero__layout">
+            <div class="sb-hero__copy">
+              <p class="sb-hero__kicker">${site.kicker}</p>
+              <h1 class="sb-hero__title">Succès Bac <em>SM!</em></h1>
+              <p class="sb-hero__lead">${site.tagline}</p>
+              <div class="sb-hero__actions">
+                <a class="sb-btn sb-btn--primary" href="#/maths" data-link>Programme Maths</a>
+                <a class="sb-btn sb-btn--secondary" href="#/pc" data-link>Programme Physique-Chimie</a>
+              </div>
+              <p class="sb-flag">
+                <svg class="sb-flag__star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.2 L14.2 9.8 L21.2 9.9 L15.6 14 L17.7 20.8 L12 16.8 L6.3 20.8 L8.4 14 L2.8 9.9 L9.8 9.8 Z"/></svg>
+                Maroc · français scientifique · ${lessons.length} cours · ta progression : <strong>${st.allPct}%</strong>
+              </p>
             </div>
-            <p class="sb-flag">
-              <svg class="sb-flag__star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.2 L14.2 9.8 L21.2 9.9 L15.6 14 L17.7 20.8 L12 16.8 L6.3 20.8 L8.4 14 L2.8 9.9 L9.8 9.8 Z"/></svg>
-              Maroc · français scientifique · ${lessons.length} cours · ta progression : <strong>${st.allPct}%</strong>
-            </p>
+            <aside class="sb-hero__seal" aria-hidden="true">
+              <div>
+                <p class="sb-arabic">${site.arabic}</p>
+                <p class="sb-hero__seal-meta">1er Bac · SM</p>
+              </div>
+            </aside>
           </div>
         </section>
         <section class="sb-section">
           <div class="sb-container">
             <div class="sb-pillars">
               <article class="sb-pillar">
-                <div class="sb-pillar__icon sb-pillar__icon--maths">Σ</div>
-                <h3>Mathématiques</h3>
-                <p>${maths.length} cours du programme SM : logique, analyse, géométrie de l’espace, arithmétique.</p>
-                <p style="margin-top:.8rem"><a class="sb-btn sb-btn--sm sb-btn--primary" href="#/maths" data-link>Ouvrir les maths</a></p>
+                <div class="sb-pillar__icon sb-pillar__icon--maths">01</div>
+                <div>
+                  <h3>Mathématiques</h3>
+                  <p>${maths.length} cours du programme SM : logique, analyse, géométrie de l’espace, arithmétique.</p>
+                </div>
+                <a class="sb-btn sb-btn--sm sb-btn--primary" href="#/maths" data-link>Ouvrir les maths</a>
               </article>
               <article class="sb-pillar">
-                <div class="sb-pillar__icon sb-pillar__icon--pc">⚛</div>
-                <h3>Physique-Chimie</h3>
-                <p>${pcs.length} cours : mécanique, énergie, électricité, optique, solutions, organique.</p>
-                <p style="margin-top:.8rem"><a class="sb-btn sb-btn--sm sb-btn--danger" href="#/pc" data-link>Ouvrir la PC</a></p>
+                <div class="sb-pillar__icon sb-pillar__icon--pc">02</div>
+                <div>
+                  <h3>Physique-Chimie</h3>
+                  <p>${pcs.length} cours : mécanique, énergie, électricité, optique, solutions, organique.</p>
+                </div>
+                <a class="sb-btn sb-btn--sm sb-btn--danger" href="#/pc" data-link>Ouvrir la PC</a>
               </article>
               <article class="sb-pillar">
-                <div class="sb-pillar__icon sb-pillar__icon--gold">%</div>
-                <h3>Stats & notes</h3>
-                <p>Vois où tu en es (1 %, 40 %, 100 %) et prends des notes à côté de chaque vidéo — un clic pour les cacher.</p>
-                <p style="margin-top:.8rem"><a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/stats" data-link>Voir ma progression</a></p>
+                <div class="sb-pillar__icon sb-pillar__icon--gold">03</div>
+                <div>
+                  <h3>Stats & notes</h3>
+                  <p>Vois où tu en es (1 %, 40 %, 100 %) et prends des notes à côté de chaque vidéo — un clic pour les cacher.</p>
+                </div>
+                <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/stats" data-link>Voir ma progression</a>
               </article>
             </div>
           </div>
@@ -356,7 +367,7 @@
                 <p class="sb-section__sub">Séries YouTube du même chapitre (séance 1, 2, 3…) + conclusion express si tu n’as pas le temps de tout regarder.</p>
               </div>
             </div>
-            <div class="sb-grid sb-grid--3">${featured.map(courseCard).join("")}</div>
+            <div class="sb-grid sb-grid--atelier">${featured.map(courseCard).join("")}</div>
           </div>
         </section>
       </main>

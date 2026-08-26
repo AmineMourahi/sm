@@ -8,11 +8,12 @@ Importer `tokens.css`. Motifs : `patterns.svg#zellige` (fonds de sections) et `p
 
 ## Principes
 
-1. **Crème en fond de page**, blanc cassé pour les cartes, terre pour le texte, vert pour la marque, rouge pour l'accent (CTA fort, PC), or pour les filets et le luxe — pas pour le corps de texte.
-2. **Titres Fraunces** (caractère, optique), **corps Outfit**, **Amiri** pour l'arabe.
-3. **Mobile-first**, une colonne jusqu'à 768px ; grille 12 dès 1024px.
+1. **Papier cahier** (crème un peu jauni), encre terre, vert et rouge en **filets / onglets** seulement, or et cobalt zellige pour le décor — pas un landing « drapeau sticker ».
+2. **Titres Cormorant Garamond** (italique, imprimerie), **corps Karla**, **Amiri** pour l’arabe.
+3. **Mobile-first**, une colonne jusqu’à 768px ; grille magazine dès 1024px.
 4. **Motion 200–300 ms**, `cubic-bezier(0.22, 1, 0.36, 1)`. `prefers-reduced-motion` : durées à 0.
 5. **AA** : texte `--sb-text` sur `--sb-surface` ; or clair = décor ; liens `--sb-text-link` ; focus gold visible.
+6. **Pas de verre flou, pas de pills, pas de cartes 16:10 dégradées** — fiches bristol, sommaire numéroté, marge rouge de cahier.
 
 ---
 

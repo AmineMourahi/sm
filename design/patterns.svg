@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 144 72" width="144" height="72" role="img" aria-labelledby="sb-patterns-title sb-patterns-desc">
   <title id="sb-patterns-title">Motifs Succès Bac SM</title>
-  <desc id="sb-patterns-desc">Tuile zellige géométrique (khatem à 8 branches) et tuile d'étoiles pentagonales marocaines. Utiliser via #zellige ou #etoile.</desc>
-
-  <!--
-    Usage CSS (tuiles 72x72, répétition seamless) :
-      background-image: url("design/patterns.svg#zellige");
-      background-image: url("design/patterns.svg#etoile");
-    Usage inline : <use href="design/patterns.svg#sb-symbol-etoile" />
-  -->
+  <desc id="sb-patterns-desc">Tuile zellige khatem à 8 branches (Fès) et étoiles pentagonales marocaines. Utiliser via #zellige ou #etoile.</desc>
 
   <defs>
     <view id="zellige" viewBox="0 0 72 72" />
     <view id="etoile" viewBox="72 0 72 72" />
 
-    <!-- Étoile pentagonale marocaine (drapeau) : 5 branches, pas hexagramme -->
-    <!-- Contour : 5 pointes R=10 + 5 creux r~3.82, centre 12,12 -->
     <symbol id="sb-symbol-etoile" viewBox="0 0 24 24">
       <path
         fill="currentColor"
@@ -23,7 +14,6 @@
         d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z" />
     </symbol>
 
-    <!-- Pentagramme filaire (entrelacs, pentagone central) : sommets 0-2-4-1-3 -->
     <symbol id="sb-symbol-pentagramme" viewBox="0 0 24 24">
       <path
         fill="none"
@@ -33,51 +23,46 @@
         d="M12 2 L17.878 20.09 L2.489 8.91 L21.511 8.91 L6.122 20.09 Z" />
     </symbol>
 
+    <!-- Khatem 8 branches : deux carrés superposés, réseau Fez -->
     <g id="tile-zellige">
       <rect width="72" height="72" fill="none" />
-      <g fill="none" stroke="#C9A227" stroke-width="0.7" stroke-linejoin="miter" opacity="0.55">
-        <polygon points="36,6 66,36 36,66 6,36" />
-        <polygon points="36,18 54,36 36,54 18,36" />
-        <rect x="21.5" y="21.5" width="29" height="29" />
-        <rect x="21.5" y="21.5" width="29" height="29" transform="rotate(45 36 36)" />
-        <polygon points="36,10 54.2,17.8 62,36 54.2,54.2 36,62 17.8,54.2 10,36 17.8,17.8" />
+      <g fill="none" stroke-linejoin="miter">
+        <polygon points="36,4 68,36 36,68 4,36" stroke="#1a4a6b" stroke-width="0.9" opacity="0.42" />
+        <polygon points="36,4 68,36 36,68 4,36" stroke="#1a4a6b" stroke-width="0.9" opacity="0.42" transform="rotate(45 36 36)" />
+        <polygon points="36,14 58,36 36,58 14,36" stroke="#006233" stroke-width="0.7" opacity="0.38" />
+        <polygon points="36,14 58,36 36,58 14,36" stroke="#006233" stroke-width="0.7" opacity="0.38" transform="rotate(45 36 36)" />
+        <rect x="24" y="24" width="24" height="24" stroke="#C9A227" stroke-width="0.65" opacity="0.55" />
+        <rect x="24" y="24" width="24" height="24" stroke="#C9A227" stroke-width="0.65" opacity="0.55" transform="rotate(45 36 36)" />
+        <circle cx="36" cy="36" r="5.2" stroke="#C8102E" stroke-width="0.55" opacity="0.35" />
+        <line x1="36" y1="0" x2="36" y2="72" stroke="#3D2B1F" stroke-width="0.35" opacity="0.12" />
+        <line x1="0" y1="36" x2="72" y2="36" stroke="#3D2B1F" stroke-width="0.35" opacity="0.12" />
+        <line x1="0" y1="0" x2="72" y2="72" stroke="#3D2B1F" stroke-width="0.35" opacity="0.1" />
+        <line x1="72" y1="0" x2="0" y2="72" stroke="#3D2B1F" stroke-width="0.35" opacity="0.1" />
       </g>
-      <g fill="none" stroke="#006233" stroke-width="0.55" opacity="0.28">
-        <line x1="36" y1="0" x2="36" y2="6" />
-        <line x1="36" y1="66" x2="36" y2="72" />
-        <line x1="0" y1="36" x2="6" y2="36" />
-        <line x1="66" y1="36" x2="72" y2="36" />
-        <line x1="0" y1="0" x2="10" y2="10" />
-        <line x1="62" y1="62" x2="72" y2="72" />
-        <line x1="72" y1="0" x2="62" y2="10" />
-        <line x1="10" y1="62" x2="0" y2="72" />
-      </g>
-      <g fill="none" stroke="#C8102E" stroke-width="0.5" opacity="0.22">
-        <polyline points="0,18 18,0" />
-        <polyline points="54,0 72,18" />
-        <polyline points="72,54 54,72" />
-        <polyline points="18,72 0,54" />
+      <g fill="#1a4a6b" opacity="0.14">
+        <polygon points="36,20 40,36 36,52 32,36" />
+        <polygon points="20,36 36,40 52,36 36,32" />
       </g>
     </g>
 
     <g id="tile-etoile">
       <rect width="72" height="72" fill="none" />
-      <g fill="#006233" opacity="0.18">
+      <g fill="#006233" opacity="0.2">
         <g transform="translate(24 8)">
           <path d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z" />
         </g>
       </g>
-      <g fill="#C9A227" opacity="0.16">
-        <g transform="translate(-12 44) scale(0.7)">
+      <g fill="#1a4a6b" opacity="0.12">
+        <g transform="translate(-10 42) scale(0.72)">
           <path d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z" />
         </g>
-        <g transform="translate(52 44) scale(0.7)">
+        <g transform="translate(50 42) scale(0.72)">
           <path d="M12 2 L14.245 8.91 L21.511 8.91 L15.633 13.18 L17.878 20.09 L12 15.82 L6.122 20.09 L8.367 13.18 L2.489 8.91 L9.755 8.91 Z" />
         </g>
       </g>
-      <g fill="none" stroke="#3D2B1F" stroke-width="0.4" opacity="0.08">
-        <circle cx="36" cy="36" r="22" />
-        <circle cx="36" cy="36" r="30" />
+      <g fill="none" stroke="#C9A227" stroke-width="0.45" opacity="0.28">
+        <polygon points="36,10 62,36 36,62 10,36" />
+        <polygon points="36,10 62,36 36,62 10,36" transform="rotate(45 36 36)" />
       </g>
     </g>
   </defs>

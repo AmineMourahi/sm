@@ -7,10 +7,10 @@
  * les primitifs, sauf illustration / motif.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
 :root {
-  /* ——— Primitifs drapeau & artisanat ——— */
+  /* ——— Primitifs drapeau, zellige Fès, papier cahier ——— */
   --sb-red: #c8102e;
   --sb-red-deep: #9a0c23;
   --sb-red-soft: #f4d4da;
@@ -20,12 +20,15 @@
   --sb-gold: #c9a227;
   --sb-gold-deep: #8a6e12;
   --sb-gold-soft: #f3e9c8;
-  --sb-cream: #f7f1e5;
-  --sb-cream-deep: #efe6d4;
+  --sb-cobalt: #1a4a6b;
+  --sb-cobalt-soft: #d5e4ee;
+  --sb-copper: #9a6230;
+  --sb-cream: #f3e6ce;
+  --sb-cream-deep: #e8d5b5;
   --sb-earth: #3d2b1f;
   --sb-earth-soft: #5c4334;
-  --sb-white: #fffcf7;
-  --sb-ink: #2a1c14;
+  --sb-white: #fbf6ec;
+  --sb-ink: #29180f;
 
   /* ——— Surfaces ——— */
   --sb-surface: var(--sb-cream);
@@ -45,6 +48,7 @@
   --sb-text-gold: var(--sb-gold-deep); /* #8A6E12 sur cream ≈ 4.6:1 */
   --sb-text-link: var(--sb-green-deep);
   --sb-text-arabic: var(--sb-green);
+  --sb-margin-cahier: color-mix(in srgb, var(--sb-red) 58%, transparent);
 
   /* ——— Traits & focus ——— */
   --sb-border: rgba(61, 43, 31, 0.12);
@@ -60,8 +64,8 @@
   --sb-info: #1f4e79;
 
   /* ——— Typo ——— */
-  --sb-font-display: "Fraunces", "Palatino Linotype", Palatino, serif;
-  --sb-font-body: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --sb-font-display: "Cormorant Garamond", "Palatino Linotype", Palatino, serif;
+  --sb-font-body: "Karla", "Segoe UI", system-ui, sans-serif;
   --sb-font-arabic: "Amiri", "Traditional Arabic", serif;
   --sb-font-opsz: 72;
 
@@ -103,11 +107,11 @@
   --sb-notes-width: 22rem;
 
   /* ——— Rayons ——— */
-  --sb-radius-sm: 0.5rem;
-  --sb-radius-md: 0.75rem;
-  --sb-radius-lg: 1rem;
-  --sb-radius-xl: 1.5rem;
-  --sb-radius-pill: 999px;
+  --sb-radius-sm: 0.2rem;
+  --sb-radius-md: 0.35rem;
+  --sb-radius-lg: 0.45rem;
+  --sb-radius-xl: 0.7rem;
+  --sb-radius-pill: 0.3rem;
 
   /* ——— Ombres chaudes (terre, jamais noir froid) ——— */
   --sb-shadow-sm: 0 1px 2px rgba(61, 43, 31, 0.06);
@@ -132,7 +136,7 @@
 
   /* ——— Player ——— */
   --sb-player-bg: #1a120e;
-  --sb-player-radius: var(--sb-radius-lg);
+  --sb-player-radius: 0.2rem;
 
   /* ——— Progress rings ——— */
   --sb-ring-track: var(--sb-cream-deep);
@@ -172,10 +176,10 @@ html[data-theme="dark"] {
   --sb-red-soft: #3d1c24;
   --sb-gold-soft: #3a2e14;
 
-  --sb-surface: #16110e;
-  --sb-surface-raised: #2a221b;
-  --sb-surface-sunken: #211a15;
-  --sb-surface-inverse: #0e0b09;
+  --sb-surface: #2a1c14;
+  --sb-surface-raised: #3d2e22;
+  --sb-surface-sunken: #23180f;
+  --sb-surface-inverse: #140e0b;
 
   --sb-text: #f3eadc;
   --sb-text-muted: #c4b4a2;
@@ -184,6 +188,8 @@ html[data-theme="dark"] {
   --sb-text-gold: #e0c56a;
   --sb-text-link: #8fd4ae;
   --sb-text-arabic: #7dcea0;
+  --sb-cobalt-soft: #1a3344;
+  --sb-margin-cahier: color-mix(in srgb, var(--sb-red) 72%, transparent);
 
   --sb-border: rgba(243, 234, 220, 0.12);
   --sb-border-strong: rgba(243, 234, 220, 0.22);
@@ -224,7 +230,6 @@ h3,
 .sb-title {
   font-family: var(--sb-font-display);
   font-optical-sizing: auto;
-  font-variation-settings: "opsz" var(--sb-font-opsz);
   font-weight: var(--sb-fw-semibold);
   line-height: var(--sb-lh-tight);
   letter-spacing: var(--sb-tracking-display);
