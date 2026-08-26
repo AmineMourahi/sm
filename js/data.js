@@ -5,7 +5,7 @@ window.SB_DATA = {
     arabic: "نجاح الباك",
     kicker: "1er Bac · Sciences Maths · Maroc",
     tagline:
-      "La plateforme 100 % marocaine pour réussir le 1er Bac Sciences Mathématiques : maths et physique-chimie, cours vidéo, conclusions express et suivi de ta progression.",
+      "La plateforme 100 % marocaine pour réussir le 1er Bac Sciences Mathématiques : maths et physique-chimie, séries de cours vidéo, conclusions express et suivi de ta progression.",
   },
   lessons: [
     /* ——— MATHS S1 ——— */

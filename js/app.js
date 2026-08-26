@@ -258,7 +258,10 @@
       <footer class="sb-footer">
         <div class="sb-container sb-footer__inner">
           <p>Succès Bac SM! · Maths & Physique-Chimie · Programme officiel MEN</p>
-          <p>Vidéos YouTube de professeurs populaires · Conclusions rédigées pour réviser vite</p>
+          <p>
+            <a href="https://github.com/AmineMourahi/sm" target="_blank" rel="noopener">Code sur GitHub</a>
+            · Séries YouTube du même cours · Conclusions pour réviser vite
+          </p>
         </div>
       </footer>`;
   }
@@ -350,7 +353,7 @@
             <div class="sb-section__head">
               <div>
                 <h2 class="sb-section__title">Cours à ouvrir tout de suite</h2>
-                <p class="sb-section__sub">Vidéo populaire + conclusion express si tu n’as pas le temps de tout regarder.</p>
+                <p class="sb-section__sub">Séries YouTube du même chapitre (séance 1, 2, 3…) + conclusion express si tu n’as pas le temps de tout regarder.</p>
               </div>
             </div>
             <div class="sb-grid sb-grid--3">${featured.map(courseCard).join("")}</div>
@@ -405,8 +408,8 @@
     const title = subject === "math" ? "Mathématiques" : "Physique-Chimie";
     const lead =
       subject === "math"
-        ? "Programme 1er Bac SM : logique, fonctions, géométrie, dénombrement, arithmétique. Chaque cours a une vidéo et une conclusion pour les jours de flemme."
-        : "Programme 1er Bac SM : mécanique et énergie, chimie des solutions, champs, optique, chimie organique.";
+        ? "Programme 1er Bac SM : logique, fonctions, géométrie, dénombrement, arithmétique. Chaque cours a sa série YouTube (séance 1, 2…) et une conclusion pour les jours de flemme."
+        : "Programme 1er Bac SM : mécanique et énergie, chimie des solutions, champs, optique, chimie organique. Séries YouTube du même chapitre + conclusion express.";
     app.innerHTML = `
       ${header(subject === "math" ? "maths" : "pc")}
       <main id="main">
