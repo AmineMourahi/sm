@@ -48,7 +48,6 @@
   --sb-text-gold: var(--sb-gold-deep); /* #8A6E12 sur cream ≈ 4.6:1 */
   --sb-text-link: var(--sb-green-deep);
   --sb-text-arabic: var(--sb-green);
-  --sb-margin-cahier: color-mix(in srgb, var(--sb-red) 58%, transparent);
 
   /* ——— Traits & focus ——— */
   --sb-border: rgba(61, 43, 31, 0.12);
@@ -189,7 +188,6 @@ html[data-theme="dark"] {
   --sb-text-link: #8fd4ae;
   --sb-text-arabic: #7dcea0;
   --sb-cobalt-soft: #1a3344;
-  --sb-margin-cahier: color-mix(in srgb, var(--sb-red) 72%, transparent);
 
   --sb-border: rgba(243, 234, 220, 0.12);
   --sb-border-strong: rgba(243, 234, 220, 0.22);

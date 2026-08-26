@@ -13,7 +13,7 @@ Importer `tokens.css`. Motifs : `patterns.svg#zellige` (fonds de sections) et `p
 3. **Mobile-first**, une colonne jusqu’à 768px ; grille magazine dès 1024px.
 4. **Motion 200–300 ms**, `cubic-bezier(0.22, 1, 0.36, 1)`. `prefers-reduced-motion` : durées à 0.
 5. **AA** : texte `--sb-text` sur `--sb-surface` ; or clair = décor ; liens `--sb-text-link` ; focus gold visible.
-6. **Pas de verre flou, pas de pills, pas de cartes 16:10 dégradées** — fiches bristol, sommaire numéroté, marge rouge de cahier.
+6. **Pas de verre flou, pas de pills, pas de cartes 16:10 dégradées** — fiches bristol, sommaire numéroté, sceau zellige en khatem.
 
 ---
 
