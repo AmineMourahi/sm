@@ -36,7 +36,7 @@ window.SB_DATA = {
       badge: "ar",
       group: "regional",
       search: "arabe arabic langue arabe اللغة العربية نصوص شعر مقالة",
-      lead: "Filières scientifiques : textes (شعر، مقالة، قصة), علوم اللغة et تعبير وإنشاء. Vidéos 1er Bac + conclusion pour le régional.",
+      lead: "Filières scientifiques, cadre du régional : textes, علوم اللغة (مصادر، تمييز، عدد، أمر/نهي، استفهام) et تعبير (توسيع، صورة، ربط). Vidéos 1er Bac + conclusion."
     },
     {
       id: "fr",
@@ -46,7 +46,7 @@ window.SB_DATA = {
       badge: "fr",
       group: "regional",
       search: "francais french langue argumentation",
-      lead: "Toutes filières : œuvres intégrales, figures de style, argumentation, production écrite. Préparation à l’examen régional.",
+      lead: "Toutes filières, cadre du régional : trois œuvres, figures de style, énonciation, argumentation, production écrite."
     },
     {
       id: "islam",
@@ -56,7 +56,7 @@ window.SB_DATA = {
       badge: "islam",
       group: "regional",
       search: "islam education islamique تربية إسلامية إيمان فقه الأسرة",
-      lead: "Toutes filières : foi et ghayb, Sourate Yusuf, fiqh de la famille. Cadre référentiel du régional.",
+      lead: "Toutes filières, cadre du régional : vingt unités (تزكية، اقتداء، أسرة، قسط، حكمة) + Sourate Yusuf pour l’الاستدلال."
     },
     {
       id: "hg",
@@ -66,7 +66,7 @@ window.SB_DATA = {
       badge: "hg",
       group: "regional",
       search: "histoire geo geographie hg اجتماعيات المغرب حماية",
-      lead: "Programme SM : transformations du XIXe, Maroc sous pression puis sous protectorat, géographie du territoire. Fiches pour le régional.",
+      lead: "Cadre SM/EX : histoire (XIXe, 1914, 1929, WWII, Maroc) et géo (développement, Maroc, monde arabe, USA, UE, Chine)."
     },
   ],
   lessons: [

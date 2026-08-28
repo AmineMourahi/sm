@@ -26,6 +26,9 @@
     aqida: "عقيدة",
     usra: "فقه الأسرة",
     iqtida: "اقتداء",
+    qist: "قسط",
+    hikma: "حكمة",
+    quran: "سورة يوسف",
     histoire: "Histoire",
     geo: "Géographie",
   };

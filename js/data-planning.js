@@ -45,7 +45,7 @@ window.SB_PLAN = {
         { id: "pc", name: "Physique-Chimie", classH: 4, homeH: 4, cc: 7, regional: null, track: "cc", href: "#/pc", tip: "Même exigence de devoirs qu’en SM sur beaucoup de chapitres. Travaux pratiques : refais le compte-rendu le jour même." },
         { id: "svt", name: "SVT", classH: 4, homeH: 4, cc: 7, regional: null, track: "cc", href: "", tip: "Pilier EX, pas une matière « à côté ». Schémas + vocabulaire après chaque séance. Pas encore de série vidéo SVT sur le site." },
         { id: "fr", name: "Français", classH: 4, homeH: 2.5, cc: 4, regional: 4, track: "both", href: "#/francais", tip: "Même épreuve régionale qu’en SM. Œuvres + production écrite : 2 h 30 maison par semaine." },
-        { id: "ar", name: "Arabe", classH: 2, homeH: 1.5, cc: 2, regional: 2, track: "both", href: "#/arabe", tip: "Programme sciences (textes, langue, expression) — les 7 cours du site couvrent le régional." },
+        { id: "ar", name: "Arabe", classH: 2, homeH: 1.5, cc: 2, regional: 2, track: "both", href: "#/arabe", tip: "Programme sciences (textes, langue, expression) — les cours du site suivent l’إطار المرجعي." },
         { id: "islam", name: "Éduc. islamique", classH: 1, homeH: 1.5, cc: 2, regional: 4, track: "both", href: "#/islam", tip: "Coef 4 au régional en EX : plus lourd qu’en SM. Cadre référentiel chaque semaine, pas un bachotage de juin." },
         { id: "hg", name: "اجتماعيات", classH: 2, homeH: 1, cc: 2, regional: 2, track: "both", href: "#/hg", tip: "Même esprit qu’en SM. Un peu moins de maison : les 4 h SVT prennent déjà le soir." },
         { id: "philo", name: "Philosophie", classH: 2, homeH: 0.5, cc: 2, regional: null, track: "cc", href: "", tip: "Contrôle de classe seulement." },

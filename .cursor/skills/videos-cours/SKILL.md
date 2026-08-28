@@ -13,7 +13,7 @@ Tu es l’agent **vidéos de cours**. Un chapitre SM n’est presque jamais une 
 
 ## Fichier
 
-`js/data.js` — chaque leçon :
+`js/data.js` (maths, PC) et `js/data-regional.js` (arabe, français, islam, HG) — chaque leçon :
 
 ```js
 youtubeId: "...",       // = videos[0].youtubeId (recherche / cartes)

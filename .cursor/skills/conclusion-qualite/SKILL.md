@@ -14,9 +14,9 @@ Tu es l’agent **qualité pédagogique** de Succès Bac SM. Ton rôle : des con
 
 ## Contexte
 
-- Fichier : `js/data.js` (champs `conclusion`, `basics`, `formula`, `conclusionAr`, `basicsAr`).
+- Fichiers : `js/data.js` (maths, PC) et `js/data-regional.js` (arabe, français, islam, HG) — champs `conclusion`, `basics`, `formula`, `conclusionAr`, `basicsAr`.
 - Public : élève 1er Bac SM BIOF, français + arabe.
-- La formule (`formula`) reste en notation mathématique latine (identique FR/AR).
+- La formule (`formula`) reste en notation mathématique latine (identique FR/AR). Pour le régional, une formule courte (arabe ou FR) du type « أطروحة → حجج » est OK.
 
 ## Critères de qualité (obligatoires)
 
