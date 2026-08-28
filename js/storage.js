@@ -9,6 +9,7 @@ window.SBStore = (() => {
     lang: "fr",
     theme: "light",
     ornaments: true,
+    stream: "sm",
   });
 
   function read() {
@@ -80,6 +81,16 @@ window.SBStore = (() => {
     return write(s);
   }
 
+  function getStream() {
+    return read().stream === "ex" ? "ex" : "sm";
+  }
+
+  function setStream(stream) {
+    const s = read();
+    s.stream = stream === "ex" ? "ex" : "sm";
+    return write(s);
+  }
+
   function getOrnaments() {
     return read().ornaments !== false;
   }
@@ -148,6 +159,8 @@ window.SBStore = (() => {
     setLang,
     getTheme,
     setTheme,
+    getStream,
+    setStream,
     getOrnaments,
     setOrnaments,
     stats,

@@ -121,7 +121,7 @@
     const qs = qIndex === -1 ? "" : raw.slice(qIndex + 1);
     const parts = path.split("/").filter(Boolean);
     const params = new URLSearchParams(qs);
-    return { parts, q: params.get("q") || "" };
+    return { parts, q: params.get("q") || "", f: params.get("f") || "" };
   }
 
   const scrollPos = Object.create(null);
@@ -263,7 +263,8 @@
             <a href="#/maths" data-link class="${active === "maths" ? "is-active" : ""}">Maths</a>
             <a href="#/pc" data-link class="${active === "pc" ? "is-active" : ""}">PC</a>
             <a href="#/regional" data-link class="${active === "regional" ? "is-active" : ""}">Régional</a>
-            <a href="#/stats" data-link class="${active === "stats" ? "is-active" : ""}">Mes stats (${stats.allPct}%)</a>
+            <a href="#/planning" data-link class="${active === "planning" ? "is-active" : ""}">Planning</a>
+            <a href="#/stats" data-link class="${active === "stats" ? "is-active" : ""}">Stats (${stats.allPct}%)</a>
           </nav>
           <div class="sb-header__tools">
             <button class="sb-atelier__btn" type="button" id="atelier-btn" aria-expanded="false" aria-controls="atelier-panel" title="Apparence">
@@ -294,6 +295,7 @@
           <a href="#/maths" data-link>Programme Maths</a>
           <a href="#/pc" data-link>Programme Physique-Chimie</a>
           <a href="#/regional" data-link>Matières du régional</a>
+          <a href="#/planning" data-link>Planning SM / EX</a>
           <a href="#/arabe" data-link>Arabe</a>
           <a href="#/francais" data-link>Français</a>
           <a href="#/islam" data-link>Éducation islamique</a>
@@ -308,7 +310,7 @@
     return `
       <section class="sb-strip">
         <p class="sb-strip__arabic sb-arabic"><span class="sb-khatem" aria-hidden="true"></span>نجاح الباك<span class="sb-khatem" aria-hidden="true"></span></p>
-        <p>Plateforme marocaine · 1er Bac Sciences Mathématiques uniquement</p>
+        <p>Plateforme marocaine · 1er Bac SM et Sciences Expérimentales</p>
       </section>
       <footer class="sb-footer">
         <div class="sb-container sb-footer__inner">
@@ -375,7 +377,7 @@
               <div class="sb-hero__actions">
                 <a class="sb-btn sb-btn--primary" href="#/maths" data-link>Programme Maths</a>
                 <a class="sb-btn sb-btn--secondary" href="#/pc" data-link>Programme Physique-Chimie</a>
-                <a class="sb-btn sb-btn--ghost" href="#/regional" data-link>Matières du régional</a>
+                <a class="sb-btn sb-btn--ghost" href="#/planning" data-link>Planning SM / EX</a>
               </div>
               <p class="sb-flag">
                 <svg class="sb-flag__star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.2 L14.2 9.8 L21.2 9.9 L15.6 14 L17.7 20.8 L12 16.8 L6.3 20.8 L8.4 14 L2.8 9.9 L9.8 9.8 Z"/></svg>
@@ -419,6 +421,14 @@
               </article>
               <article class="sb-pillar">
                 <div class="sb-pillar__icon sb-pillar__icon--ar">04</div>
+                <div>
+                  <h3>Planning</h3>
+                  <p>1er Bac SM ou EX : quoi étudier, combien d’heures, régional et contrôles de classe en même temps.</p>
+                </div>
+                <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/planning" data-link>Ouvrir le planning</a>
+              </article>
+              <article class="sb-pillar">
+                <div class="sb-pillar__icon sb-pillar__icon--gold">05</div>
                 <div>
                   <h3>Stats & notes</h3>
                   <p>Vois où tu en es (1 %, 40 %, 100 %) et prends des notes à côté de chaque vidéo — un clic pour les cacher.</p>
@@ -524,9 +534,9 @@
       <main id="main">
         <div class="sb-container sb-pagehead">
           <p class="sb-breadcrumb">${backLink("#/")}</p>
-          <p class="sb-hero__kicker">Examen régional · 1er Bac SM</p>
+          <p class="sb-hero__kicker">Examen régional · 1er Bac SM et EX</p>
           <h1 class="sb-section__title">Matières du régional</h1>
-          <p class="sb-section__sub">Arabe, français, éducation islamique et اجتماعيات : mêmes cartes, mêmes vidéos, mêmes conclusions express que maths et PC.</p>
+          <p class="sb-section__sub">Arabe, français, éducation islamique et اجتماعيات : mêmes cartes, mêmes vidéos, mêmes conclusions express que maths et PC. Pour les heures et le mix contrôles / régional, ouvre le <a href="#/planning" data-link>planning SM / EX</a>.</p>
           <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${st.regionalPct}% du régional terminé</p>
           <div class="sb-progress" style="max-width:320px;height:8px;margin-top:.6rem">
             <div class="sb-progress__fill sb-progress__fill--ar" style="width:${st.regionalPct}%"></div>
@@ -557,6 +567,191 @@
         </section>
       </main>
       ${footer()}`;
+  }
+
+  function formatHours(n) {
+    const v = Math.round((Number(n) || 0) * 60);
+    if (!v) return "—";
+    const h = Math.floor(v / 60);
+    const m = v % 60;
+    if (!h) return `${m} min`;
+    if (!m) return `${h} h`;
+    return `${h} h ${m}`;
+  }
+
+  function trackBadge(track) {
+    if (track === "reg") return '<span class="sb-badge sb-badge--ar">Régional</span>';
+    if (track === "both") return '<span class="sb-badge sb-badge--islam">Classe + régional</span>';
+    return '<span class="sb-badge sb-badge--maths">Contrôle</span>';
+  }
+
+  function chapterLists(ids) {
+    return ids
+      .map((subjectId) => {
+        const meta = subjectMeta(subjectId);
+        const list = lessonsOf(subjectId);
+        if (!list.length) return "";
+        const nameHtml = isRtlText(meta.nameLong)
+          ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(meta.nameLong)}</span>`
+          : escapeHtml(meta.nameLong);
+        return `<article class="sb-plan-block">
+          <h3>${nameHtml}</h3>
+          ${groupModules(list)
+            .map((mod) => {
+              if (!mod.items.length) return "";
+              return `<p class="sb-plan-sem">${mod.title}</p>
+                <ul class="sb-plan-chapters">
+                  ${mod.items
+                    .map((l) => {
+                      const on = store.isDone(l.id);
+                      return `<li class="${on ? "is-done" : ""}"><a href="#/cours/${l.id}" data-link>${chapterLabel(l)}</a>${on ? " · fait" : ""}</li>`;
+                    })
+                    .join("")}
+                </ul>`;
+            })
+            .join("")}
+        </article>`;
+      })
+      .join("");
+  }
+
+  function renderPlanning(f) {
+    const plan = window.SB_PLAN;
+    if (!plan || !plan.streams) {
+      app.innerHTML = `${header("planning")}<main class="sb-container sb-empty"><p>Planning indisponible.</p>${backLink("#/")}</main>${footer()}`;
+      return;
+    }
+    const streamId = f === "ex" || f === "sm" ? f : store.getStream();
+    store.setStream(streamId);
+    const stream = plan.streams[streamId];
+    const st = store.stats(lessons);
+    const classTotal = stream.subjects.reduce((n, s) => n + (Number(s.classH) || 0), 0);
+    const homeTotal = stream.subjects.reduce((n, s) => n + (Number(s.homeH) || 0), 0);
+    const rows = stream.subjects
+      .map((s) => {
+        const nameHtml = isRtlText(s.name)
+          ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(s.name)}</span>`
+          : escapeHtml(s.name);
+        const title = s.href
+          ? `<a href="${s.href}" data-link>${nameHtml}</a>`
+          : nameHtml;
+        return `<tr data-track="${s.track}">
+          <td>${title}<br><small>${escapeHtml(s.tip || "")}</small></td>
+          <td>${formatHours(s.classH)}</td>
+          <td>${formatHours(s.homeH)}</td>
+          <td>${s.cc != null ? s.cc : "—"}</td>
+          <td>${s.regional != null ? s.regional : "—"}</td>
+          <td>${trackBadge(s.track)}</td>
+        </tr>`;
+      })
+      .join("");
+    const week = stream.week
+      .map(
+        (d) => `<article class="sb-plan-day">
+          <h3>${escapeHtml(d.day)}</h3>
+          <ul>
+            ${d.slots
+              .map(
+                (slot) => `<li class="sb-plan-slot sb-plan-slot--${slot.track}">
+                  <strong>${escapeHtml(slot.time)}</strong>
+                  <span>${escapeHtml(slot.subject)}</span>
+                </li>`
+              )
+              .join("")}
+          </ul>
+        </article>`
+      )
+      .join("");
+    const phases = stream.mix
+      .map(
+        (p) => `<article class="sb-plan-phase">
+          <p class="sb-plan-phase__split">${escapeHtml(p.split)}</p>
+          <h3>${escapeHtml(p.title)}</h3>
+          <p>${escapeHtml(p.text)}</p>
+        </article>`
+      )
+      .join("");
+    const scienceNote =
+      streamId === "ex"
+        ? `<p class="sb-section__sub">En EX, maths / PC / SVT se jouent aux <strong>contrôles de classe</strong> (coef 7 chacune). Les vidéos maths et PC du site suivent le programme <strong>SM</strong>, plus dense : prends-les pour les chapitres que ton prof a déjà faits. La SVT n’a pas encore de série ici — le cahier de classe reste la référence.</p>`
+        : `<p class="sb-section__sub">En SM, maths (coef 9) et PC (coef 7) n’ont <strong>pas</strong> d’épreuve au régional : elles se jouent toute l’année aux devoirs. Les 17 + 27 cours du site couvrent ce pilier.</p>`;
+    app.innerHTML = `
+      ${header("planning")}
+      <main id="main">
+        <div class="sb-container sb-pagehead">
+          <p class="sb-breadcrumb">${backLink("#/")}</p>
+          <p class="sb-hero__kicker">Planning · année scolaire · régional ${escapeHtml(plan.regionalSession)}</p>
+          <h1 class="sb-section__title">Quoi étudier, combien d’heures</h1>
+          <p class="sb-section__sub">${escapeHtml(plan.note)}</p>
+          <div class="sb-plan-switch" role="radiogroup" aria-label="Filière">
+            <button type="button" class="sb-plan-switch__btn" data-stream="sm" role="radio" aria-checked="${streamId === "sm"}">1er Bac SM</button>
+            <button type="button" class="sb-plan-switch__btn" data-stream="ex" role="radio" aria-checked="${streamId === "ex"}">1er Bac EX</button>
+          </div>
+          <p class="sb-plan-lead">${escapeHtml(stream.lead)}</p>
+          <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${escapeHtml(stream.nameLong)}</p>
+          <p class="sb-section__sub">${formatHours(classTotal)} de classe · ${formatHours(homeTotal)} de travail maison · ${formatHours(classTotal + homeTotal)} en tout dans la semaine type</p>
+        </div>
+        <section class="sb-section" style="padding-top:0">
+          <div class="sb-container">
+            <div class="sb-plan-tracks">
+              <article class="sb-plan-track">
+                <p class="sb-plan-track__kicker">Piste 1</p>
+                <h2>Contrôles de classe</h2>
+                <p>Devoirs surveillés toute l’année. En SM : maths et PC d’abord. En EX : maths, PC et SVT à parts égales. Philosophie et 2e langue aussi, plus légères.</p>
+              </article>
+              <article class="sb-plan-track sb-plan-track--reg">
+                <p class="sb-plan-track__kicker">Piste 2</p>
+                <h2>Examen régional</h2>
+                <p>Arabe, français, éduc. islamique, اجتماعيات. Session ${escapeHtml(plan.regionalSession)} · rattrapage ${escapeHtml(plan.regionalRetry)}. Compte 25 % du bac — à travailler dès septembre, ${st.regionalPct}% des cours du site déjà faits.</p>
+                <p><a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/regional" data-link>Ouvrir les cours du régional</a></p>
+              </article>
+            </div>
+            <h2 class="sb-section__title" style="margin-top:2rem">Heures par matière</h2>
+            <p class="sb-section__sub">Classe = lycée. Maison = soir et week-end. Les deux pistes en même temps : ne coupe jamais les sciences la semaine d’un devoir, ne zappe jamais le régional les semaines « calmes ».</p>
+            <div class="sb-plan-tablewrap">
+              <table class="sb-plan-table">
+                <thead>
+                  <tr>
+                    <th>Matière</th>
+                    <th>Classe / sem.</th>
+                    <th>Maison / sem.</th>
+                    <th>Coef CC</th>
+                    <th>Coef régional</th>
+                    <th>Piste</th>
+                  </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total</th>
+                    <th>${formatHours(classTotal)}</th>
+                    <th>${formatHours(homeTotal)}</th>
+                    <th colspan="3">${formatHours(classTotal + homeTotal)} lycée + maison</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <h2 class="sb-section__title" style="margin-top:2rem">Semaine type (travail maison)</h2>
+            <p class="sb-section__sub">Après les cours, pas à la place. Si un devoir tombe : décale le régional au week-end, ne saute pas les sciences.</p>
+            <div class="sb-plan-week">${week}</div>
+            <h2 class="sb-section__title" style="margin-top:2rem">L’année en trois temps</h2>
+            <div class="sb-plan-phases">${phases}</div>
+            <h2 class="sb-section__title" style="margin-top:2rem">Programme à couvrir</h2>
+            ${scienceNote}
+            <div class="sb-plan-blocks">
+              ${streamId === "sm" ? chapterLists(["math", "pc", "ar", "fr", "islam", "hg"]) : chapterLists(["ar", "fr", "islam", "hg", "math", "pc"])}
+            </div>
+          </div>
+        </section>
+      </main>
+      ${footer()}`;
+    document.querySelectorAll("[data-stream]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.stream === "ex" ? "ex" : "sm";
+        store.setStream(id);
+        location.hash = `#/planning?f=${id}`;
+      });
+    });
   }
 
   function neighbors(lesson) {
@@ -1076,9 +1271,10 @@
   }
 
   function route() {
-    const { parts, q } = parseHash();
+    const { parts, q, f } = parseHash();
     if (parts.length === 0) renderHome();
     else if (parts[0] === "regional") renderRegional();
+    else if (parts[0] === "planning") renderPlanning(f);
     else if (parts[0] === "stats") renderStats();
     else if (parts[0] === "notes") renderNotes();
     else if (parts[0] === "recherche") renderSearch(q);
