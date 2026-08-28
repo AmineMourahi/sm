@@ -224,7 +224,7 @@ button {
 .sb-header__nav {
   display: none;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.1rem;
 }
 
 .sb-header__nav a {
@@ -593,6 +593,26 @@ button {
   color: var(--sb-gold-deep);
 }
 
+.sb-pillar__icon--ar {
+  background: var(--sb-cobalt-soft);
+  color: var(--sb-cobalt);
+}
+
+.sb-pillar__icon--fr {
+  background: #f0e0d0;
+  color: var(--sb-copper);
+}
+
+.sb-pillar__icon--islam {
+  background: var(--sb-gold-soft);
+  color: var(--sb-gold-deep);
+}
+
+.sb-pillar__icon--hg {
+  background: var(--sb-cream-deep);
+  color: var(--sb-earth);
+}
+
 .sb-pillar h3 {
   margin: 0 0 0.2rem;
   font-size: 1.35rem;
@@ -639,6 +659,22 @@ button {
   background: var(--sb-red-deep);
 }
 
+.sb-course-card--ar .sb-course-card__tab {
+  background: var(--sb-cobalt);
+}
+
+.sb-course-card--fr .sb-course-card__tab {
+  background: var(--sb-copper);
+}
+
+.sb-course-card--islam .sb-course-card__tab {
+  background: var(--sb-earth);
+}
+
+.sb-course-card--hg .sb-course-card__tab {
+  background: var(--sb-earth-soft);
+}
+
 .sb-course-card__media {
   display: none;
 }
@@ -653,6 +689,14 @@ button {
   margin: 0;
   font-size: 1.22rem;
   font-style: italic;
+}
+
+.sb-course-card__title .sb-arabic,
+.sb-section__title .sb-arabic,
+.sb-lesson-row .sb-arabic,
+.sb-index__title .sb-arabic {
+  font-family: var(--sb-font-arabic);
+  font-style: normal;
 }
 
 .sb-course-card__meta {
@@ -722,6 +766,26 @@ button {
   color: var(--sb-red-deep);
 }
 
+.sb-badge--ar {
+  background: var(--sb-cobalt-soft);
+  color: var(--sb-cobalt);
+}
+
+.sb-badge--fr {
+  background: #f0e0d0;
+  color: var(--sb-copper);
+}
+
+.sb-badge--islam {
+  background: var(--sb-gold-soft);
+  color: var(--sb-gold-deep);
+}
+
+.sb-badge--hg {
+  background: var(--sb-cream-deep);
+  color: var(--sb-earth);
+}
+
 .sb-badge--done {
   background: var(--sb-gold-soft);
   color: var(--sb-gold-deep);
@@ -767,6 +831,22 @@ button {
 
 .sb-progress__fill--pc {
   background: var(--sb-red);
+}
+
+.sb-progress__fill--ar {
+  background: var(--sb-cobalt);
+}
+
+.sb-progress__fill--fr {
+  background: var(--sb-copper);
+}
+
+.sb-progress__fill--islam {
+  background: var(--sb-gold-deep);
+}
+
+.sb-progress__fill--hg {
+  background: var(--sb-earth);
 }
 
 .sb-progress-ring {
@@ -819,7 +899,13 @@ button {
 
 @media (min-width: 768px) {
   .sb-stats-hero {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .sb-stats-hero {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

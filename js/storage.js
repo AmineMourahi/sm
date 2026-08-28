@@ -92,13 +92,25 @@ window.SBStore = (() => {
 
   function stats(lessons) {
     const s = read();
-    const math = lessons.filter((l) => l.subject === "math");
-    const pc = lessons.filter((l) => l.subject === "pc");
     const count = (arr) => arr.filter((l) => s.done[l.id]).length;
     const pct = (n, d) => (d ? Math.round((1000 * n) / d) / 10 : 0);
+    const math = lessons.filter((l) => l.subject === "math");
+    const pc = lessons.filter((l) => l.subject === "pc");
+    const regional = lessons.filter((l) => l.subject !== "math" && l.subject !== "pc");
     const mDone = count(math);
     const pDone = count(pc);
-    const allDone = mDone + pDone;
+    const rDone = count(regional);
+    const allDone = count(lessons);
+    const bySubject = {};
+    lessons.forEach((l) => {
+      if (!bySubject[l.subject]) bySubject[l.subject] = { done: 0, total: 0, pct: 0 };
+      bySubject[l.subject].total += 1;
+      if (s.done[l.id]) bySubject[l.subject].done += 1;
+    });
+    Object.keys(bySubject).forEach((id) => {
+      const row = bySubject[id];
+      row.pct = pct(row.done, row.total);
+    });
     const notesCount = Object.keys(s.notes).length;
     return {
       mathDone: mDone,
@@ -107,9 +119,13 @@ window.SBStore = (() => {
       pcDone: pDone,
       pcTotal: pc.length,
       pcPct: pct(pDone, pc.length),
+      regionalDone: rDone,
+      regionalTotal: regional.length,
+      regionalPct: pct(rDone, regional.length),
       allDone,
       allTotal: lessons.length,
       allPct: pct(allDone, lessons.length),
+      bySubject,
       notesCount,
       lastLesson: s.lastLesson,
     };

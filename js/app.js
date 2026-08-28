@@ -1,12 +1,14 @@
 (() => {
-  const { lessons, site } = window.SB_DATA;
+  const { lessons, site, subjects: subjectList = [] } = window.SB_DATA;
   const store = window.SBStore;
   const app = document.getElementById("app");
   const toastEl = document.getElementById("toast");
 
   const byId = Object.fromEntries(lessons.map((l) => [l.id, l]));
+  const subjectsById = Object.fromEntries(subjectList.map((s) => [s.id, s]));
   const maths = lessons.filter((l) => l.subject === "math");
   const pcs = lessons.filter((l) => l.subject === "pc");
+  const regionalSubjects = subjectList.filter((s) => s.group === "regional");
 
   const branchLabel = {
     algebre: "Algèbre",
@@ -15,7 +17,55 @@
     proba: "Dénombrement",
     physique: "Physique",
     chimie: "Chimie",
+    nass: "نصوص",
+    lugha: "علوم اللغة",
+    taabir: "تعبير وإنشاء",
+    oeuvre: "Œuvre intégrale",
+    langue: "Langue",
+    production: "Production écrite",
+    aqida: "عقيدة",
+    usra: "فقه الأسرة",
+    iqtida: "اقتداء",
+    histoire: "Histoire",
+    geo: "Géographie",
   };
+
+  function subjectMeta(id) {
+    return (
+      subjectsById[id] || {
+        id,
+        slug: id,
+        name: id,
+        nameLong: id,
+        badge: id === "pc" ? "pc" : "maths",
+        group: "core",
+        search: "",
+        lead: "",
+      }
+    );
+  }
+
+  function lessonsOf(subjectId) {
+    return lessons.filter((l) => l.subject === subjectId);
+  }
+
+  function isRtlText(str) {
+    return /[\u0600-\u06FF]/.test(String(str));
+  }
+
+  function chapterLabel(l) {
+    const t = escapeHtml(l.chapter);
+    return isRtlText(l.chapter) ? `<span lang="ar" dir="rtl" class="sb-arabic">${t}</span>` : t;
+  }
+
+  function fillClass(subjectId) {
+    const badge = subjectMeta(subjectId).badge;
+    return badge === "maths" ? "" : `sb-progress__fill--${badge}`;
+  }
+
+  function subjectPct(st, subjectId) {
+    return (st.bySubject && st.bySubject[subjectId] && st.bySubject[subjectId].pct) || 0;
+  }
 
   function videosOf(l) {
     if (Array.isArray(l.videos) && l.videos.length) {
@@ -134,7 +184,9 @@
             (l.basicsAr || []).join(" "),
             l.conclusion,
             l.conclusionAr || "",
-            l.subject === "math" ? "maths mathematiques" : "physique chimie pc",
+            subjectMeta(l.subject).search,
+            subjectMeta(l.subject).name,
+            subjectMeta(l.subject).nameLong,
             "S" + l.semester,
           ].join(" ")
         );
@@ -209,7 +261,8 @@
           <nav class="sb-header__nav" aria-label="Navigation principale">
             <a href="#/" data-link class="${active === "home" ? "is-active" : ""}">Accueil</a>
             <a href="#/maths" data-link class="${active === "maths" ? "is-active" : ""}">Maths</a>
-            <a href="#/pc" data-link class="${active === "pc" ? "is-active" : ""}">Physique-Chimie</a>
+            <a href="#/pc" data-link class="${active === "pc" ? "is-active" : ""}">PC</a>
+            <a href="#/regional" data-link class="${active === "regional" ? "is-active" : ""}">Régional</a>
             <a href="#/stats" data-link class="${active === "stats" ? "is-active" : ""}">Mes stats (${stats.allPct}%)</a>
           </nav>
           <div class="sb-header__tools">
@@ -240,6 +293,11 @@
           <a href="#/" data-link>Accueil</a>
           <a href="#/maths" data-link>Programme Maths</a>
           <a href="#/pc" data-link>Programme Physique-Chimie</a>
+          <a href="#/regional" data-link>Matières du régional</a>
+          <a href="#/arabe" data-link>Arabe</a>
+          <a href="#/francais" data-link>Français</a>
+          <a href="#/islam" data-link>Éducation islamique</a>
+          <a href="#/hg" data-link>اجتماعيات</a>
           <a href="#/stats" data-link>Mes statistiques</a>
           <a href="#/notes" data-link>Toutes mes notes</a>
         </div>
@@ -265,20 +323,25 @@
 
   function courseCard(l) {
     const done = store.isDone(l.id);
-    const badge = l.subject === "math" ? "maths" : "pc";
+    const meta = subjectMeta(l.subject);
+    const badge = meta.badge;
+    const branch = branchLabel[l.branch] || "";
+    const branchHtml = isRtlText(branch)
+      ? `<span lang="ar" dir="rtl">${escapeHtml(branch)}</span>`
+      : escapeHtml(branch);
     return `
       <a class="sb-course-card sb-course-card--${badge}" href="#/cours/${l.id}" data-link>
         <span class="sb-course-card__tab">S${l.semester}</span>
         <div class="sb-course-card__body">
           <div>
-            <span class="sb-badge sb-badge--${badge}">${l.subject === "math" ? "Maths" : l.branch === "chimie" ? "Chimie" : "Physique"}</span>
+            <span class="sb-badge sb-badge--${badge}">${escapeHtml(meta.name)}</span>
             ${done ? '<span class="sb-badge sb-badge--done">Terminé</span>' : ""}
           </div>
-          <h3 class="sb-course-card__title">${l.chapter}</h3>
-          <p class="sb-course-card__meta">${branchLabel[l.branch]} · ${
+          <h3 class="sb-course-card__title">${chapterLabel(l)}</h3>
+          <p class="sb-course-card__meta">${branchHtml}${branch ? " · " : ""}${
             videosOf(l).length > 1 ? `${videosOf(l).length} vidéos · ` : ""
-          }${durationOf(l)} min · ${l.channel}</p>
-          <div class="sb-progress"><div class="sb-progress__fill ${l.subject === "pc" ? "sb-progress__fill--pc" : ""}" style="width:${done ? 100 : 0}%"></div></div>
+          }${durationOf(l)} min · ${escapeHtml(l.channel)}</p>
+          <div class="sb-progress"><div class="sb-progress__fill ${fillClass(l.subject)}" style="width:${done ? 100 : 0}%"></div></div>
         </div>
       </a>`;
   }
@@ -289,10 +352,10 @@
       byId["logique-mathematique"],
       byId["derivation"],
       byId["acido-basiques"],
-      byId["energie-mecanique"],
-      byId["suites-numeriques"],
-      byId["champ-electrostatique"],
-    ];
+      byId["shir-ihya"],
+      byId["iman-ghayb"],
+      byId["boite-merveilles"],
+    ].filter(Boolean);
     app.innerHTML = `
       ${header("home")}
       <main id="main">
@@ -312,6 +375,7 @@
               <div class="sb-hero__actions">
                 <a class="sb-btn sb-btn--primary" href="#/maths" data-link>Programme Maths</a>
                 <a class="sb-btn sb-btn--secondary" href="#/pc" data-link>Programme Physique-Chimie</a>
+                <a class="sb-btn sb-btn--ghost" href="#/regional" data-link>Matières du régional</a>
               </div>
               <p class="sb-flag">
                 <svg class="sb-flag__star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.2 L14.2 9.8 L21.2 9.9 L15.6 14 L17.7 20.8 L12 16.8 L6.3 20.8 L8.4 14 L2.8 9.9 L9.8 9.8 Z"/></svg>
@@ -347,6 +411,14 @@
               </article>
               <article class="sb-pillar">
                 <div class="sb-pillar__icon sb-pillar__icon--gold">03</div>
+                <div>
+                  <h3>Régional</h3>
+                  <p>${regionalSubjects.reduce((n, s) => n + lessonsOf(s.id).length, 0)} cours : arabe, français, éduc. islamique, اجتماعيات — même format que maths et PC.</p>
+                </div>
+                <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/regional" data-link>Ouvrir le régional</a>
+              </article>
+              <article class="sb-pillar">
+                <div class="sb-pillar__icon sb-pillar__icon--ar">04</div>
                 <div>
                   <h3>Stats & notes</h3>
                   <p>Vois où tu en es (1 %, 40 %, 100 %) et prends des notes à côté de chaque vidéo — un clic pour les cacher.</p>
@@ -390,18 +462,22 @@
             <h3 class="sb-module__title">${mod.title}</h3>
             <p class="sb-module__meta">${done}/${mod.items.length} cours · ${pct}%</p>
           </span>
-          <span class="sb-progress" style="width:120px"><span class="sb-progress__fill ${subject === "pc" ? "sb-progress__fill--pc" : ""}" style="width:${pct}%;display:block;height:100%"></span></span>
+          <span class="sb-progress" style="width:120px"><span class="sb-progress__fill ${fillClass(subject)}" style="width:${pct}%;display:block;height:100%"></span></span>
         </button>
         <div class="sb-module__body">
           ${mod.items
             .map((l) => {
               const on = store.isDone(l.id);
+              const branch = branchLabel[l.branch] || "";
+              const branchHtml = isRtlText(branch)
+                ? `<span lang="ar" dir="rtl">${escapeHtml(branch)}</span>`
+                : escapeHtml(branch);
               return `<a class="sb-lesson-row ${on ? "is-done" : ""}" href="#/cours/${l.id}" data-link>
                 <span style="display:flex;align-items:center;gap:.7rem">
                   <span class="sb-check ${on ? "is-on" : ""}"></span>
-                  <span><strong>${l.chapter}</strong><br><small>${branchLabel[l.branch]} · ${videosOf(l).length > 1 ? videosOf(l).length + " vidéos · " : ""}${durationOf(l)} min</small></span>
+                  <span><strong>${chapterLabel(l)}</strong><br><small>${branchHtml}${branch ? " · " : ""}${videosOf(l).length > 1 ? videosOf(l).length + " vidéos · " : ""}${durationOf(l)} min</small></span>
                 </span>
-                <span class="sb-badge sb-badge--${l.subject === "math" ? "maths" : "pc"}">${on ? "Fait" : "À faire"}</span>
+                <span class="sb-badge sb-badge--${subjectMeta(l.subject).badge}">${on ? "Fait" : "À faire"}</span>
               </a>`;
             })
             .join("")}
@@ -409,31 +485,74 @@
       </article>`;
   }
 
-  function renderProgramme(subject) {
-    const list = subject === "math" ? maths : pcs;
+  function renderProgramme(subjectId) {
+    const meta = subjectMeta(subjectId);
+    const list = lessonsOf(subjectId);
     const st = store.stats(lessons);
-    const pct = subject === "math" ? st.mathPct : st.pcPct;
-    const title = subject === "math" ? "Mathématiques" : "Physique-Chimie";
-    const lead =
-      subject === "math"
-        ? "Programme 1er Bac SM : logique, fonctions, géométrie, dénombrement, arithmétique. Chaque cours a sa série YouTube (séance 1, 2…) et une conclusion pour les jours de flemme."
-        : "Programme 1er Bac SM : mécanique et énergie, chimie des solutions, champs, optique, chimie organique. Séries YouTube du même chapitre + conclusion express.";
+    const pct = subjectPct(st, subjectId);
+    const title = meta.nameLong;
+    const titleHtml = isRtlText(title)
+      ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(title)}</span>`
+      : escapeHtml(title);
+    const lead = meta.lead || "";
     app.innerHTML = `
-      ${header(subject === "math" ? "maths" : "pc")}
+      ${header(meta.group === "regional" ? "regional" : meta.slug)}
       <main id="main">
         <div class="sb-container sb-pagehead">
-          <p class="sb-breadcrumb">${backLink("#/")}</p>
+          <p class="sb-breadcrumb">${backLink(meta.group === "regional" ? "#/regional" : "#/")}</p>
           <p class="sb-hero__kicker">Programme officiel · 1er Bac SM</p>
-          <h1 class="sb-section__title">${title}</h1>
+          <h1 class="sb-section__title">${titleHtml}</h1>
           <p class="sb-section__sub">${lead}</p>
-          <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${pct}% du programme ${subject === "math" ? "maths" : "PC"} terminé</p>
+          <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${pct}% du programme ${escapeHtml(meta.name)} terminé</p>
           <div class="sb-progress" style="max-width:320px;height:8px;margin-top:.6rem">
-            <div class="sb-progress__fill ${subject === "pc" ? "sb-progress__fill--pc" : ""}" style="width:${pct}%"></div>
+            <div class="sb-progress__fill ${fillClass(subjectId)}" style="width:${pct}%"></div>
           </div>
         </div>
         <section class="sb-section" style="padding-top:0">
           <div class="sb-container sb-programme">
-            ${groupModules(list).map((m) => moduleBlock(m, subject)).join("")}
+            ${groupModules(list).map((m) => moduleBlock(m, subjectId)).join("")}
+          </div>
+        </section>
+      </main>
+      ${footer()}`;
+  }
+
+  function renderRegional() {
+    const st = store.stats(lessons);
+    app.innerHTML = `
+      ${header("regional")}
+      <main id="main">
+        <div class="sb-container sb-pagehead">
+          <p class="sb-breadcrumb">${backLink("#/")}</p>
+          <p class="sb-hero__kicker">Examen régional · 1er Bac SM</p>
+          <h1 class="sb-section__title">Matières du régional</h1>
+          <p class="sb-section__sub">Arabe, français, éducation islamique et اجتماعيات : mêmes cartes, mêmes vidéos, mêmes conclusions express que maths et PC.</p>
+          <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${st.regionalPct}% du régional terminé</p>
+          <div class="sb-progress" style="max-width:320px;height:8px;margin-top:.6rem">
+            <div class="sb-progress__fill sb-progress__fill--ar" style="width:${st.regionalPct}%"></div>
+          </div>
+        </div>
+        <section class="sb-section" style="padding-top:0">
+          <div class="sb-container">
+            <div class="sb-pillars">
+              ${regionalSubjects
+                .map((s, i) => {
+                  const n = lessonsOf(s.id).length;
+                  const pct = subjectPct(st, s.id);
+                  const nameHtml = isRtlText(s.nameLong)
+                    ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(s.nameLong)}</span>`
+                    : escapeHtml(s.nameLong);
+                  return `<article class="sb-pillar">
+                    <div class="sb-pillar__icon sb-pillar__icon--${s.badge}">${String(i + 1).padStart(2, "0")}</div>
+                    <div>
+                      <h3>${nameHtml}</h3>
+                      <p>${n} cours · ${pct}% · ${escapeHtml(s.lead)}</p>
+                    </div>
+                    <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/${s.slug}" data-link>Ouvrir</a>
+                  </article>`;
+                })
+                .join("")}
+            </div>
           </div>
         </section>
       </main>
@@ -441,14 +560,14 @@
   }
 
   function neighbors(lesson) {
-    const pool = lesson.subject === "math" ? maths : pcs;
+    const pool = lessonsOf(lesson.subject);
     const i = pool.findIndex((x) => x.id === lesson.id);
     return { prev: pool[i - 1], next: pool[i + 1], i, n: pool.length, pool };
   }
 
   function lessonIndex(lesson) {
     const { pool, i, n } = neighbors(lesson);
-    const name = lesson.subject === "math" ? "Maths" : "PC";
+    const name = subjectMeta(lesson.subject).name;
     const rows = pool
       .map((item, idx) => {
         const on = store.isDone(item.id);
@@ -459,7 +578,7 @@
             : "";
         return `${semBreak}<a class="sb-index__item ${current ? "is-current" : ""} ${on ? "is-done" : ""}" href="#/cours/${item.id}" data-link ${current ? 'id="index-current"' : ""}>
             <span class="sb-index__num">${idx + 1}</span>
-            <span class="sb-index__title">${item.chapter}</span>
+            <span class="sb-index__title">${chapterLabel(item)}</span>
             ${on ? '<span class="sb-check is-on" aria-hidden="true"></span>' : ""}
           </a>`;
       })
@@ -545,8 +664,17 @@
     const note = store.getNote(l.id);
     const open = store.notesOpen();
     const { prev, next } = neighbors(l);
-    const subjectHref = l.subject === "math" ? "#/maths" : "#/pc";
-    const subjectName = l.subject === "math" ? "Maths" : "Physique-Chimie";
+    const meta = subjectMeta(l.subject);
+    const subjectHref = `#/${meta.slug}`;
+    const subjectName = meta.nameLong;
+    const branch = branchLabel[l.branch] || meta.name;
+    const branchHtml = isRtlText(branch)
+      ? `<span lang="ar" dir="rtl">${escapeHtml(branch)}</span>`
+      : escapeHtml(branch);
+    const ytQuery =
+      l.subject === "math" || l.subject === "pc"
+        ? `${l.chapter} 1bac SM cours`
+        : `${l.chapter} أولى باك 1bac Maroc`;
     const parts = videosOf(l);
     const first = parts[0];
     const playlist =
@@ -566,24 +694,25 @@
           </ol>`
         : "";
     app.innerHTML = `
-      ${header(l.subject === "math" ? "maths" : "pc")}
+      ${header(meta.group === "regional" ? "regional" : meta.slug)}
       <main id="main" class="sb-section">
         <div class="sb-container">
           <nav class="sb-breadcrumb">
             ${backLink(subjectHref)}
             <span aria-hidden="true">·</span>
             <a href="#/" data-link>Accueil</a> ·
-            <a href="${subjectHref}" data-link>${subjectName}</a> ·
+            ${meta.group === "regional" ? `<a href="#/regional" data-link>Régional</a> · ` : ""}
+            <a href="${subjectHref}" data-link>${isRtlText(subjectName) ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(subjectName)}</span>` : escapeHtml(subjectName)}</a> ·
             <span>S${l.semester}</span>
           </nav>
           <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1rem">
-            <span class="sb-badge sb-badge--${l.subject === "math" ? "maths" : "pc"}">${branchLabel[l.branch]}</span>
+            <span class="sb-badge sb-badge--${meta.badge}">${branchHtml}</span>
             <span class="sb-badge">${durationOf(l)} min</span>
             ${videosOf(l).length > 1 ? `<span class="sb-badge">${videosOf(l).length} vidéos</span>` : ""}
             ${done ? '<span class="sb-badge sb-badge--done">Cours terminé</span>' : ""}
           </div>
-          <h1 class="sb-section__title">${l.chapter}</h1>
-          <p class="sb-section__sub">${parts.length > 1 ? `${parts.length} vidéos à la suite` : "Vidéo"} : ${escapeHtml(first.title)} · ${l.channel}</p>
+          <h1 class="sb-section__title">${chapterLabel(l)}</h1>
+          <p class="sb-section__sub">${parts.length > 1 ? `${parts.length} vidéos à la suite` : "Vidéo"} : ${escapeHtml(first.title)} · ${escapeHtml(l.channel)}</p>
 
           <div class="sb-cours" style="margin-top:1.25rem">
             <div>
@@ -598,7 +727,7 @@
               ${playlist}
               <div class="sb-player__bar">
                 <button class="sb-btn sb-btn--ghost" type="button" id="yt-reload">Relancer la vidéo</button>
-                <a class="sb-btn sb-btn--ghost" href="https://www.youtube.com/results?search_query=${encodeURIComponent(l.chapter + " 1bac SM cours")}" target="_blank" rel="noopener">Autre vidéo</a>
+                <a class="sb-btn sb-btn--ghost" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ytQuery)}" target="_blank" rel="noopener">Autre vidéo</a>
               </div>
               <p class="sb-player__hint" id="yt-hint">${
                 parts.length > 1
@@ -631,8 +760,8 @@
           ${conclusionBlock(l)}
 
           <div class="sb-cours-nav" style="margin-top:1.25rem">
-            ${prev ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${prev.id}" data-link>← ${prev.chapter}</a>` : "<span></span>"}
-            ${next ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${next.id}" data-link>${next.chapter} →</a>` : "<span></span>"}
+            ${prev ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${prev.id}" data-link>← ${chapterLabel(prev)}</a>` : "<span></span>"}
+            ${next ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${next.id}" data-link>${chapterLabel(next)} →</a>` : "<span></span>"}
           </div>
         </div>
       </main>
@@ -716,13 +845,14 @@
           <p class="sb-hero__kicker">Tableau de bord</p>
           <p class="sb-breadcrumb">${backLink("#/")}</p>
           <h1 class="sb-section__title">Ta progression</h1>
-          <p class="sb-section__sub">Un pourcentage clair : maths, physique-chimie, et le programme entier.</p>
+          <p class="sb-section__sub">Un pourcentage clair : maths, physique-chimie, matières du régional, et le programme entier.</p>
         </div>
         <section class="sb-section" style="padding-top:0">
           <div class="sb-container">
             <div class="sb-stats-hero">
               ${ring(st.mathPct, "var(--sb-ring-maths)", `Maths · ${st.mathDone}/${st.mathTotal} cours`)}
               ${ring(st.pcPct, "var(--sb-ring-pc)", `Physique-Chimie · ${st.pcDone}/${st.pcTotal} cours`)}
+              ${ring(st.regionalPct, "var(--sb-ring-regional)", `Régional · ${st.regionalDone}/${st.regionalTotal} cours`)}
               ${ring(st.allPct, "var(--sb-ring-global)", `Programme · ${st.allDone}/${st.allTotal} cours`)}
             </div>
             <div class="sb-grid sb-grid--3" style="margin-top:2rem">
@@ -735,11 +865,11 @@
                 <p class="sb-stat-card__label">cours avec des notes</p>
               </article>
               <article class="sb-stat-card">
-                <p class="sb-stat-card__value">${st.mathPct === 100 && st.pcPct === 100 ? "SM" : st.allDone}</p>
-                <p class="sb-stat-card__label">${st.mathPct === 100 && st.pcPct === 100 ? "Programme bouclé" : "cours validés"}</p>
+                <p class="sb-stat-card__value">${st.allPct === 100 ? "SM" : st.allDone}</p>
+                <p class="sb-stat-card__label">${st.allPct === 100 ? "Programme bouclé" : "cours validés"}</p>
               </article>
             </div>
-            ${last ? `<p style="margin-top:1.5rem">Dernier cours ouvert : <a href="#/cours/${last.id}" data-link>${last.chapter}</a></p>` : ""}
+            ${last ? `<p style="margin-top:1.5rem">Dernier cours ouvert : <a href="#/cours/${last.id}" data-link>${chapterLabel(last)}</a></p>` : ""}
             <div class="sb-hero__actions" style="margin-top:1.25rem">
               <a class="sb-btn sb-btn--primary" href="#/" data-back="#/">← Retour</a>
               ${last ? `<a class="sb-btn sb-btn--secondary" href="#/cours/${last.id}" data-link>Reprendre le cours</a>` : ""}
@@ -774,7 +904,7 @@
               ? withNotes
                   .map(
                     (l) => `<article class="sb-conclusion" style="margin-top:1rem">
-                    <h2 class="sb-conclusion__title"><a href="#/cours/${l.id}" data-link>${l.chapter}</a></h2>
+                    <h2 class="sb-conclusion__title"><a href="#/cours/${l.id}" data-link>${chapterLabel(l)}</a></h2>
                     <p style="white-space:pre-wrap">${escapeHtml(store.getNote(l.id))}</p>
                   </article>`
                   )
@@ -882,8 +1012,8 @@
             q
               ? hits.length
                 ? `${hits.length} cours pour « ${escapeHtml(q)} »`
-                : `Aucun cours pour « ${escapeHtml(q)} ». Essaie barycentre, pH, dérivation…`
-              : "Tape un chapitre, une formule ou une matière (maths, physique, chimie)."
+                : `Aucun cours pour « ${escapeHtml(q)} ». Essaie barycentre, pH, مقالة, Antigone…`
+              : "Tape un chapitre, une formule ou une matière (maths, arabe, français, islam, اجتماعيات)."
           }</p>
         </div>
         <section class="sb-section" style="padding-top:0">
@@ -915,7 +1045,7 @@
       }
       box.innerHTML = hits
         .map((l) => {
-          const mat = l.subject === "math" ? "Maths" : l.branch === "chimie" ? "Chimie" : "Physique";
+          const mat = subjectMeta(l.subject).name;
           return `<a class="sb-search__hit" href="#/cours/${l.id}" data-link>
             <strong>${l.chapter}</strong>
             <span>${mat} · S${l.semester}</span>
@@ -948,13 +1078,16 @@
   function route() {
     const { parts, q } = parseHash();
     if (parts.length === 0) renderHome();
-    else if (parts[0] === "maths") renderProgramme("math");
-    else if (parts[0] === "pc") renderProgramme("pc");
+    else if (parts[0] === "regional") renderRegional();
     else if (parts[0] === "stats") renderStats();
     else if (parts[0] === "notes") renderNotes();
     else if (parts[0] === "recherche") renderSearch(q);
     else if (parts[0] === "cours" && parts[1]) renderLesson(parts[1]);
-    else renderHome();
+    else {
+      const sub = subjectList.find((s) => s.slug === parts[0]);
+      if (sub) renderProgramme(sub.id);
+      else renderHome();
+    }
     bindChrome();
     const y = scrollPos[hashKey()] || 0;
     window.scrollTo(0, y);

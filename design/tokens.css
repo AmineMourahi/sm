@@ -141,6 +141,7 @@
   --sb-ring-track: var(--sb-cream-deep);
   --sb-ring-maths: var(--sb-green);
   --sb-ring-pc: var(--sb-red);
+  --sb-ring-regional: var(--sb-cobalt);
   --sb-ring-global: var(--sb-gold-deep);
   --sb-ring-stroke: 6;
 }
