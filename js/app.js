@@ -298,6 +298,7 @@
           <a href="#/maths" data-link>Programme Maths</a>
           <a href="#/pc" data-link>Programme Physique-Chimie</a>
           <a href="#/regional" data-link>Matières du régional</a>
+          <a href="#/epreuve" data-link>L’épreuve régionale</a>
           <a href="#/planning" data-link>Planning SM / EX</a>
           <a href="#/arabe" data-link>Arabe</a>
           <a href="#/francais" data-link>Français</a>
@@ -418,7 +419,7 @@
                 <div class="sb-pillar__icon sb-pillar__icon--gold">03</div>
                 <div>
                   <h3>Régional</h3>
-                  <p>${regionalSubjects.reduce((n, s) => n + lessonsOf(s.id).length, 0)} cours : arabe, français, éduc. islamique, اجتماعيات — même format que maths et PC.</p>
+                  <p>${regionalSubjects.reduce((n, s) => n + lessonsOf(s.id).length, 0)} cours + la page épreuve (barème, sujet type). Même format que maths et PC.</p>
                 </div>
                 <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/regional" data-link>Ouvrir le régional</a>
               </article>
@@ -539,7 +540,7 @@
           <p class="sb-breadcrumb">${backLink("#/")}</p>
           <p class="sb-hero__kicker">Examen régional · 1er Bac SM et EX</p>
           <h1 class="sb-section__title">Matières du régional</h1>
-          <p class="sb-section__sub">Arabe, français, éducation islamique et اجتماعيات : mêmes cartes, mêmes vidéos, mêmes conclusions express que maths et PC. Pour les heures et le mix contrôles / régional, ouvre le <a href="#/planning" data-link>planning SM / EX</a>.</p>
+          <p class="sb-section__sub">Arabe, français, éducation islamique et اجتماعيات : mêmes cartes, mêmes vidéos, mêmes conclusions express que maths et PC. Pour le barème et un sujet type, ouvre <a href="#/epreuve" data-link>l’épreuve régionale</a>. Pour les heures, le <a href="#/planning" data-link>planning SM / EX</a>.</p>
           <p style="margin-top:1rem;font-family:var(--sb-font-display);font-size:1.4rem">${st.regionalPct}% du régional terminé</p>
           <div class="sb-progress" style="max-width:320px;height:8px;margin-top:.6rem">
             <div class="sb-progress__fill sb-progress__fill--ar" style="width:${st.regionalPct}%"></div>
@@ -566,10 +567,93 @@
                 })
                 .join("")}
             </div>
+            <article class="sb-plan-track sb-plan-track--reg" style="margin-top:1.5rem">
+              <p class="sb-plan-track__kicker">Jour J</p>
+              <h2>Barème et sujet type</h2>
+              <p>Structure officielle (texte / langue / expression, article + documents, situation d’islam). Pas une copie d’annale : le plan pour s’entraîner.</p>
+              <p><a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/epreuve" data-link>Ouvrir l’épreuve</a></p>
+            </article>
           </div>
         </section>
       </main>
       ${footer()}`;
+  }
+
+  function renderEpreuve(f) {
+    const exam = window.SB_EXAM;
+    if (!exam || !Array.isArray(exam.papers)) {
+      app.innerHTML = `${header("regional")}<main class="sb-container sb-empty"><p>Épreuve indisponible.</p>${backLink("#/regional")}</main>${footer()}`;
+      return;
+    }
+    const paper = exam.papers.find((p) => p.id === f) || exam.papers[0];
+    const plan = window.SB_PLAN || {};
+    const partsHtml = paper.parts
+      .map(
+        (part) => `<article class="sb-exam-part">
+          <strong>${part.points} pts</strong>
+          <h3>${isRtlText(part.title) ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(part.title)}</span>` : escapeHtml(part.title)}</h3>
+          <p>${escapeHtml(part.what)}</p>
+        </article>`
+      )
+      .join("");
+    const method = `<ol>${paper.method.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
+    const steps = `<ol>${paper.paper.steps.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
+    const courses = (paper.courses || [])
+      .map((id) => {
+        const l = byId[id];
+        if (!l) return "";
+        return `<a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/cours/${l.id}" data-link>${chapterLabel(l)}</a>`;
+      })
+      .join("");
+    const switcher = exam.papers
+      .map(
+        (p) =>
+          `<button type="button" class="sb-plan-switch__btn" data-paper="${p.id}" role="radio" aria-checked="${p.id === paper.id}">${escapeHtml(p.name)}</button>`
+      )
+      .join("");
+    const nameHtml = isRtlText(paper.nameLong)
+      ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(paper.nameLong)}</span>`
+      : escapeHtml(paper.nameLong);
+    app.innerHTML = `
+      ${header("regional")}
+      <main id="main">
+        <div class="sb-container sb-pagehead">
+          <p class="sb-breadcrumb">${backLink("#/regional")}</p>
+          <p class="sb-hero__kicker">${escapeHtml(exam.kicker)}</p>
+          <h1 class="sb-section__title">${escapeHtml(exam.title)}</h1>
+          <p class="sb-section__sub">${escapeHtml(exam.lead)}</p>
+          <p class="sb-section__sub">${escapeHtml(exam.drill)}${plan.regionalSession ? ` Session ${escapeHtml(plan.regionalSession)}.` : ""}</p>
+          <div class="sb-plan-switch" role="radiogroup" aria-label="Matière de l’épreuve" style="margin-top:1.1rem">${switcher}</div>
+        </div>
+        <section class="sb-section" style="padding-top:0">
+          <div class="sb-container">
+            <p class="sb-hero__kicker">${escapeHtml(paper.name)} · ${paper.total} points</p>
+            <h2 class="sb-section__title">${nameHtml}</h2>
+            <div class="sb-exam-parts">${partsHtml}</div>
+            <div class="sb-exam-grid">
+              <article class="sb-exam-card">
+                <h3>Dans l’ordre, le jour J</h3>
+                ${method}
+                <p class="sb-callout">Piège : ${escapeHtml(paper.trap)}</p>
+                <p>Si tu es pressé : ${escapeHtml(paper.hurry)}</p>
+              </article>
+              <article class="sb-exam-card">
+                <h3>${escapeHtml(paper.paper.title)}</h3>
+                <p>${escapeHtml(paper.paper.time)}</p>
+                ${steps}
+              </article>
+            </div>
+            <h3 class="sb-section__title" style="margin-top:1.75rem;font-size:1.6rem">Cours du site pour cette épreuve</h3>
+            <div class="sb-exam-courses">${courses}</div>
+          </div>
+        </section>
+      </main>
+      ${footer()}`;
+    document.querySelectorAll("[data-paper]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        location.hash = `#/epreuve?f=${btn.dataset.paper}`;
+      });
+    });
   }
 
   function formatHours(n) {
@@ -706,7 +790,8 @@
                 <p class="sb-plan-track__kicker">Piste 2</p>
                 <h2>Examen régional</h2>
                 <p>Arabe, français, éduc. islamique, اجتماعيات. Session ${escapeHtml(plan.regionalSession)} · rattrapage ${escapeHtml(plan.regionalRetry)}. Compte 25 % du bac — à travailler dès septembre, ${st.regionalPct}% des cours du site déjà faits.</p>
-                <p><a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/regional" data-link>Ouvrir les cours du régional</a></p>
+                <p><a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/regional" data-link>Ouvrir les cours du régional</a>
+                <a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/epreuve" data-link>Comment on te note</a></p>
               </article>
             </div>
             <h2 class="sb-section__title" style="margin-top:2rem">Heures par matière</h2>
@@ -819,6 +904,18 @@
         </div>
         <p class="sb-callout" dir="ltr">${l.formula}</p>
       </article>`;
+  }
+
+  function yusufBlock(l) {
+    const row = window.SB_EXAM && window.SB_EXAM.yusuf && window.SB_EXAM.yusuf[l.id];
+    if (!row) return "";
+    return `<aside class="sb-yusuf" lang="ar" dir="rtl">
+      <p class="sb-yusuf__kicker">الاستدلال من سورة يوسف</p>
+      <p class="sb-yusuf__ayah">${escapeHtml(row.ayah)}</p>
+      <p>${escapeHtml(row.ref)} · ${escapeHtml(row.value)}</p>
+      <p>${escapeHtml(row.event)}</p>
+      <a href="#/cours/surat-yusuf" data-link>سورة يوسف على الموقع</a>
+    </aside>`;
   }
 
   function bindLangTabs() {
@@ -953,9 +1050,11 @@
               ${done ? "Marquer comme non terminé" : "J’ai terminé ce cours"}
             </button>
             <a class="sb-btn sb-btn--secondary" href="#/stats" data-link>Voir mes stats</a>
+            <button class="sb-btn sb-btn--ghost" type="button" id="print-fiche">Imprimer la fiche</button>
           </div>
 
           ${conclusionBlock(l)}
+          ${yusufBlock(l)}
 
           <div class="sb-cours-nav" style="margin-top:1.25rem">
             ${prev ? `<a class="sb-btn sb-btn--ghost" href="#/cours/${prev.id}" data-link>← ${chapterLabel(prev)}</a>` : "<span></span>"}
@@ -1024,6 +1123,8 @@
       renderLesson(id);
       bindChrome();
     });
+    const printBtn = document.getElementById("print-fiche");
+    if (printBtn) printBtn.addEventListener("click", () => window.print());
     const list = document.querySelector(".sb-index__list");
     const currentRow = document.getElementById("index-current");
     if (list && currentRow) {
@@ -1277,6 +1378,7 @@
     const { parts, q, f } = parseHash();
     if (parts.length === 0) renderHome();
     else if (parts[0] === "regional") renderRegional();
+    else if (parts[0] === "epreuve") renderEpreuve(f);
     else if (parts[0] === "planning") renderPlanning(f);
     else if (parts[0] === "stats") renderStats();
     else if (parts[0] === "notes") renderNotes();

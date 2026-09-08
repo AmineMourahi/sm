@@ -2060,6 +2060,157 @@ html[data-ornaments="off"] .sb-khatem {
   color: var(--sb-green-deep);
 }
 
+.sb-exam-parts {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .sb-exam-parts {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+.sb-exam-part {
+  padding: 1rem 1.1rem;
+  background: var(--sb-surface-sunken);
+  border: 1px solid var(--sb-border);
+  border-radius: var(--sb-radius-md);
+}
+
+.sb-exam-part strong {
+  display: block;
+  font-family: var(--sb-font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--sb-gold-deep);
+  margin-bottom: 0.35rem;
+}
+
+.sb-exam-part h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+}
+
+.sb-exam-part p {
+  margin: 0;
+  color: var(--sb-text-muted);
+  font-size: 0.95rem;
+}
+
+.sb-exam-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .sb-exam-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sb-exam-card {
+  padding: 1.15rem 1.25rem 1.3rem;
+  background: var(--sb-surface);
+  border: 1px solid var(--sb-border-gold);
+  border-radius: var(--sb-radius-md);
+}
+
+.sb-exam-card h2,
+.sb-exam-card h3 {
+  margin: 0 0 0.65rem;
+  font-family: var(--sb-font-display);
+}
+
+.sb-exam-card ol,
+.sb-exam-card ul {
+  margin: 0;
+  padding-inline-start: 1.2rem;
+}
+
+.sb-exam-card li + li {
+  margin-top: 0.4rem;
+}
+
+.sb-exam-courses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.sb-yusuf {
+  margin: 1.1rem 0 0;
+  padding: 1rem 1.15rem;
+  background: var(--sb-surface-sunken);
+  border: 1px solid var(--sb-border-gold);
+  border-radius: var(--sb-radius-md);
+}
+
+.sb-yusuf__kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sb-gold-deep);
+  font-family: var(--sb-font-body);
+}
+
+.sb-yusuf__ayah {
+  margin: 0.2rem 0 0.55rem;
+  font-family: var(--sb-font-arabic);
+  font-size: 1.35rem;
+  line-height: 1.7;
+}
+
+.sb-yusuf p {
+  margin: 0.25rem 0 0;
+  color: var(--sb-text-muted);
+}
+
+.sb-yusuf a {
+  display: inline-block;
+  margin-top: 0.55rem;
+}
+
+@media print {
+  .sb-header,
+  .sb-footer,
+  .sb-strip,
+  .sb-search,
+  .sb-cours,
+  .sb-cours-nav,
+  .sb-player__bar,
+  .sb-fab-notes,
+  .sb-breadcrumb,
+  .sb-skip,
+  .sb-toast,
+  #mark-done,
+  .sb-btn,
+  body::before,
+  .sb-hero__stars,
+  .sb-hero__jewel {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .sb-conclusion,
+  .sb-yusuf,
+  .sb-section__title {
+    break-inside: avoid;
+  }
+
+  .sb-pagehead,
+  .sb-container {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sb-atelier__btn:hover,
   .sb-atelier__btn[aria-expanded="true"] {

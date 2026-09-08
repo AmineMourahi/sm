@@ -19,6 +19,8 @@ Tu es l’agent **infos**. Ton job : chaque leçon régionale du site correspond
 
 Après une leçon ajoutée ou corrigée : suivre aussi `.cursor/skills/videos-cours/SKILL.md` et `.cursor/skills/conclusion-qualite/SKILL.md`.
 
+Barème et sujet type (sans copier une annale) : `js/data-exam.js`, page `#/epreuve`. Lien Yusuf par leçon : `SB_EXAM.yusuf`.
+
 ## Cadres à utiliser (MEN)
 
 | Matière | Cadre | Pas celui-ci |
