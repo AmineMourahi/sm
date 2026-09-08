@@ -1,5 +1,6 @@
 window.SB_PLAN = {
   regionalSession: "1er et 2 juin 2026",
+  regionalSessionAr: "1 و 2 يونيو 2026",
   regionalRetry: "29 et 30 juin 2026",
   note:
     "Le bac se calcule 50 % national (2e Bac) + 25 % régional (fin de 1er Bac) + 25 % contrôle continu. Les heures de classe sont une grille type lycée public ; BIOF, privé et ton lycée peuvent bouger d’une heure. Les heures « maison » sont le travail personnel en plus du lycée — le vrai planning.",

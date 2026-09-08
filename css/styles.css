@@ -2140,6 +2140,42 @@ html[data-ornaments="off"] .sb-khatem {
   margin-top: 0.85rem;
 }
 
+.sb-exam-lang {
+  margin: 0 0 1rem;
+}
+
+.sb-exam[dir="rtl"] .sb-section__title,
+.sb-exam[dir="rtl"] .sb-hero__kicker,
+.sb-exam[dir="rtl"] .sb-section__sub,
+.sb-exam[dir="rtl"] .sb-exam-part,
+.sb-exam[dir="rtl"] .sb-exam-card,
+.sb-exam[dir="rtl"] .sb-callout {
+  font-family: var(--sb-font-arabic);
+}
+
+.sb-exam[dir="rtl"] .sb-section__title {
+  font-size: 2.05rem;
+  line-height: 1.45;
+}
+
+.sb-exam[dir="rtl"] .sb-exam-part h3,
+.sb-exam[dir="rtl"] .sb-exam-card h3 {
+  font-family: var(--sb-font-arabic);
+  font-size: 1.2rem;
+  line-height: 1.55;
+}
+
+.sb-exam[dir="rtl"] .sb-exam-part p,
+.sb-exam[dir="rtl"] .sb-exam-card li,
+.sb-exam[dir="rtl"] .sb-exam-card p {
+  font-size: 1.12rem;
+  line-height: 1.85;
+}
+
+.sb-exam[dir="rtl"] .sb-back {
+  font-family: var(--sb-font-arabic);
+}
+
 .sb-yusuf {
   margin: 1.1rem 0 0;
   padding: 1rem 1.15rem;
@@ -2186,6 +2222,9 @@ html[data-ornaments="off"] .sb-khatem {
   .sb-breadcrumb,
   .sb-skip,
   .sb-toast,
+  .sb-langtabs,
+  .sb-plan-switch,
+  #print-fiche,
   #mark-done,
   .sb-btn,
   body::before,

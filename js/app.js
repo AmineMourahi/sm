@@ -124,7 +124,7 @@
     const qs = qIndex === -1 ? "" : raw.slice(qIndex + 1);
     const parts = path.split("/").filter(Boolean);
     const params = new URLSearchParams(qs);
-    return { parts, q: params.get("q") || "", f: params.get("f") || "" };
+    return { parts, q: params.get("q") || "", f: params.get("f") || "", l: params.get("l") || "" };
   }
 
   const scrollPos = Object.create(null);
@@ -579,71 +579,99 @@
       ${footer()}`;
   }
 
-  function renderEpreuve(f) {
+  function examPick(obj, key, isAr) {
+    if (!obj) return "";
+    if (isAr) return obj[key + "Ar"] || obj[key] || "";
+    return obj[key] || "";
+  }
+
+  function examHref(paperId, lang) {
+    return `#/epreuve?f=${encodeURIComponent(paperId)}&l=${lang}`;
+  }
+
+  function renderEpreuve(f, langParam) {
     const exam = window.SB_EXAM;
+    const isAr = langParam !== "fr";
+    const lang = isAr ? "ar" : "fr";
+    const ui = (exam && exam.ui && exam.ui[lang]) || {};
     if (!exam || !Array.isArray(exam.papers)) {
-      app.innerHTML = `${header("regional")}<main class="sb-container sb-empty"><p>Épreuve indisponible.</p>${backLink("#/regional")}</main>${footer()}`;
+      app.innerHTML = `${header("regional")}<main class="sb-container sb-empty" lang="${isAr ? "ar" : "fr"}" dir="${isAr ? "rtl" : "ltr"}"><p>${escapeHtml(ui.unavailable || "Épreuve indisponible.")}</p>${backLink("#/regional", isAr ? "رجوع" : "Retour")}</main>${footer()}`;
       return;
     }
     const paper = exam.papers.find((p) => p.id === f) || exam.papers[0];
     const plan = window.SB_PLAN || {};
+    const sessionDate = isAr ? plan.regionalSessionAr || plan.regionalSession : plan.regionalSession;
+    const session = sessionDate
+      ? isAr
+        ? ` ${ui.session} ${escapeHtml(sessionDate)}.`
+        : ` Session ${escapeHtml(sessionDate)}.`
+      : "";
+    const pts = isAr ? ui.points : "pts";
     const partsHtml = paper.parts
-      .map(
-        (part) => `<article class="sb-exam-part">
-          <strong>${part.points} pts</strong>
-          <h3>${isRtlText(part.title) ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(part.title)}</span>` : escapeHtml(part.title)}</h3>
-          <p>${escapeHtml(part.what)}</p>
-        </article>`
-      )
+      .map((part) => {
+        const title = examPick(part, "title", isAr);
+        const what = examPick(part, "what", isAr);
+        return `<article class="sb-exam-part">
+          <strong>${part.points} ${escapeHtml(pts)}</strong>
+          <h3>${escapeHtml(title)}</h3>
+          <p>${escapeHtml(what)}</p>
+        </article>`;
+      })
       .join("");
-    const method = `<ol>${paper.method.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
-    const steps = `<ol>${paper.paper.steps.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
+    const methodItems = isAr ? paper.methodAr || paper.method : paper.method;
+    const stepItems = isAr ? paper.paper.stepsAr || paper.paper.steps : paper.paper.steps;
+    const method = `<ol>${(methodItems || []).map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
+    const steps = `<ol>${(stepItems || []).map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
     const courses = (paper.courses || [])
       .map((id) => {
-        const l = byId[id];
-        if (!l) return "";
-        return `<a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/cours/${l.id}" data-link>${chapterLabel(l)}</a>`;
+        const lesson = byId[id];
+        if (!lesson) return "";
+        return `<a class="sb-btn sb-btn--sm sb-btn--ghost" href="#/cours/${lesson.id}" data-link>${chapterLabel(lesson)}</a>`;
       })
       .join("");
     const switcher = exam.papers
-      .map(
-        (p) =>
-          `<button type="button" class="sb-plan-switch__btn" data-paper="${p.id}" role="radio" aria-checked="${p.id === paper.id}">${escapeHtml(p.name)}</button>`
-      )
+      .map((p) => {
+        const label = examPick(p, "name", isAr);
+        return `<button type="button" class="sb-plan-switch__btn" data-paper="${p.id}" role="radio" aria-checked="${p.id === paper.id}">${escapeHtml(label)}</button>`;
+      })
       .join("");
-    const nameHtml = isRtlText(paper.nameLong)
-      ? `<span lang="ar" dir="rtl" class="sb-arabic">${escapeHtml(paper.nameLong)}</span>`
-      : escapeHtml(paper.nameLong);
+    const nameLong = examPick(paper, "nameLong", isAr) || examPick(paper, "name", isAr);
+    const paperName = examPick(paper, "name", isAr);
     app.innerHTML = `
       ${header("regional")}
-      <main id="main">
+      <main id="main" class="sb-exam" lang="${isAr ? "ar" : "fr"}" dir="${isAr ? "rtl" : "ltr"}">
         <div class="sb-container sb-pagehead">
-          <p class="sb-breadcrumb">${backLink("#/regional")}</p>
-          <p class="sb-hero__kicker">${escapeHtml(exam.kicker)}</p>
-          <h1 class="sb-section__title">${escapeHtml(exam.title)}</h1>
-          <p class="sb-section__sub">${escapeHtml(exam.lead)}</p>
-          <p class="sb-section__sub">${escapeHtml(exam.drill)}${plan.regionalSession ? ` Session ${escapeHtml(plan.regionalSession)}.` : ""}</p>
-          <div class="sb-plan-switch" role="radiogroup" aria-label="Matière de l’épreuve" style="margin-top:1.1rem">${switcher}</div>
+          <p class="sb-breadcrumb">${backLink("#/regional", isAr ? "رجوع" : "Retour")}</p>
+          <div class="sb-langtabs sb-exam-lang" role="tablist" aria-label="${isAr ? "لغة المساعدة" : "Langue de l’aide"}">
+            <button type="button" class="sb-langtabs__btn" role="tab" data-exam-lang="ar" aria-selected="${isAr}">العربية</button>
+            <button type="button" class="sb-langtabs__btn" role="tab" data-exam-lang="fr" aria-selected="${!isAr}">Français</button>
+          </div>
+          <p class="sb-hero__kicker">${escapeHtml(examPick(exam, "kicker", isAr))}</p>
+          <h1 class="sb-section__title">${escapeHtml(examPick(exam, "title", isAr))}</h1>
+          <p class="sb-section__sub">${escapeHtml(examPick(exam, "lead", isAr))}</p>
+          <p class="sb-section__sub">${escapeHtml(examPick(exam, "drill", isAr))}${session}</p>
+          <div class="sb-plan-switch" role="radiogroup" aria-label="${escapeHtml(ui.subjects || "")}" style="margin-top:1.1rem">${switcher}</div>
         </div>
         <section class="sb-section" style="padding-top:0">
           <div class="sb-container">
-            <p class="sb-hero__kicker">${escapeHtml(paper.name)} · ${paper.total} points</p>
-            <h2 class="sb-section__title">${nameHtml}</h2>
+            <p class="sb-hero__kicker">${escapeHtml(paperName)} · ${paper.total} ${escapeHtml(isAr ? ui.points : "points")}</p>
+            <h2 class="sb-section__title">${escapeHtml(nameLong)}</h2>
+            <p><button class="sb-btn sb-btn--ghost" type="button" id="print-fiche">${isAr ? "طباعة البطاقة" : "Imprimer la fiche"}</button></p>
             <div class="sb-exam-parts">${partsHtml}</div>
             <div class="sb-exam-grid">
               <article class="sb-exam-card">
-                <h3>Dans l’ordre, le jour J</h3>
+                <h3>${escapeHtml(ui.order)}</h3>
                 ${method}
-                <p class="sb-callout">Piège : ${escapeHtml(paper.trap)}</p>
-                <p>Si tu es pressé : ${escapeHtml(paper.hurry)}</p>
+                <p class="sb-callout">${escapeHtml(ui.trap)} : ${escapeHtml(examPick(paper, "trap", isAr))}</p>
+                <p>${escapeHtml(ui.hurry)} : ${escapeHtml(examPick(paper, "hurry", isAr))}</p>
               </article>
               <article class="sb-exam-card">
-                <h3>${escapeHtml(paper.paper.title)}</h3>
-                <p>${escapeHtml(paper.paper.time)}</p>
+                <h3>${escapeHtml(examPick(paper.paper, "title", isAr))}</h3>
+                <p>${escapeHtml(examPick(paper.paper, "time", isAr))}</p>
                 ${steps}
               </article>
             </div>
-            <h3 class="sb-section__title" style="margin-top:1.75rem;font-size:1.6rem">Cours du site pour cette épreuve</h3>
+            <h3 class="sb-section__title" style="margin-top:1.75rem;font-size:1.6rem">${escapeHtml(ui.courses)}</h3>
             <div class="sb-exam-courses">${courses}</div>
           </div>
         </section>
@@ -651,9 +679,16 @@
       ${footer()}`;
     document.querySelectorAll("[data-paper]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        location.hash = `#/epreuve?f=${btn.dataset.paper}`;
+        location.hash = examHref(btn.dataset.paper, lang);
       });
     });
+    document.querySelectorAll("[data-exam-lang]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        location.hash = examHref(paper.id, btn.dataset.examLang);
+      });
+    });
+    const printBtn = document.getElementById("print-fiche");
+    if (printBtn) printBtn.addEventListener("click", () => window.print());
   }
 
   function formatHours(n) {
@@ -1375,10 +1410,10 @@
   }
 
   function route() {
-    const { parts, q, f } = parseHash();
+    const { parts, q, f, l } = parseHash();
     if (parts.length === 0) renderHome();
     else if (parts[0] === "regional") renderRegional();
-    else if (parts[0] === "epreuve") renderEpreuve(f);
+    else if (parts[0] === "epreuve") renderEpreuve(f, l);
     else if (parts[0] === "planning") renderPlanning(f);
     else if (parts[0] === "stats") renderStats();
     else if (parts[0] === "notes") renderNotes();
